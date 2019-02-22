@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
+#include <QList>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +25,7 @@ private:
     Ui::Rendering *uiRendering;
     Inspector *inspector;
 
+    QList<int> scene;
 public slots:
     void openProject();
     void saveProject();
