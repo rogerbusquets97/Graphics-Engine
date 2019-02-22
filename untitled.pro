@@ -27,13 +27,21 @@ SOURCES += \
         mainwindow.cpp \
     inspector.cpp \
     myopenglwidget.cpp \
-    circlewidget.cpp
+    circlewidget.cpp \
+    gameobject.cpp \
+    component.cpp \
+    hierarchywidget.cpp \
+    gameobjectwidget.cpp
 
 HEADERS += \
         mainwindow.h \
     inspector.h \
     myopenglwidget.h \
-    circlewidget.h
+    circlewidget.h \
+    gameobject.h \
+    component.h \
+    hierarchywidget.h \
+    gameobjectwidget.h
 
 FORMS += \
         mainwindow.ui \
