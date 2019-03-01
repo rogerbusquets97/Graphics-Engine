@@ -9,3 +9,13 @@ Scene::~Scene()
 {
 
 }
+
+void Scene::OnAddObject(GameObject* obj)
+{
+
+}
+
+void Scene::OnDeleteObject(GameObject *obj)
+{
+
+}

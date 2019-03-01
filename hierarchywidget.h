@@ -1,25 +1,20 @@
 #ifndef HIERARCHYWIDGET_H
 #define HIERARCHYWIDGET_H
 
-#include <QWidget>
+#include <QDockWidget>
 #include <QLabel>
 #include <list>
 #include "gameobject.h"
 
-namespace Ui
-{
-   class HierarchyWidget;
-}
-class HierarchyWidget : public QWidget
+class HierarchyWidget : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit HierarchyWidget(QWidget *parent = nullptr);
+    explicit HierarchyWidget(QDockWidget *parent = nullptr);
 private:
 
     GameObject* selected;
     std::list<QLabel> objects;
-    Ui::Inspector *ui;
 
 
 signals:

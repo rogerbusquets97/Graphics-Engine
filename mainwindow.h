@@ -9,7 +9,7 @@ class Rendering;
 }
 
 class Inspector;
-class HierarchyWidget;
+class Hierarchy_Widget;
 
 class MainWindow : public QMainWindow
 {
@@ -23,12 +23,13 @@ private:
     Ui::MainWindow *uiMainWindow;
     Ui::Rendering *uiRendering;
     Inspector *inspector;
-    HierarchyWidget* hierarchy;
+    Hierarchy_Widget* hierarchy;
 
 public slots:
     void openProject();
     void saveProject();
     void exitProject();
 };
+extern MainWindow* w;
 
 #endif // MAINWINDOW_H

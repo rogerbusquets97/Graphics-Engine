@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include <QObject>
-#include <list>
+#include <QList>.h>
 #include "gameobject.h"
 
 class Scene : public QObject
@@ -13,7 +13,7 @@ public:
    virtual ~Scene();
 
 private:
-   std::list<GameObject*> sceneObjects;
+   QList<GameObject*> sceneObjects;
 
 
 signals:

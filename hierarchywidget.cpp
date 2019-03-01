@@ -5,7 +5,7 @@
 #include <QSpacerItem>
 #include "gameobjectwidget.h"
 
-HierarchyWidget::HierarchyWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Inspector)
+HierarchyWidget::HierarchyWidget(QDockWidget *parent) : QDockWidget(parent)
 {
   //Aixi afegim go visualment.
   //  GameObjectWidget* obj_widget = new GameObjectWidget(GameObject*);

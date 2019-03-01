@@ -30,9 +30,9 @@ SOURCES += \
     circlewidget.cpp \
     gameobject.cpp \
     component.cpp \
-    hierarchywidget.cpp \
     gameobjectwidget.cpp \
-    scene.cpp
+    scene.cpp \
+    hierarchy_widget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,14 +41,15 @@ HEADERS += \
     circlewidget.h \
     gameobject.h \
     component.h \
-    hierarchywidget.h \
     gameobjectwidget.h \
-    scene.h
+    scene.h \
+    hierarchy_widget.h
 
 FORMS += \
         mainwindow.ui \
     rendering.ui \
-    inspector.ui
+    inspector.ui \
+    hierarchy_widget.ui
 QT      += opengl
 
 CONFIG += console
