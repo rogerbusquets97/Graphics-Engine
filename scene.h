@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include <QObject>
-#include <QList>.h>
+#include <QList>>
 #include "gameobject.h"
 
 class Scene : public QObject

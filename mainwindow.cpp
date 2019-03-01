@@ -3,6 +3,8 @@
 #include "ui_rendering.h"
 #include "inspector.h"
 #include "hierarchy_widget.h"
+#include "scene.h"
+#include "gameobject.h"
 
 #include <iostream>
 #include <QFileDialog>
@@ -14,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     uiRendering(new Ui::Rendering)
 {
 
+    currScene = new Scene();
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 
     uiMainWindow->setupUi(this);
@@ -46,6 +49,12 @@ MainWindow::~MainWindow()
     delete uiRendering;
     delete inspector;
     delete hierarchy;
+    delete currScene;
+}
+
+void MainWindow::OnAddObject(GameObject* obj)
+{
+    currScene->OnAddObject(obj);
 }
 
 void MainWindow::openProject()

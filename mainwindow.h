@@ -10,6 +10,8 @@ class Rendering;
 
 class Inspector;
 class Hierarchy_Widget;
+class Scene;
+class GameObject;
 
 class MainWindow : public QMainWindow
 {
@@ -18,12 +20,14 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void OnAddObject(GameObject* obj);
 
 private:
     Ui::MainWindow *uiMainWindow;
     Ui::Rendering *uiRendering;
     Inspector *inspector;
     Hierarchy_Widget* hierarchy;
+    Scene* currScene;
 
 public slots:
     void openProject();

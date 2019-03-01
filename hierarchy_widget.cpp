@@ -27,10 +27,9 @@ void Hierarchy_Widget::OnAddGameObject()
     if(obj!= nullptr)
     {
         list->addItem(obj->GetName());
+        w->OnAddObject(obj);
     }
 
-
-    std::cout << "OnAddGameObject" << std::endl;
 }
 
 void Hierarchy_Widget::OnDeleteGameObject(GameObject *obj)
