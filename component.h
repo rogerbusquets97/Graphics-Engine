@@ -7,6 +7,7 @@ class Component
 {
 public:
     Component();
+    virtual ~Component();
 };
 
 #endif // COMPONENT_H

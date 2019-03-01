@@ -35,14 +35,28 @@
     </property>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="HierachyDock">
+  <widget class="HierarchyWidget" name="HierachyDock">
    <property name="windowTitle">
     <string>Hierachy</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_5"/>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <widget class="QPushButton" name="addGoButton">
+     <property name="geometry">
+      <rect>
+       <x>-20</x>
+       <y>10</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add Game Object</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="ProjectDock">
    <property name="windowTitle">
@@ -136,6 +150,15 @@
    <class>circlewidget</class>
    <extends>QOpenGLWidget</extends>
    <header>circlewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>HierarchyWidget</class>
+   <extends>QDockWidget</extends>
+   <header location="global">hierarchywidget.h</header>
+   <container>1</container>
+   <slots>
+    <slot>OnAddObject()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>

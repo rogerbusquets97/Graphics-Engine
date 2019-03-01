@@ -31,7 +31,8 @@ SOURCES += \
     gameobject.cpp \
     component.cpp \
     hierarchywidget.cpp \
-    gameobjectwidget.cpp
+    gameobjectwidget.cpp \
+    scene.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     gameobject.h \
     component.h \
     hierarchywidget.h \
-    gameobjectwidget.h
+    gameobjectwidget.h \
+    scene.h
 
 FORMS += \
         mainwindow.ui \

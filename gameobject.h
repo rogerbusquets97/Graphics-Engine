@@ -4,16 +4,16 @@
 #include <QObject>
 #include "component.h"
 #include <list>
-#include <string>
+#include <QString>
 class GameObject : public QObject
 {
     Q_OBJECT
 public:
-    explicit GameObject(QObject *parent = nullptr, std::string n);
-    void SetName(const std::string n);
-    inline std::string GetName() const {return name;}
+    GameObject(QObject *parent = nullptr, QString n = "GameObject");
+    inline void SetName(const QString n){name = n;}
+    inline QString GetName() const {return name;}
 private:
-    std::string name;
+    QString name;
     std::list<Component*> components;
 signals:
 

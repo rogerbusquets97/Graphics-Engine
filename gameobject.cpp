@@ -1,13 +1,8 @@
 #include "gameobject.h"
 
-GameObject::GameObject(QObject *parent, std::string n) : QObject(parent), name(n)
+GameObject::GameObject(QObject *parent, QString n) : QObject(parent), name(n)
 {
 
-}
-
-void GameObject::SetName(const std::string n)
-{
-    name = n;
 }
 
 void GameObject::OnAddComponent(Component* c)
