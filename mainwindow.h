@@ -26,6 +26,8 @@ private:
     Inspector *inspector;
 
     QList<int> scene;
+    QString m_sSettingsFile;
+
 public slots:
     void openProject();
     void saveProject();

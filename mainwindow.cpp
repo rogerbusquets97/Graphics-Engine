@@ -6,12 +6,15 @@
 #include <Qlist>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QApplication>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     uiMainWindow(new Ui::MainWindow),
     uiRendering(new Ui::Rendering)
 {
+    QCoreApplication::setApplicationName("Antimonored Engine");
 
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 
@@ -46,58 +49,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::openProject()
 {
+    std::cout<< "Save Project" << std::endl;
+
     QString fileName = QFileDialog::getOpenFileName(this, "Open Project", "", tr("Scene Name (*.txt);; All Files (*)"));
-    if(!fileName.isEmpty())
-    {
-        std::cout << fileName.toStdString() << std::endl;
-    }
-    else
-    {
-        QFile file(fileName);
-
-        if (!file.open(QIODevice::ReadOnly))
-        {
-            QMessageBox::information(this, tr("Unable to open file"), file.errorString());
-            return;
-        }
-
-        if (scene.isEmpty())
-        {
-        QMessageBox::information(this, tr("Scene is empty."), tr("The file you are attempting to load is empty."));
-        }
-        else {
-           /* QDataStream in(&file);
-            in.setVersion(QDataStream::Qt_4_5);
-            scene.clear();
-            in >> scene;*/
-            QList<int>::iterator i = scene.begin();
-            //nameLine->setText(i);
-
-        }
-    }
+    QSettings settings(fileName, QSettings::IniFormat);
 }
 void MainWindow::saveProject()
 {
     std::cout<< "Save Project" << std::endl;
 
-    QString fileName = QFileDialog::getSaveFileName(this, "Save Scene", "", tr(".txt (*txt);;All Files (*)"));
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Scene");
 
-    if(fileName.isEmpty())
-    {
-        std::cout<< "Name is empty" << std::endl;
-    }
-    else {
-        QFile file(fileName);
-        if(!file.open(QIODevice::WriteOnly))
-        {
-            QMessageBox::information(this, tr("Unable to open file"),
-                    file.errorString());
-        }
+    QSettings settings(fileName, QSettings::IniFormat);
 
-        QDataStream out(&file);
-        out.setVersion(QDataStream::Qt_4_5);
-        out << scene;
-    }
+    settings.setValue("AntiMonoRed, all rights reserved", "Roger Busquets & Josep Huguet - 2019");
 }
 
 void MainWindow::exitProject()
