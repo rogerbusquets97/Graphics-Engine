@@ -26,7 +26,8 @@ private:
 
 public slots:
     void OnAddGameObject();
-    void OnDeleteGameObject(GameObject* obj);
+    void OnDeleteGameObject();
+    void OnObjectSelected(QListWidgetItem* obj);
 };
 
 #endif // HIERARCHY_WIDGET_H

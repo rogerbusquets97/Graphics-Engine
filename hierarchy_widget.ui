@@ -37,6 +37,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="DeleteButton">
+     <property name="text">
+      <string>Delete Game Object</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

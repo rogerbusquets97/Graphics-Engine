@@ -21,6 +21,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void OnAddObject(GameObject* obj);
+    Scene* GetCurrScene()const;
 
 private:
     Ui::MainWindow *uiMainWindow;

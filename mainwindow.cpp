@@ -85,3 +85,8 @@ void MainWindow::exitProject()
         std::cout<<"Cancel exit"<<std::endl;
     }
 }
+
+Scene* MainWindow::GetCurrScene()const
+{
+    return currScene;
+}
