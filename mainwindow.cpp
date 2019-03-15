@@ -6,15 +6,18 @@
 #include "scene.h"
 #include "gameobject.h"
 
-#include <iostream>
+#include <Qlist>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QApplication>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     uiMainWindow(new Ui::MainWindow),
     uiRendering(new Ui::Rendering)
 {
+    QCoreApplication::setApplicationName("Antimonored Engine");
 
     currScene = new Scene();
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
@@ -41,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(uiMainWindow->actionOpen_Project, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(uiMainWindow->actionSave_Project, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(uiMainWindow->actionExit, SIGNAL(triggered()), this, SLOT(exitProject()));
+
+    scene.push_back(5);
 }
 
 MainWindow::~MainWindow()
@@ -59,15 +64,20 @@ void MainWindow::OnAddObject(GameObject* obj)
 
 void MainWindow::openProject()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Open Project");
-    if(!path.isEmpty())
-    {
-        std::cout << path.toStdString() << std::endl;
-    }
+    std::cout<< "Save Project" << std::endl;
+
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Project", "", tr("Scene Name (*.txt);; All Files (*)"));
+    QSettings settings(fileName, QSettings::IniFormat);
 }
 void MainWindow::saveProject()
 {
     std::cout<< "Save Project" << std::endl;
+
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Scene");
+
+    QSettings settings(fileName, QSettings::IniFormat);
+
+    settings.setValue("AntiMonoRed, all rights reserved", "Roger Busquets & Josep Huguet - 2019");
 }
 
 void MainWindow::exitProject()

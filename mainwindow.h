@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
+#include <QList>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +31,9 @@ private:
     Inspector *inspector;
     Hierarchy_Widget* hierarchy;
     Scene* currScene;
+
+    QList<int> scene;
+    QString m_sSettingsFile;
 
 public slots:
     void openProject();
