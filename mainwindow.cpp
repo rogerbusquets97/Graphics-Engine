@@ -45,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(uiMainWindow->actionSave_Project, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(uiMainWindow->actionExit, SIGNAL(triggered()), this, SLOT(exitProject()));
 
-    scene.push_back(5);
 }
 
 MainWindow::~MainWindow()
@@ -64,10 +63,36 @@ void MainWindow::OnAddObject(GameObject* obj)
 
 void MainWindow::openProject()
 {
-    std::cout<< "Save Project" << std::endl;
+    std::cout<< "Load Project" << std::endl;
 
     QString fileName = QFileDialog::getOpenFileName(this, "Open Project", "", tr("Scene Name (*.txt);; All Files (*)"));
     QSettings settings(fileName, QSettings::IniFormat);
+
+
+
+    int size = settings.beginReadArray("Game Objects");
+
+    if (size > 0)
+    {
+        DeleteMainWindowScene();
+
+        uint objcount = 0;
+
+        for(uint i = 0; i < size; ++i, ++objcount)
+        {
+          settings.setArrayIndex(i);
+          GameObject* go = new GameObject(nullptr, settings.value("name").toString());
+          currScene->OnAddObject(go);
+        }
+        settings.endArray();
+
+        std::cout<< "Loaded " << objcount <<  " objects." << std::endl;
+      }
+    else
+    {
+        std::cout<< "File was empty. Unable to load objects." << std::endl;
+    }
+
 }
 void MainWindow::saveProject()
 {
@@ -76,6 +101,19 @@ void MainWindow::saveProject()
     QString fileName = QFileDialog::getSaveFileName(this, "Save Scene");
 
     QSettings settings(fileName, QSettings::IniFormat);
+
+    uint objcount = 0;
+
+    settings.beginWriteArray("Game Objects", currScene->GetGameObjects().size());
+
+    for(uint i = 0; i < currScene->GetGameObjects().size(); ++i, ++objcount)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue(QString("name"), currScene->GetGameObjects()[i]->GetName());
+    }
+    settings.endArray();
+
+    std::cout<< "Saved " << objcount <<  " objects." << std::endl;
 
     settings.setValue("AntiMonoRed, all rights reserved", "Roger Busquets & Josep Huguet - 2019");
 }
@@ -99,4 +137,10 @@ void MainWindow::exitProject()
 Scene* MainWindow::GetCurrScene()const
 {
     return currScene;
+}
+
+void MainWindow::DeleteMainWindowScene()
+{
+    hierarchy->list.clear();
+    currScene->ClearScene();
 }

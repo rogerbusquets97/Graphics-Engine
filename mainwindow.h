@@ -31,9 +31,9 @@ private:
     Inspector *inspector;
     Hierarchy_Widget* hierarchy;
     Scene* currScene;
-
-    QList<int> scene;
     QString m_sSettingsFile;
+
+    void DeleteMainWindowScene();
 
 public slots:
     void openProject();

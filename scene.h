@@ -29,6 +29,11 @@ public slots:
    void OnAddObject(GameObject* obj);
    void OnDeleteSelectedObject();
    void OnDeleteObject(QString name);
+
+   void ClearScene();
+
+   QList<GameObject*> GetGameObjects() const;
+
 };
 
 #endif // SCENE_H

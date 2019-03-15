@@ -69,3 +69,19 @@ void Scene::SetSelectedObject(int i)
     }
 }
 
+void Scene::ClearScene()
+{
+     selectedOject = nullptr;
+
+     for(uint i = 0; i < sceneObjects.size(); ++i)
+        delete sceneObjects[i];
+
+     sceneObjects.clear();
+
+}
+
+QList<GameObject*> Scene::GetGameObjects() const
+{
+    return sceneObjects;
+}
+
