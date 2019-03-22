@@ -2,6 +2,7 @@
 #define INSPECTOR_H
 
 #include <QWidget>
+#include "component.h"
 
 class Inspector : public QWidget
 {
@@ -11,11 +12,14 @@ public:
     std::list<Component*>* components;
     //Component Widgets
 
-    inline void SetComponentList(std::list<Component*>* components){this->components = components;}
+    void SetComponentList(std::list<Component*>* components);
 
+private:
+    void UpdateContent();
 signals:
 
 public slots:
+
 };
 
 #endif // INSPECTOR_H
