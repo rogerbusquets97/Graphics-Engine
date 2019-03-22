@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ui_rendering.h"
-#include "inspector.h"
 #include "hierarchy_widget.h"
 #include "scene.h"
 #include "gameobject.h"
@@ -32,9 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     uiMainWindow->RenderingDock->setFloating(false);
 
-    inspector = new Inspector();
-    uiMainWindow->InspectorDock->setWidget(inspector);
-
     hierarchy = new Hierarchy_Widget();
     uiMainWindow->HierachyDock->setWidget(hierarchy);
 
@@ -51,7 +47,6 @@ MainWindow::~MainWindow()
 {
     delete uiMainWindow;
     delete uiRendering;
-    delete inspector;
     delete hierarchy;
     delete currScene;
 }

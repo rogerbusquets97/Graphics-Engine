@@ -22,6 +22,7 @@ Hierarchy_Widget::Hierarchy_Widget(QWidget *parent) :
 
 Hierarchy_Widget::~Hierarchy_Widget()
 {
+    list->clear();
     delete ui;
 }
 

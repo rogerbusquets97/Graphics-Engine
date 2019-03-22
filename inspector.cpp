@@ -1,14 +1,8 @@
 #include "inspector.h"
-#include "ui_inspector.h"
 
-Inspector::Inspector(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Inspector)
+Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
-    ui->setupUi(this);
-}
+    //Create subwidgets
+    //Add them to the layout
 
-Inspector::~Inspector()
-{
-    delete ui;
 }
