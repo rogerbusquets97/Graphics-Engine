@@ -8,22 +8,25 @@
 class ComponentShape : public Component
 {
 public:
-    enum Shape {
+    enum ShapeType {
         CIRCLE = 0, RECTANGLE, UNKNOWN
     };
 
     ComponentShape();
     void SetColor(QColor color);
-    void SetRect(QRect rect);
-    void ChangeType(ComponentShape::Shape newType);
+    void ChangeType(ComponentShape::ShapeType newType);
+    ShapeType GetShape() const;
+    float GetRadius() const {return r};
+    float GetHeight() const {return h};
+    float GetWidth() const {return w};
 private:
     QColor color;
     Shape type;
 
     // CIRCLE
-    int r;
+    float r;
     // RECTANGLE
-    int w, h;
+    float w, h;
 };
 
 

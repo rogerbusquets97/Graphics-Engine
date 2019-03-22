@@ -8,7 +8,7 @@ void ComponentShape::SetColor(QColor color)
     this->color = color;
 }
 
-void ComponentShape::ChangeType(Shape newType)
+void ComponentShape::ChangeType(ShapeType newType)
 {
     if (type == newType) return;
 
@@ -24,4 +24,9 @@ void ComponentShape::ChangeType(Shape newType)
     }
 
     type = newType;
+}
+
+ComponentShape::ShapeType ComponentShape::GetShape() const
+{
+    return type;
 }

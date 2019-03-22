@@ -37,11 +37,22 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
     pen.setStyle(Qt::PenStyle::DashLine);
     painter.setPen(pen);
 
-    int r= 24;
+    switch (shape->ComponentShape())
+    {
+    case ComponentShape::CIRCLE:
+        int r = shape->GetRadius();
+        int w = r*2, h = r*2;
+        int x = rect().width() / 2 - r;
+        int y = rect().height() / 2 - r;
+        QRect circleRect(x,y,w,h);
+        painter.drawEllipse(circleRect);
+        break;
+    }
+    /*int r= 24;
     int w =r*2, h=r*2;
     int x = rect().width() / 2 - r;
     int y = rect().height() / 2-r;
     QRect circleRect(x,y,w,h);
-    painter.drawEllipse(circleRect);
+    painter.drawEllipse(circleRect);*/
 
 }
