@@ -1,4 +1,5 @@
 #include "inspector.h"
+#include "component.h"
 
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
@@ -8,15 +9,20 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
 }
 
-void Inspector::SetComponentList(std::list<Component *> *components)
+void Inspector::SetObject(GameObject* obj)
 {
-    this->components = components;
+    selected = obj;
+}
+
+GameObject* Inspector::GetObject()const
+{
+    return selected;
 }
 void Inspector::UpdateContent()
 {
-    if(components!=nullptr)
+    if(selected!=nullptr)
     {
-        for(QList<Component*>::iterator it = *components.begin(); it!= *components.end(); ++it)
+        for(QList<Component*>::iterator it = selected->components.begin(); it!= selected->components.end(); ++it)
         {
             switch ((*it)->GetType()) {
             case ComponentType::Shape:

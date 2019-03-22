@@ -5,6 +5,7 @@
 #include "gameobject.h"
 
 enum ComponentType {Shape}; //De moment nomes tenim aquest
+class GameObject;
 
 class Component
 {
@@ -12,8 +13,8 @@ public:
     Component(GameObject* p, ComponentType t);
     virtual ~Component();
 
-    inline ComponentType GetType()const{return type;}
-    inline GameObject* GetParent()const{return parent;}
+    ComponentType GetType()const{return type;}
+    GameObject* GetParent()const{return parent;}
 
 private:
 

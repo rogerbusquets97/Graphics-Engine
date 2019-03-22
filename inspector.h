@@ -2,20 +2,19 @@
 #define INSPECTOR_H
 
 #include <QWidget>
-#include "component.h"
+#include "gameobject.h"
 
 class Inspector : public QWidget
 {
     Q_OBJECT
 public:
     explicit Inspector(QWidget *parent = nullptr);
-    std::list<Component*>* components;
-    //Component Widgets
-
-    void SetComponentList(std::list<Component*>* components);
+    GameObject* GetObject()const;
+    void SetObject(GameObject* obj);
 
 private:
     void UpdateContent();
+    GameObject* selected;
 signals:
 
 public slots:

@@ -1,5 +1,6 @@
 #include "gameobject.h"
 #include "mainwindow.h"
+#include "component.h"
 
 GameObject::GameObject(QObject *parent, QString n) : QObject(parent), name(n)
 {
@@ -12,5 +13,5 @@ void GameObject::OnAddComponent(Component* c)
 
 void GameObject::OnDeleteComponent(Component* c)
 {
-    components.remove(c);
+    components.removeOne(c);
 }
