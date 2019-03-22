@@ -8,7 +8,10 @@ Scene::Scene(QObject *parent) : QObject(parent)
 
 Scene::~Scene()
 {
-
+   for(QList<GameObject*>::iterator it = sceneObjects.begin(); it!= sceneObjects.end(); ++it)
+   {
+       delete (*it);
+   }
 }
 
 void Scene::OnAddObject(GameObject* obj)

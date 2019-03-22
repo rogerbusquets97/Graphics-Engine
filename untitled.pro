@@ -25,30 +25,29 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    inspector.cpp \
     myopenglwidget.cpp \
     circlewidget.cpp \
     gameobject.cpp \
-    component.cpp \
     gameobjectwidget.cpp \
     scene.cpp \
-    hierarchy_widget.cpp
+    hierarchy_widget.cpp \
+    inspector.cpp \
+    component.cpp
 
 HEADERS += \
         mainwindow.h \
-    inspector.h \
     myopenglwidget.h \
     circlewidget.h \
     gameobject.h \
     component.h \
     gameobjectwidget.h \
     scene.h \
-    hierarchy_widget.h
+    hierarchy_widget.h \
+    inspector.h
 
 FORMS += \
         mainwindow.ui \
     rendering.ui \
-    inspector.ui \
     hierarchy_widget.ui
 QT      += opengl
 

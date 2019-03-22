@@ -10,7 +10,6 @@ class MainWindow;
 class Rendering;
 }
 
-class Inspector;
 class Hierarchy_Widget;
 class Scene;
 class GameObject;
@@ -28,7 +27,6 @@ public:
 private:
     Ui::MainWindow *uiMainWindow;
     Ui::Rendering *uiRendering;
-    Inspector *inspector;
     Hierarchy_Widget* hierarchy;
     Scene* currScene;
 

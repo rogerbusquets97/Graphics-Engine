@@ -3,20 +3,19 @@
 
 #include <QWidget>
 
-namespace Ui {
-class Inspector;
-}
-
 class Inspector : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit Inspector(QWidget *parent = nullptr);
-    ~Inspector();
+    std::list<Component*>* components;
+    //Component Widgets
 
-private:
-    Ui::Inspector *ui;
+    inline void SetComponentList(std::list<Component*>* components){this->components = components;}
+
+signals:
+
+public slots:
 };
 
 #endif // INSPECTOR_H
