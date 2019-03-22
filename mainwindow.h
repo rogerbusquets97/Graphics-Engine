@@ -10,9 +10,11 @@ class MainWindow;
 class Rendering;
 }
 
+class ShapeWidget;
 class Hierarchy_Widget;
 class Scene;
 class GameObject;
+class Inspector;
 
 class MainWindow : public QMainWindow
 {
@@ -24,10 +26,13 @@ public:
     void OnAddObject(GameObject* obj);
     Scene* GetCurrScene()const;
 
+   Inspector* inspector;
+
 private:
     Ui::MainWindow *uiMainWindow;
     Ui::Rendering *uiRendering;
     Hierarchy_Widget* hierarchy;
+
     Scene* currScene;
     QString m_sSettingsFile;
 

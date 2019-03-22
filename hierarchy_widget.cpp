@@ -7,6 +7,7 @@
 #include <iostream>
 #include "mainwindow.h"
 #include "scene.h"
+#include "ComponentShape.h"
 
 Hierarchy_Widget::Hierarchy_Widget(QWidget *parent) :
     QWidget(parent),
@@ -40,6 +41,9 @@ void Hierarchy_Widget::OnAddGameObject()
 {
     QString name = QString("GameObject %1").arg(w->GetCurrScene()->GetSceneGoCount() +1);
     GameObject* obj = new GameObject(nullptr, name);
+    ComponentShape* comp_shape = new ComponentShape(obj, ComponentType::Shape);
+    obj->OnAddComponent(comp_shape);
+
     if(obj!= nullptr)
     {
         list->addItem(obj->GetName());
@@ -61,6 +65,7 @@ void Hierarchy_Widget::OnDeleteGameObject()
 void Hierarchy_Widget::OnObjectSelected(QListWidgetItem* obj)
 {
     w->GetCurrScene()->SetSelectedObject(list->currentRow());
+
 }
 
 void Hierarchy_Widget::ClearHierarchy()

@@ -4,6 +4,8 @@
 #include "hierarchy_widget.h"
 #include "scene.h"
 #include "gameobject.h"
+#include "shapewidget.h"
+#include "inspector.h"
 
 #include <Qlist>
 #include <QFileDialog>
@@ -34,12 +36,16 @@ MainWindow::MainWindow(QWidget *parent) :
     hierarchy = new Hierarchy_Widget();
     uiMainWindow->HierachyDock->setWidget(hierarchy);
 
+    inspector = new Inspector();
+    uiMainWindow->InspectorDock->setWidget(inspector);
+
     tabifyDockWidget(uiMainWindow->RenderingDock, uiMainWindow->InspectorDock);
 
     // Connect Actions' triggered() signals to some slots
     connect(uiMainWindow->actionOpen_Project, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(uiMainWindow->actionSave_Project, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(uiMainWindow->actionExit, SIGNAL(triggered()), this, SLOT(exitProject()));
+
 
 }
 
@@ -49,6 +55,7 @@ MainWindow::~MainWindow()
     delete uiRendering;
     delete hierarchy;
     delete currScene;
+    delete inspector;
 }
 
 void MainWindow::OnAddObject(GameObject* obj)

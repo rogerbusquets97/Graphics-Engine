@@ -34,7 +34,8 @@ SOURCES += \
     inspector.cpp \
     component.cpp \
     componentshape.cpp \
-    shapewidget.cpp
+    shapewidget.cpp \
+    componentshapewidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,7 +48,8 @@ HEADERS += \
     hierarchy_widget.h \
     inspector.h \
     ComponentShape.h \
-    shapewidget.h
+    shapewidget.h \
+    componentshapewidget.h
 
 FORMS += \
         mainwindow.ui \

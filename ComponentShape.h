@@ -4,6 +4,7 @@
 #include "component.h"
 
 #include <QWidget>
+#include <QPainter>
 
 class ComponentShape : public Component
 {
@@ -19,9 +20,12 @@ public:
     float GetRadius() const;
     float GetHeight() const;
     float GetWidth() const;
+
 private:
     QColor color;
     ShapeType shapeType;
+    QBrush brush;
+    QPen pen;
 
     // CIRCLE
     float r;

@@ -1,5 +1,7 @@
 #include "scene.h"
 #include <iostream>
+#include "mainwindow.h"
+#include "inspector.h"
 
 Scene::Scene(QObject *parent) : QObject(parent)
 {
@@ -69,6 +71,7 @@ void Scene::SetSelectedObject(int i)
     if(!sceneObjects.empty())
     {
         selectedOject = sceneObjects.at(i);
+        w->inspector->SetObject(selectedOject);
     }
 }
 

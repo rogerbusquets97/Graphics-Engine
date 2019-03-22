@@ -5,6 +5,7 @@
 
 #include <QWidget>
 #include "gameobject.h"
+#include "componentshapewidget.h"
 
 class Inspector : public QWidget
 {
@@ -17,6 +18,7 @@ public:
 private:
     void UpdateContent();
     GameObject* selected;
+    ComponentShapeWidget* shappowidgetto;
 signals:
 
 public slots:

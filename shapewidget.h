@@ -9,10 +9,11 @@ class ShapeWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ShapeWidget();
     explicit ShapeWidget(QWidget *parent = nullptr);
     void SetComponentShape(ComponentShape* comp_shape);
 
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 private:
     void paintEvent(QPaintEvent *event) override;
 
