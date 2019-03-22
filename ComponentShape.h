@@ -12,7 +12,7 @@ public:
         CIRCLE = 0, RECTANGLE, UNKNOWN
     };
 
-    ComponentShape();
+    ComponentShape(GameObject* p, ComponentType t);
     void SetColor(QColor color);
     void SetRect(QRect rect);
     void ChangeType(ComponentShape::Shape newType);
