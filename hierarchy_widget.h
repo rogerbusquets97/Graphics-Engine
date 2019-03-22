@@ -16,9 +16,10 @@ class Hierarchy_Widget : public QWidget
     Q_OBJECT
 
 public:
+    void AddGameObject(GameObject* go);
     explicit Hierarchy_Widget(QWidget *parent = 0);
     ~Hierarchy_Widget();
-
+    void ClearHierarchy();
 private:
     Ui::Hierarchy_Widget *ui;
     GameObject* selected;
@@ -26,6 +27,7 @@ private:
 
 public slots:
     void OnAddGameObject();
+
     void OnDeleteGameObject();
     void OnObjectSelected(QListWidgetItem* obj);
 };

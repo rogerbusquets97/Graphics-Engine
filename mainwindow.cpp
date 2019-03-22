@@ -65,10 +65,8 @@ void MainWindow::openProject()
 {
     std::cout<< "Load Project" << std::endl;
 
-    QString fileName = QFileDialog::getOpenFileName(this, "Open Project", "", tr("Scene Name (*.txt);; All Files (*)"));
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Project", "", tr(""));
     QSettings settings(fileName, QSettings::IniFormat);
-
-
 
     int size = settings.beginReadArray("Game Objects");
 
@@ -83,6 +81,7 @@ void MainWindow::openProject()
           settings.setArrayIndex(i);
           GameObject* go = new GameObject(nullptr, settings.value("name").toString());
           currScene->OnAddObject(go);
+          hierarchy->AddGameObject(go);
         }
         settings.endArray();
 
@@ -141,6 +140,6 @@ Scene* MainWindow::GetCurrScene()const
 
 void MainWindow::DeleteMainWindowScene()
 {
-    hierarchy->list.clear();
+    hierarchy->ClearHierarchy();
     currScene->ClearScene();
 }

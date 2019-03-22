@@ -25,6 +25,16 @@ Hierarchy_Widget::~Hierarchy_Widget()
     delete ui;
 }
 
+void Hierarchy_Widget::AddGameObject(GameObject* go)
+{
+    if (go == nullptr)
+    {
+        std::cout<< "Game Object was nullptr! at Hierarchy_Widget::AddGameObject()" << std::endl;
+        return;
+    }
+     list->addItem(go->GetName());
+}
+
 void Hierarchy_Widget::OnAddGameObject()
 {
     QString name = QString("GameObject %1").arg(w->GetCurrScene()->GetSceneGoCount() +1);
@@ -50,4 +60,9 @@ void Hierarchy_Widget::OnDeleteGameObject()
 void Hierarchy_Widget::OnObjectSelected(QListWidgetItem* obj)
 {
     w->GetCurrScene()->SetSelectedObject(list->currentRow());
+}
+
+void Hierarchy_Widget::ClearHierarchy()
+{
+    list->clear();
 }
