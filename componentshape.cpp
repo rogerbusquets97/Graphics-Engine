@@ -1,6 +1,8 @@
 #include "ComponentShape.h"
-ComponentShape::ComponentShape()
+ComponentShape::ComponentShape(GameObject* p, ComponentType t)
 {
+    this->parent = p;
+    this->type = t;
 }
 
 void ComponentShape::SetColor(QColor color)

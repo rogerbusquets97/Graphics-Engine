@@ -16,7 +16,7 @@ public:
     ComponentType GetType()const{return type;}
     GameObject* GetParent()const{return parent;}
 
-private:
+protected:
 
     ComponentType type;
     GameObject* parent;
