@@ -1,8 +1,6 @@
 #include "ComponentShape.h"
-ComponentShape::ComponentShape(GameObject* p, ComponentType t)
+ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
-    this->parent = p;
-    this->type = t;
 }
 
 void ComponentShape::SetColor(QColor color)
@@ -17,18 +15,31 @@ void ComponentShape::ChangeType(ShapeType newType)
     switch((int)type)
     {
     case (int)CIRCLE:
-        r = 0.5;
+        r = 0.5f;
         break;
     case (int)RECTANGLE:
-        w = 0.7;
-        h = 0.4;
+        w = 0.7f;
+        h = 0.4f;
         break;
     }
 
-    type = newType;
+    shapeType = newType;
 }
 
-ComponentShape::ShapeType ComponentShape::GetShape() const
+ComponentShape::ShapeType ComponentShape::GetShapeType() const
 {
-    return type;
+    return shapeType;
+}
+
+float ComponentShape::GetRadius() const
+{
+    return r;
+}
+float ComponentShape::GetHeight() const
+{
+    return h;
+}
+float ComponentShape::GetWidth() const
+{
+    return w;
 }

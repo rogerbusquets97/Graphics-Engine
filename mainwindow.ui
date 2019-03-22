@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="circlewidget" name="openGLWidget_2"/>
+     <widget class="QOpenGLWidget" name="openGLWidget_2"/>
     </item>
     <item row="1" column="0">
      <widget class="myopenglwidget" name="openGLWidget"/>
@@ -26,8 +26,6 @@
   <widget class="QDockWidget" name="HierachyDock">
    <property name="minimumSize">
     <size>
-     <width>100</width>
-     <height>15</height>
      <width>150</width>
      <height>38</height>
     </size>
@@ -139,11 +137,6 @@
    <class>myopenglwidget</class>
    <extends>QOpenGLWidget</extends>
    <header>myopenglwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>circlewidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>circlewidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

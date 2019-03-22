@@ -10,7 +10,7 @@ class GameObject;
 class Component
 {
 public:
-    Component(GameObject* p, ComponentType t);
+    Component(GameObject* p, ComponentType t) : parent(p),type(t){}
     virtual ~Component();
 
     ComponentType GetType()const{return type;}

@@ -15,13 +15,13 @@ public:
     ComponentShape(GameObject* p, ComponentType t);
     void SetColor(QColor color);
     void ChangeType(ComponentShape::ShapeType newType);
-    ShapeType GetShape() const;
-    float GetRadius() const {return r};
-    float GetHeight() const {return h};
-    float GetWidth() const {return w};
+    ShapeType GetShapeType() const;
+    float GetRadius() const;
+    float GetHeight() const;
+    float GetWidth() const;
 private:
     QColor color;
-    Shape type;
+    ShapeType shapeType;
 
     // CIRCLE
     float r;

@@ -37,7 +37,7 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
     pen.setStyle(Qt::PenStyle::DashLine);
     painter.setPen(pen);
 
-    switch (shape->ComponentShape())
+    switch (shape->GetShapeType())
     {
     case ComponentShape::CIRCLE:
         int r = shape->GetRadius();
