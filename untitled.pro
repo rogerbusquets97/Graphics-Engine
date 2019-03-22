@@ -32,7 +32,9 @@ SOURCES += \
     scene.cpp \
     hierarchy_widget.cpp \
     inspector.cpp \
-    component.cpp
+    component.cpp \
+    componentshape.cpp \
+    shapewidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +45,9 @@ HEADERS += \
     gameobjectwidget.h \
     scene.h \
     hierarchy_widget.h \
-    inspector.h
+    inspector.h \
+    ComponentShape.h \
+    shapewidget.h
 
 FORMS += \
         mainwindow.ui \

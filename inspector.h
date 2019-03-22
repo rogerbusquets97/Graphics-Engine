@@ -1,6 +1,8 @@
 #ifndef INSPECTOR_H
 #define INSPECTOR_H
 
+#include "component.h"
+
 #include <QWidget>
 
 class Inspector : public QWidget

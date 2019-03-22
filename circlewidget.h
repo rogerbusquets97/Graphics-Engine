@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QPainter>
 
 class circlewidget : public QWidget
 {
