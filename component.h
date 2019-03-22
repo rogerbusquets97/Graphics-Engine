@@ -2,18 +2,25 @@
 #define COMPONENT_H
 
 #include <QObject>
+#include "gameobject.h"
 
 enum ComponentType {Shape}; //De moment nomes tenim aquest
+class GameObject;
 
 class Component
 {
 public:
-    Component();
+    Component(GameObject* p, ComponentType t);
     virtual ~Component();
-    ComponentType type;
 
-    void inline SetType(ComponentType t){type = t;}
-    ComponentType inline GetType()const{return type;}
+    ComponentType GetType()const{return type;}
+    GameObject* GetParent()const{return parent;}
+
+private:
+
+    ComponentType type;
+    GameObject* parent;
+
 };
 
 #endif // COMPONENT_H
