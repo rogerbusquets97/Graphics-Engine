@@ -69,7 +69,8 @@ void MainWindow::OnAddObject(GameObject* obj)
     if (obj != nullptr)
     {
         currScene->OnAddObject(obj);
-        shape_widget->AddComponentShape(obj->GetComponentShape());
+        ComponentShape* tmp_cmp_shape = (ComponentShape*)obj->GetComponent(Shape);
+        shape_widget->AddComponentShape(tmp_cmp_shape);
         shape_widget->update();
     }
 }

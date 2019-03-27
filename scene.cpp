@@ -18,8 +18,8 @@ Scene::~Scene()
 
 void Scene::OnAddObject(GameObject* obj)
 {
+    if (obj != nullptr)
     sceneObjects.push_back(obj);
-    std::cout << obj->GetName().toStdString() << std::endl;
 }
 
 void Scene::OnDeleteSelectedObject()

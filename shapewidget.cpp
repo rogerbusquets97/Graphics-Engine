@@ -28,7 +28,7 @@ QSize ShapeWidget::minimumSizeHint() const {
 void ShapeWidget::paintEvent(QPaintEvent *event)
 {
    // if (shape == nullptr) return;
-   std::cout << "called paintevent" << std::endl;
+   std::cout << "called paintevent" << compShapes.size()  << std::endl;
    QPainter painter(this);
 
     QColor blueColor = QColor::fromRgb(127,190,220);
@@ -51,23 +51,6 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
     pen.setStyle(Qt::PenStyle::DashLine);
     painter.setPen(pen);
 
-   /* switch (shape->GetShapeType())
-    {
-    case ComponentShape::CIRCLE:
-        int r = shape->GetRadius();
-        int w = r*2, h = r*2;
-        int x = rect().width() / 2 - r;
-        int y = rect().height() / 2 - r;
-        QRect circleRect(x,y,w,h);
-        painter.drawEllipse(circleRect);
-        break;
-    }
-    /*int r= 24;
-    int w =r*2, h=r*2;
-    int x = rect().width() / 2 - r;
-    int y = rect().height() / 2-r;
-    QRect circleRect(x,y,w,h);
-    painter.drawEllipse(circleRect);*/
     for(int i = 0; i < compShapes.size(); ++i)
     {
         std::cout << "I see sumn" << std::endl;

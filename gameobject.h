@@ -5,6 +5,12 @@
 #include <QList>
 #include <QString>
 
+enum ComponentType
+{
+ Shape,
+ Component_Unknow
+};
+
 class Component;
 class ComponentShape;
 class GameObject : public QObject
@@ -18,7 +24,7 @@ public:
 public:
     QString name;
     QList<Component*> components;
-    ComponentShape* GetComponentShape();
+    Component* GetComponent(ComponentType t);
 signals:
 
 public slots:
