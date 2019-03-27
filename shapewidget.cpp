@@ -1,16 +1,20 @@
 #include "shapewidget.h"
-
-
+#include "mainwindow.h"
+#include <iostream>
 #include <QPainter>
 
 ShapeWidget::ShapeWidget(QWidget *parent) : QWidget(parent)
 {
-    setAutoFillBackground((true));
+    setAutoFillBackground(true);
 }
 
-void ShapeWidget::SetComponentShape(ComponentShape* comp_shape)
+void ShapeWidget::AddComponentShape(ComponentShape* compShape)
 {
-    shape = comp_shape;
+    if(compShape!= nullptr)
+    {
+        compShapes.push_back(compShape);
+        std::cout << "Rendering shape of object: " << compShape->GetParent()->GetName().toStdString() << std::endl;
+    }
 }
 
 QSize ShapeWidget::sizeHint() const
@@ -21,16 +25,15 @@ QSize ShapeWidget::minimumSizeHint() const {
     return QSize(64,64);
 }
 
-
 void ShapeWidget::paintEvent(QPaintEvent *event)
 {
    // if (shape == nullptr) return;
-
+   std::cout << "called paintevent" << compShapes.size()  << std::endl;
    QPainter painter(this);
 
-    QColor blueColor = QColor::fromRgb((127,190,220));
-    QColor whiteColor = QColor::fromRgb((255,255,255));
-    QColor blackColor = QColor::fromRgb((0,0,0));
+    QColor blueColor = QColor::fromRgb(127,190,220);
+    QColor whiteColor = QColor::fromRgb(255,255,255);
+    QColor blackColor = QColor::fromRgb(0,0,0);
     QBrush brush;
     QPen pen;
 
@@ -48,36 +51,39 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
     pen.setStyle(Qt::PenStyle::DashLine);
     painter.setPen(pen);
 
-   /* switch (shape->GetShapeType())
+    for(int i = 0; i < compShapes.size(); ++i)
     {
-    case ComponentShape::CIRCLE:
-        int r = shape->GetRadius();
-        int w = r*2, h = r*2;
-        int x = rect().width() / 2 - r;
-        int y = rect().height() / 2 - r;
-        QRect circleRect(x,y,w,h);
-        painter.drawEllipse(circleRect);
-        break;
+        std::cout << "I see sumn" << std::endl;
+        switch (compShapes[i]->GetShapeType())
+        {
+            case ShapeType::CIRCLE:
+            {
+                std::cout << "It's a CIRLCE" << std::endl;
+                int r= 24;
+                int w =r*2, h=r*2;
+                int x = rect().width() / 2 - r;
+                int y = rect().height() / 2-r;
+                QRect circleRect(x,y,w,h);
+                painter.drawEllipse(circleRect);
+                break;
+            }
+            case ShapeType::RECTANGLE:
+        {
+               std::cout << "It's a RECTANGLE" << std::endl;
+            int w2 = 20;
+            int h2 = 10;
+            int x2 = 0;
+            int y2 = 0;
+            QRect rectRect(x2,y2,w2,h2);
+            painter.drawRect(rectRect);
+            break;
+        }
+            default:
+            {
+                std::cout << "It's the OA" << std::endl;
+                break;
+            }
+        }
     }
-    /*int r= 24;
-    int w =r*2, h=r*2;
-    int x = rect().width() / 2 - r;
-    int y = rect().height() / 2-r;
-    QRect circleRect(x,y,w,h);
-    painter.drawEllipse(circleRect);*/
-
-    int r= 24;
-    int w =r*2, h=r*2;
-    int x = rect().width() / 2 - r;
-    int y = rect().height() / 2-r;
-    QRect circleRect(x,y,w,h);
-    painter.drawEllipse(circleRect);
-
-
-    int r2= 45;
-    int w2 =r2*2, h2=r*2;
-    int x2 = rect().width() / 2 - r2;
-    int y2 = rect().height() / 2-r2;
-    QRect circleRect2(x2,y2,w2,h2);
-    painter.drawEllipse(circleRect2);
+    painter.end();
 }

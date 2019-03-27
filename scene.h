@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include <QObject>
-#include <QList>>
+#include <QList>
 #include <QString>
 #include "gameobject.h"
 
@@ -14,7 +14,7 @@ public:
    GameObject* GetObject(QString name);
    int GetSceneGoCount()const;
    void SetSelectedObject(QString n);
-   void SetSelectedObject(int i);
+   void SetSelectedObjectByInt(int i);
    virtual ~Scene();
 
 private:

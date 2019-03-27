@@ -15,6 +15,7 @@ class Hierarchy_Widget;
 class Scene;
 class GameObject;
 class Inspector;
+class ShapeWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -26,12 +27,13 @@ public:
     void OnAddObject(GameObject* obj);
     Scene* GetCurrScene()const;
 
-   Inspector* inspector;
-
+    Inspector* inspector;
+    ShapeWidget* shape_widget;
 private:
     Ui::MainWindow *uiMainWindow;
     Ui::Rendering *uiRendering;
     Hierarchy_Widget* hierarchy;
+
 
     Scene* currScene;
     QString m_sSettingsFile;

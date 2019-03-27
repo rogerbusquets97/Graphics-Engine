@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     QCoreApplication::setApplicationName("Antimonored Engine");
 
+    uiMainWindow->setupUi(this);
+
     currScene = new Scene();
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
-
-    uiMainWindow->setupUi(this);
 
     QWidget *renderingWidget = new QWidget();
     uiRendering->setupUi(renderingWidget);
@@ -38,6 +38,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     inspector = new Inspector();
     uiMainWindow->InspectorDock->setWidget(inspector);
+
+    shape_widget = new ShapeWidget();
+    uiMainWindow->RenderingDock->setWidget(shape_widget);
+    uiMainWindow->RenderingDock->setFloating(false);
+    shape_widget->show();
 
     tabifyDockWidget(uiMainWindow->RenderingDock, uiMainWindow->InspectorDock);
 
@@ -56,11 +61,18 @@ MainWindow::~MainWindow()
     delete hierarchy;
     delete currScene;
     delete inspector;
+    delete shape_widget;
 }
 
 void MainWindow::OnAddObject(GameObject* obj)
 {
-    currScene->OnAddObject(obj);
+    if (obj != nullptr)
+    {
+        currScene->OnAddObject(obj);
+        ComponentShape* tmp_cmp_shape = (ComponentShape*)obj->GetComponent(Shape);
+        shape_widget->AddComponentShape(tmp_cmp_shape);
+        shape_widget->update();
+    }
 }
 
 void MainWindow::openProject()
@@ -78,7 +90,7 @@ void MainWindow::openProject()
 
         uint objcount = 0;
 
-        for(uint i = 0; i < size; ++i, ++objcount)
+        for(int i = 0; i < size; ++i, ++objcount)
         {
           settings.setArrayIndex(i);
           GameObject* go = new GameObject(nullptr, settings.value("name").toString());
@@ -107,7 +119,7 @@ void MainWindow::saveProject()
 
     settings.beginWriteArray("Game Objects", currScene->GetGameObjects().size());
 
-    for(uint i = 0; i < currScene->GetGameObjects().size(); ++i, ++objcount)
+    for(int i = 0; i < currScene->GetGameObjects().size(); ++i, ++objcount)
     {
         settings.setArrayIndex(i);
         settings.setValue(QString("name"), currScene->GetGameObjects()[i]->GetName());

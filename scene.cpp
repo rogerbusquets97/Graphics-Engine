@@ -18,8 +18,8 @@ Scene::~Scene()
 
 void Scene::OnAddObject(GameObject* obj)
 {
+    if (obj != nullptr)
     sceneObjects.push_back(obj);
-    std::cout << obj->GetName().toStdString() << std::endl;
 }
 
 void Scene::OnDeleteSelectedObject()
@@ -66,7 +66,7 @@ void Scene::SetSelectedObject(QString n)
 
 }
 
-void Scene::SetSelectedObject(int i)
+void Scene::SetSelectedObjectByInt(int i)
 {
     if(!sceneObjects.empty())
     {
@@ -84,7 +84,7 @@ void Scene::ClearScene()
 {
      selectedOject = nullptr;
 
-     for(uint i = 0; i < sceneObjects.size(); ++i)
+     for(int i = 0; i < sceneObjects.size(); ++i)
         delete sceneObjects[i];
 
      sceneObjects.clear();

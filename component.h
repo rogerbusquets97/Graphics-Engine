@@ -4,12 +4,16 @@
 #include <QObject>
 #include "gameobject.h"
 
-enum ComponentType {Shape}; //De moment nomes tenim aquest
+ //De moment nomes tenim aquest
 class GameObject;
+
+
 
 class Component
 {
 public:
+
+
     Component(GameObject* p, ComponentType t) : parent(p),type(t){}
     virtual ~Component();
 

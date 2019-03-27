@@ -15,3 +15,13 @@ void GameObject::OnDeleteComponent(Component* c)
 {
     components.removeOne(c);
 }
+
+Component* GameObject::GetComponent(ComponentType t)
+{
+    Component* ret = nullptr;
+
+    for(int i = 0; i < components.size(); ++i)
+        if(components[i]->GetType() == t)
+                ret = components[i];
+    return ret;
+}

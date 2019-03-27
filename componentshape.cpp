@@ -1,32 +1,31 @@
 #include "ComponentShape.h"
 ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
-}
-
-void ComponentShape::SetColor(QColor color)
-{
-    this->color = color;
+    shapeType = CIRCLE;
+    colorType = WHITE;
 }
 
 void ComponentShape::ChangeType(ShapeType newType)
 {
-    if (type == newType) return;
+    if (shapeType == newType) return;
 
-    switch((int)type)
+    switch(shapeType)
     {
-    case (int)CIRCLE:
+    case CIRCLE:
         r = 0.5f;
         break;
-    case (int)RECTANGLE:
+    case RECTANGLE:
         w = 0.7f;
         h = 0.4f;
+        break;
+    default:
         break;
     }
 
     shapeType = newType;
 }
 
-ComponentShape::ShapeType ComponentShape::GetShapeType() const
+ShapeType ComponentShape::GetShapeType() const
 {
     return shapeType;
 }
