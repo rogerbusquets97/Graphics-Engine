@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     shape_widget = new ShapeWidget();
     uiMainWindow->RenderingDock->setWidget(shape_widget);
     uiMainWindow->RenderingDock->setFloating(false);
+    shape_widget->show();
 
     tabifyDockWidget(uiMainWindow->RenderingDock, uiMainWindow->InspectorDock);
 
@@ -69,7 +70,7 @@ void MainWindow::OnAddObject(GameObject* obj)
     {
         currScene->OnAddObject(obj);
         shape_widget->AddComponentShape(obj->GetComponentShape());
-        shape_widget->repaint();
+        shape_widget->update();
     }
 }
 

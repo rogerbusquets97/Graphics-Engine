@@ -14,7 +14,6 @@ void ShapeWidget::AddComponentShape(ComponentShape* compShape)
     {
         compShapes.push_back(compShape);
         std::cout << "Rendering shape of object: " << compShape->GetParent()->GetName().toStdString() << std::endl;
-        w->shape_widget->render(this);
     }
 }
 
