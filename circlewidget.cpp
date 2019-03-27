@@ -17,9 +17,9 @@ QSize circlewidget::minimumSizeHint() const {
 
 void circlewidget::paintEvent(QPaintEvent *event)
 {
-    QColor blueColor = QColor::fromRgb((127,190,220));
-    QColor whiteColor = QColor::fromRgb((255,255,255));
-    QColor blackColor = QColor::fromRgb((0,0,0));
+    QColor blueColor = QColor::fromRgb(127,190,220);
+    QColor whiteColor = QColor::fromRgb(255,255,255);
+    QColor blackColor = QColor::fromRgb(0,0,0);
 
     QPainter painter(this);
 

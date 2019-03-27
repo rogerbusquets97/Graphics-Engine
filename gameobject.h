@@ -6,6 +6,7 @@
 #include <QString>
 
 class Component;
+class ComponentShape;
 class GameObject : public QObject
 {
     Q_OBJECT
@@ -13,9 +14,11 @@ public:
     GameObject(QObject *parent = nullptr, QString n = "GameObject");
     inline void SetName(const QString n){ name = n; }
     inline QString GetName() const { return name; }
+
 public:
     QString name;
     QList<Component*> components;
+    ComponentShape* GetComponentShape();
 signals:
 
 public slots:

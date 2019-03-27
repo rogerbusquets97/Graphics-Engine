@@ -39,6 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
     inspector = new Inspector();
     uiMainWindow->InspectorDock->setWidget(inspector);
 
+    shape_widget = new ShapeWidget();
+    uiMainWindow->RenderingDock->setWidget(shape_widget);
+    uiMainWindow->RenderingDock->setFloating(false);
+
     tabifyDockWidget(uiMainWindow->RenderingDock, uiMainWindow->InspectorDock);
 
     // Connect Actions' triggered() signals to some slots
@@ -56,11 +60,16 @@ MainWindow::~MainWindow()
     delete hierarchy;
     delete currScene;
     delete inspector;
+    delete shape_widget;
 }
 
 void MainWindow::OnAddObject(GameObject* obj)
 {
-    currScene->OnAddObject(obj);
+    if (obj != nullptr)
+    {
+        currScene->OnAddObject(obj);
+        shape_widget->AddComponentShape(obj->GetComponentShape());
+    }
 }
 
 void MainWindow::openProject()

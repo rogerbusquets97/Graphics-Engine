@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QList>
 #include "ComponentShape.h"
 
 class ShapeWidget : public QWidget
@@ -14,11 +15,15 @@ public:
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
+
+    QList<ComponentShape*> GetShapes() { return compShapes; };
+    void AddComponentShape(ComponentShape* compShape);
+
 private:
     void paintEvent(QPaintEvent *event) override;
 
+    QList<ComponentShape*> compShapes;
 
-    ComponentShape* shape;
 signals:
 
 public slots:

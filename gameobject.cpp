@@ -15,3 +15,12 @@ void GameObject::OnDeleteComponent(Component* c)
 {
     components.removeOne(c);
 }
+
+ComponentShape* GameObject::GetComponentShape()
+{
+    for(int i = 0; i < components.size(); ++i)
+    {
+        if(components[i]->GetType() == Component::Shape)
+                return (ComponentShape*)components[i];
+    }
+}

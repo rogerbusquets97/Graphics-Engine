@@ -3,11 +3,6 @@ ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
 }
 
-void ComponentShape::SetColor(QColor color)
-{
-    this->color = color;
-}
-
 void ComponentShape::ChangeType(ShapeType newType)
 {
     if (shapeType == newType) return;

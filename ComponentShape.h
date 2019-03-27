@@ -10,7 +10,10 @@ class ComponentShape : public Component
 {
 public:
     enum ShapeType {
-        CIRCLE = 0, RECTANGLE, UNKNOWN
+        CIRCLE = 0, RECTANGLE, SHAPE_UNKNOWN
+    };
+    enum ColorType {
+        BLUE = 0, WHITE, BLACK, COLOR_UNKNOWN
     };
 
     ComponentShape(GameObject* p, ComponentType t);
@@ -22,7 +25,8 @@ public:
     float GetWidth() const;
 
 private:
-    QColor color;
+
+    ColorType color;
     ShapeType shapeType;
     QBrush brush;
     QPen pen;

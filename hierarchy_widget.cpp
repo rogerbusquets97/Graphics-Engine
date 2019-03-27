@@ -41,7 +41,7 @@ void Hierarchy_Widget::OnAddGameObject()
 {
     QString name = QString("GameObject %1").arg(w->GetCurrScene()->GetSceneGoCount() +1);
     GameObject* obj = new GameObject(nullptr, name);
-    ComponentShape* comp_shape = new ComponentShape(obj, ComponentType::Shape);
+    ComponentShape* comp_shape = new ComponentShape(obj, Component::Shape);
     obj->OnAddComponent(comp_shape);
 
     if(obj!= nullptr)

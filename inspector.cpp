@@ -41,7 +41,7 @@ void Inspector::UpdateContent()
         for(QList<Component*>::iterator it = selected->components.begin(); it!= selected->components.end(); ++it)
         {
             switch ((*it)->GetType()) {
-            case ComponentType::Shape:
+            case Component::Shape:
                 //Set visible shape component visible
                 shappowidgetto->setVisible((true));
                 break;

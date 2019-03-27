@@ -1,16 +1,17 @@
 #include "shapewidget.h"
 
-
+#include <iostream>
 #include <QPainter>
 
 ShapeWidget::ShapeWidget(QWidget *parent) : QWidget(parent)
 {
-    setAutoFillBackground((true));
+    setAutoFillBackground(true);
 }
 
-void ShapeWidget::SetComponentShape(ComponentShape* comp_shape)
+void ShapeWidget::AddComponentShape(ComponentShape* compShape)
 {
-    shape = comp_shape;
+    compShapes.push_back(compShape);
+    std::cout << "Rendering shape of object: " << compShape->GetParent()->GetName().toStdString() << std::endl;
 }
 
 QSize ShapeWidget::sizeHint() const
@@ -28,9 +29,9 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
 
    QPainter painter(this);
 
-    QColor blueColor = QColor::fromRgb((127,190,220));
-    QColor whiteColor = QColor::fromRgb((255,255,255));
-    QColor blackColor = QColor::fromRgb((0,0,0));
+    QColor blueColor = QColor::fromRgb(127,190,220);
+    QColor whiteColor = QColor::fromRgb(255,255,255);
+    QColor blackColor = QColor::fromRgb(0,0,0);
     QBrush brush;
     QPen pen;
 
