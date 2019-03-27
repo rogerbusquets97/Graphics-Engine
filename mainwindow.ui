@@ -14,29 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="ShapeWidget" name="openGLWidget_2"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="myopenglwidget" name="openGLWidget"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QDockWidget" name="HierachyDock">
-   <property name="minimumSize">
-    <size>
-     <width>150</width>
-     <height>38</height>
-    </size>
-   </property>
-   <property name="windowTitle">
-    <string>Hyerachy</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_5"/>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
   <widget class="QDockWidget" name="ProjectDock">
    <property name="minimumSize">
@@ -52,30 +30,6 @@
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_6"/>
-  </widget>
-  <widget class="QDockWidget" name="InspectorDock">
-   <property name="minimumSize">
-    <size>
-     <width>150</width>
-     <height>38</height>
-    </size>
-   </property>
-   <property name="windowTitle">
-    <string>Inspector</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4"/>
-  </widget>
-  <widget class="QDockWidget" name="RenderingDock">
-   <property name="windowTitle">
-    <string>Rendering</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_7"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -111,6 +65,33 @@
    <addaction name="actionSave_Project"/>
    <addaction name="actionExit"/>
   </widget>
+  <widget class="QDockWidget" name="HierarchyDock">
+   <property name="windowTitle">
+    <string>Hierarchy</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_12"/>
+  </widget>
+  <widget class="QDockWidget" name="RenderingDock_2">
+   <property name="windowTitle">
+    <string>Rendering</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_14"/>
+  </widget>
+  <widget class="QDockWidget" name="InspectorDock_2">
+   <property name="windowTitle">
+    <string>Inspector</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_15"/>
+  </widget>
   <action name="actionOpen_Project">
    <property name="text">
     <string>Open Project</string>
@@ -130,20 +111,14 @@
   <zorder>ProjectDock</zorder>
   <zorder>InspectorDock</zorder>
   <zorder>RenderingDock</zorder>
+  <zorder>dockWidget</zorder>
+  <zorder>dockWidget_2</zorder>
+  <zorder>HierarchyDock</zorder>
+  <zorder>dockWidget_4</zorder>
+  <zorder>RenderingDock_2</zorder>
+  <zorder>InspectorDock_2</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>myopenglwidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>myopenglwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ShapeWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>shapewidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

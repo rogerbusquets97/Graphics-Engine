@@ -25,26 +25,19 @@ MainWindow::MainWindow(QWidget *parent) :
     currScene = new Scene();
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 
-    QWidget *renderingWidget = new QWidget();
-    uiRendering->setupUi(renderingWidget);
-    renderingWidget->show();
-
-    uiMainWindow->RenderingDock->setWidget(renderingWidget);
-
-    uiMainWindow->RenderingDock->setFloating(false);
-
-    hierarchy = new Hierarchy_Widget();
-    uiMainWindow->HierachyDock->setWidget(hierarchy);
-
-    inspector = new Inspector();
-    uiMainWindow->InspectorDock->setWidget(inspector);
-
-    shape_widget = new ShapeWidget();
-    uiMainWindow->RenderingDock->setWidget(shape_widget);
-    uiMainWindow->RenderingDock->setFloating(false);
+     shape_widget = new ShapeWidget();
+    uiRendering->setupUi(shape_widget);
     shape_widget->show();
 
-    tabifyDockWidget(uiMainWindow->RenderingDock, uiMainWindow->InspectorDock);
+    uiMainWindow->RenderingDock_2->setWidget(shape_widget);
+
+    uiMainWindow->RenderingDock_2->setFloating(false);
+
+    hierarchy = new Hierarchy_Widget();
+    uiMainWindow->HierarchyDock->setWidget(hierarchy);
+
+    inspector = new Inspector();
+    uiMainWindow->InspectorDock_2->setWidget(inspector);
 
     // Connect Actions' triggered() signals to some slots
     connect(uiMainWindow->actionOpen_Project, SIGNAL(triggered()), this, SLOT(openProject()));
