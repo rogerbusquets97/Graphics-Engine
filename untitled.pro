@@ -35,7 +35,9 @@ SOURCES += \
     component.cpp \
     componentshape.cpp \
     shapewidget.cpp \
-    componentshapewidget.cpp
+    componentshapewidget.cpp \
+    shapecomponentwidget.cpp \
+    transformcomponentwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -49,12 +51,16 @@ HEADERS += \
     inspector.h \
     ComponentShape.h \
     shapewidget.h \
-    componentshapewidget.h
+    componentshapewidget.h \
+    shapecomponentwidget.h \
+    transformcomponentwidget.h
 
 FORMS += \
         mainwindow.ui \
     rendering.ui \
-    hierarchy_widget.ui
+    hierarchy_widget.ui \
+    shapecomponentwidget.ui \
+    transformcomponentwidget.ui
 QT      += opengl
 
 CONFIG += console

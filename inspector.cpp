@@ -1,25 +1,36 @@
 #include "inspector.h"
 #include "component.h"
 
-#include "QBoxLayout"
+#include "QVBoxLayout"
+#include "shapecomponentwidget.h"
+#include "QSpacerItem"
 
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
-    //Create subwidgets
-    shappowidgetto = new ComponentShapeWidget();
 
-    //Add them to the layout
-    QBoxLayout* votavox = new QBoxLayout(QBoxLayout::TopToBottom);
+   //Subwidgets
+   shapeCompoenentWidget = new ShapeComponentWidget();
+   shapeCompoenentWidget->setVisible(false);
 
-    votavox->addWidget(shappowidgetto);
-    setLayout(votavox);
+   QSpacerItem* spacer = new QSpacerItem(1,1,QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    shappowidgetto->setVisible((false));
+   //Add them to a vertical layout
+   QVBoxLayout* layout = new QVBoxLayout;
+   layout->addWidget(shapeCompoenentWidget);
+
+   //Spacer should be added last
+   layout->addItem(spacer);
+
+   //Set layout to use
+   setLayout(layout);
+
+
 }
 
 void Inspector::SetObject(GameObject* obj)
 {
     selected = obj;
+    UpdateContent();
 }
 
 GameObject* Inspector::GetObject()const
@@ -28,15 +39,16 @@ GameObject* Inspector::GetObject()const
 }
 void Inspector::UpdateContent()
 {
-    shappowidgetto->setVisible((false));
+    //Set all invisible before checking for available components
+    shapeCompoenentWidget->setVisible(false);
     if(selected!=nullptr)
     {
         for(QList<Component*>::iterator it = selected->components.begin(); it!= selected->components.end(); ++it)
         {
             switch ((*it)->GetType()) {
             case ComponentType::Shape:
-                //Set visible shape component visible
-                shappowidgetto->setVisible((true));
+                //Set visible shape component
+                shapeCompoenentWidget->setVisible(true);
                 break;
             default:
                 break;
