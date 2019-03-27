@@ -27,13 +27,13 @@ public:
     void OnAddObject(GameObject* obj);
     Scene* GetCurrScene()const;
 
-   Inspector* inspector;
-
+    Inspector* inspector;
+    ShapeWidget* shape_widget;
 private:
     Ui::MainWindow *uiMainWindow;
     Ui::Rendering *uiRendering;
     Hierarchy_Widget* hierarchy;
-    ShapeWidget* shape_widget;
+
 
     Scene* currScene;
     QString m_sSettingsFile;

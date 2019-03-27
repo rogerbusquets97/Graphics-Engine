@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     QCoreApplication::setApplicationName("Antimonored Engine");
 
+    uiMainWindow->setupUi(this);
+
     currScene = new Scene();
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
-
-    uiMainWindow->setupUi(this);
 
     QWidget *renderingWidget = new QWidget();
     uiRendering->setupUi(renderingWidget);
@@ -69,6 +69,7 @@ void MainWindow::OnAddObject(GameObject* obj)
     {
         currScene->OnAddObject(obj);
         shape_widget->AddComponentShape(obj->GetComponentShape());
+        shape_widget->repaint();
     }
 }
 

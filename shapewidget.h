@@ -23,7 +23,6 @@ private:
     void paintEvent(QPaintEvent *event) override;
 
     QList<ComponentShape*> compShapes;
-
 signals:
 
 public slots:

@@ -1,6 +1,8 @@
 #include "ComponentShape.h"
 ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
+    shapeType = CIRCLE;
+    colorType = WHITE;
 }
 
 void ComponentShape::ChangeType(ShapeType newType)
@@ -23,7 +25,7 @@ void ComponentShape::ChangeType(ShapeType newType)
     shapeType = newType;
 }
 
-ComponentShape::ShapeType ComponentShape::GetShapeType() const
+ShapeType ComponentShape::GetShapeType() const
 {
     return shapeType;
 }
