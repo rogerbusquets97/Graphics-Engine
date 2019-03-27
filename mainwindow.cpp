@@ -78,7 +78,7 @@ void MainWindow::openProject()
 
         uint objcount = 0;
 
-        for(uint i = 0; i < size; ++i, ++objcount)
+        for(int i = 0; i < size; ++i, ++objcount)
         {
           settings.setArrayIndex(i);
           GameObject* go = new GameObject(nullptr, settings.value("name").toString());
@@ -107,7 +107,7 @@ void MainWindow::saveProject()
 
     settings.beginWriteArray("Game Objects", currScene->GetGameObjects().size());
 
-    for(uint i = 0; i < currScene->GetGameObjects().size(); ++i, ++objcount)
+    for(int i = 0; i < currScene->GetGameObjects().size(); ++i, ++objcount)
     {
         settings.setArrayIndex(i);
         settings.setValue(QString("name"), currScene->GetGameObjects()[i]->GetName());

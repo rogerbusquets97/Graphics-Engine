@@ -58,13 +58,13 @@ void Hierarchy_Widget::OnDeleteGameObject()
     {
         w->GetCurrScene()->OnDeleteSelectedObject();
         list->takeItem(list->currentRow());
-        w->GetCurrScene()->SetSelectedObject(list->currentRow());
+        w->GetCurrScene()->SetSelectedObjectByInt(list->currentRow());
     }
 }
 
 void Hierarchy_Widget::OnObjectSelected(QListWidgetItem* obj)
 {
-    w->GetCurrScene()->SetSelectedObject(list->currentRow());
+    w->GetCurrScene()->SetSelectedObjectByInt(list->currentRow());
 
 }
 

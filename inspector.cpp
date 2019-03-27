@@ -19,7 +19,14 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
 void Inspector::SetObject(GameObject* obj)
 {
-    selected = obj;
+    if (obj != nullptr)
+    {
+        selected = obj;
+        UpdateContent();
+    }
+    else {
+          shappowidgetto->setVisible(false);
+    }
 }
 
 GameObject* Inspector::GetObject()const
@@ -28,7 +35,7 @@ GameObject* Inspector::GetObject()const
 }
 void Inspector::UpdateContent()
 {
-    shappowidgetto->setVisible((false));
+
     if(selected!=nullptr)
     {
         for(QList<Component*>::iterator it = selected->components.begin(); it!= selected->components.end(); ++it)

@@ -12,6 +12,7 @@ public:
     explicit ComponentShapeWidget(QWidget *parent = nullptr);
     virtual ~ComponentShapeWidget();
     QComboBox* combobox;
+    QComboBox* colorbox;
 signals:
 
 public slots:

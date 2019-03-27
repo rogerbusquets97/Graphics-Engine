@@ -66,7 +66,7 @@ void Scene::SetSelectedObject(QString n)
 
 }
 
-void Scene::SetSelectedObject(int i)
+void Scene::SetSelectedObjectByInt(int i)
 {
     if(!sceneObjects.empty())
     {
@@ -79,7 +79,7 @@ void Scene::ClearScene()
 {
      selectedOject = nullptr;
 
-     for(uint i = 0; i < sceneObjects.size(); ++i)
+     for(int i = 0; i < sceneObjects.size(); ++i)
         delete sceneObjects[i];
 
      sceneObjects.clear();
