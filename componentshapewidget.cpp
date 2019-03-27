@@ -5,9 +5,9 @@
 ComponentShapeWidget::ComponentShapeWidget(QWidget *parent) : QWidget(parent)
 {
     colorbox = new QComboBox();
-    combobox->addItem(QString("Blue"));
-    combobox->addItem(QString("White"));
-    combobox->addItem(QString("Black"));
+    colorbox->addItem(QString("Blue"));
+    colorbox->addItem(QString("White"));
+    colorbox->addItem(QString("Black"));
 
     combobox = new QComboBox();
     combobox->addItem(QString("Circle"));
