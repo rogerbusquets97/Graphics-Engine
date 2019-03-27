@@ -4,11 +4,15 @@
 #include "QVBoxLayout"
 #include "shapecomponentwidget.h"
 #include "QSpacerItem"
+#include "transformcomponentwidget.h"
 
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
 
    //Subwidgets
+   transformComponentWidget = new TransformComponentWidget();
+   transformComponentWidget->setVisible(false);
+
    shapeCompoenentWidget = new ShapeComponentWidget();
    shapeCompoenentWidget->setVisible(false);
 
@@ -16,7 +20,9 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
    //Add them to a vertical layout
    QVBoxLayout* layout = new QVBoxLayout;
+   layout->addWidget(transformComponentWidget);
    layout->addWidget(shapeCompoenentWidget);
+
 
    //Spacer should be added last
    layout->addItem(spacer);
@@ -41,8 +47,11 @@ void Inspector::UpdateContent()
 {
     //Set all invisible before checking for available components
     shapeCompoenentWidget->setVisible(false);
+     transformComponentWidget->setVisible(false);
+
     if(selected!=nullptr)
     {
+        transformComponentWidget->setVisible(true);
         for(QList<Component*>::iterator it = selected->components.begin(); it!= selected->components.end(); ++it)
         {
             switch ((*it)->GetType()) {

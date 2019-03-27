@@ -41,6 +41,7 @@ void Hierarchy_Widget::OnAddGameObject()
 {
     QString name = QString("GameObject %1").arg(w->GetCurrScene()->GetSceneGoCount() +1);
     GameObject* obj = new GameObject(nullptr, name);
+    //For Testing. The ideal would be to be able to add components to Game Objects from the editor
     ComponentShape* comp_shape = new ComponentShape(obj, ComponentType::Shape);
     obj->OnAddComponent(comp_shape);
 

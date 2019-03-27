@@ -73,6 +73,11 @@ void Scene::SetSelectedObject(int i)
         selectedOject = sceneObjects.at(i);
         w->inspector->SetObject(selectedOject);
     }
+    else
+    {
+        selectedOject = nullptr;
+        w->inspector->SetObject(nullptr);
+    }
 }
 
 void Scene::ClearScene()

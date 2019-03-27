@@ -7,6 +7,7 @@
 #include "gameobject.h"
 
 class ShapeComponentWidget;
+class TransformComponentWidget;
 
 class Inspector : public QWidget
 {
@@ -20,6 +21,8 @@ private:
     void UpdateContent();
     GameObject* selected;
     ShapeComponentWidget* shapeCompoenentWidget;
+    TransformComponentWidget* transformComponentWidget;
+
 
 signals:
 
