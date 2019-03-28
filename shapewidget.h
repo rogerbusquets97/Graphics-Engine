@@ -16,12 +16,12 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
-    QList<ComponentShape*> GetShapes() { return compShapes; };
+    QList<ComponentShape*> GetShapes() { return compShapes; }
     void AddComponentShape(ComponentShape* compShape);
 
 private:
     void paintEvent(QPaintEvent *event) override;
-
+    QColor sortColor(ColorType t);
     QList<ComponentShape*> compShapes;
 signals:
 

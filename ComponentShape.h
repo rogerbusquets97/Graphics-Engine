@@ -21,6 +21,7 @@ public:
     void SetColor(QColor color);
     void ChangeType(ShapeType newType);
     ShapeType GetShapeType() const;
+    ColorType GetColorType() const {return colorType;};
     float GetRadius() const;
     float GetHeight() const;
     float GetWidth() const;

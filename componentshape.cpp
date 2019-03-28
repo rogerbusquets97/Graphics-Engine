@@ -2,7 +2,7 @@
 ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
     shapeType = CIRCLE;
-    colorType = WHITE;
+    colorType = BLUE;
 }
 
 void ComponentShape::ChangeType(ShapeType newType)
