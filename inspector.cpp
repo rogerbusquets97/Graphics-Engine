@@ -18,7 +18,6 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
    shapeCompoenentWidget = new ShapeComponentWidget();
 
-   QSpacerItem* spacer = new QSpacerItem(1,1,QSizePolicy::Minimum, QSizePolicy::Minimum);
 
    //Add them to a vertical layout
    QVBoxLayout* layout = new QVBoxLayout;
@@ -36,8 +35,8 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
    connect(button,SIGNAL(clicked()),this,SLOT(OnAddComponent()));
    layout->addWidget(button);
    //Spacer should be added last
+   QSpacerItem* spacer = new QSpacerItem(1,0,QSizePolicy::Minimum, QSizePolicy::Minimum);
    layout->addItem(spacer);
-
    //Set layout to use
    setLayout(layout);
 

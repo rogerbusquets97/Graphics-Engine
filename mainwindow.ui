@@ -49,6 +49,18 @@
    <addaction name="actionExit"/>
   </widget>
   <widget class="QDockWidget" name="HierarchyDock">
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>300</width>
+     <height>500</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Hierarchy</string>
    </property>
@@ -58,6 +70,12 @@
    <widget class="QWidget" name="dockWidgetContents_12"/>
   </widget>
   <widget class="QDockWidget" name="RenderingDock_2">
+   <property name="minimumSize">
+    <size>
+     <width>80</width>
+     <height>500</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Rendering</string>
    </property>
@@ -75,7 +93,7 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>500</width>
+     <width>300</width>
      <height>500</height>
     </size>
    </property>
