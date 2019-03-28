@@ -5,6 +5,8 @@
 
 #include <QWidget>
 #include "gameobject.h"
+#include "QComboBox"
+#include "QPushButton"
 
 class ShapeComponentWidget;
 class TransformComponentWidget;
@@ -19,14 +21,20 @@ public:
 
 private:
     void UpdateContent();
-    GameObject* selected;
+    void SetAllInvisible();
+    GameObject* selected = nullptr;
     ShapeComponentWidget* shapeCompoenentWidget;
     TransformComponentWidget* transformComponentWidget;
+
+
+    QComboBox* comboBox;
+    QPushButton* button;
 
 
 signals:
 
 public slots:
+    void OnAddComponent();
 
 };
 
