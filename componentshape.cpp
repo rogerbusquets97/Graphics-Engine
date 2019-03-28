@@ -3,6 +3,11 @@ ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
     shapeType = CIRCLE;
     colorType = BLUE;
+    r = 25;
+    x = 0;
+    y = 0;
+    w = 100;
+    h = 100;
 }
 
 void ComponentShape::ChangeType(ShapeType newType)
@@ -12,11 +17,11 @@ void ComponentShape::ChangeType(ShapeType newType)
     switch(shapeType)
     {
     case CIRCLE:
-        r = 0.5f;
+        r = 25;
         break;
     case RECTANGLE:
-        w = 0.7f;
-        h = 0.4f;
+        w = 100;
+        h = 100;
         break;
     default:
         break;
@@ -28,17 +33,4 @@ void ComponentShape::ChangeType(ShapeType newType)
 ShapeType ComponentShape::GetShapeType() const
 {
     return shapeType;
-}
-
-float ComponentShape::GetRadius() const
-{
-    return r;
-}
-float ComponentShape::GetHeight() const
-{
-    return h;
-}
-float ComponentShape::GetWidth() const
-{
-    return w;
 }

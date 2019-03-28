@@ -44,37 +44,44 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
         {
             case ShapeType::CIRCLE:
             {
-             brush.setColor(sortColor(compShapes[i]->GetColorType()));
-             pen.setWidth(4);
-             pen.setColor(sortColor(compShapes[i]->GetColorType()));
-             pen.setStyle(Qt::PenStyle::DashLine);
-             painter.setPen(pen);
+                // CIRCLE Render properties -------
+                brush.setColor(sortColor(compShapes[i]->GetColorType()));
+                pen.setWidth(4);
+                pen.setColor(sortColor(compShapes[i]->GetColorType()));
+                pen.setStyle(Qt::PenStyle::DashLine);
+                painter.setPen(pen);
+                //---------
+                int x_circle = compShapes[i]->GetPositionX();
+                int y_circle = compShapes[i]->GetPositionY();
 
-                std::cout << "It's a CIRLCE" << std::endl;
-                int r= 24;
-                int w =r*2, h=r*2;
-                int x = rect().width() / 2 - r;
-                int y = rect().height() / 2-r;
-                QRect circleRect(x,y,w,h);
+                int r_circle = compShapes[i]->GetRadius();
+                int w_circle = r_circle *2;
+                int h_circle = r_circle *2;
+
+                QRect circleRect(x_circle,y_circle,w_circle, h_circle);
                 painter.drawEllipse(circleRect);
+
                 break;
             }
             case ShapeType::RECTANGLE:
-        {
-             brush.setColor(sortColor(compShapes[i]->GetColorType()));
-             pen.setWidth(4);
-             pen.setColor(sortColor(compShapes[i]->GetColorType()));
-             pen.setStyle(Qt::PenStyle::DashLine);
-             painter.setPen(pen);
-               std::cout << "It's a RECTANGLE" << std::endl;
-            int w2 = 20;
-            int h2 = 10;
-            int x2 = 0;
-            int y2 = 0;
-            QRect rectRect(x2,y2,w2,h2);
-            painter.drawRect(rectRect);
-            break;
-        }
+            {
+                // RECTANGLE Render properties -------
+                brush.setColor(sortColor(compShapes[i]->GetColorType()));
+                pen.setWidth(4);
+                pen.setColor(sortColor(compShapes[i]->GetColorType()));
+                pen.setStyle(Qt::PenStyle::DashLine);
+                painter.setPen(pen);
+
+                int x_rect = compShapes[i]->GetPositionX();
+                int y_rect = compShapes[i]->GetPositionY();
+
+                int w_rect = compShapes[i]->GetWidth();
+                int h_rect = compShapes[i]->GetHeight();
+
+                QRect rectRect(x_rect,y_rect,w_rect,h_rect);
+                painter.drawRect(rectRect);
+                break;
+            }
             default:
             {
                 std::cout << "It's the OA" << std::endl;
@@ -109,7 +116,7 @@ QColor ShapeWidget::sortColor(ColorType t)
         ret = blackColor;
         break;
         }
-    deafult:
+    default:
         {
         ret = whiteColor;
         break;

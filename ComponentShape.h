@@ -22,21 +22,23 @@ public:
     void ChangeType(ShapeType newType);
     ShapeType GetShapeType() const;
     ColorType GetColorType() const {return colorType;};
-    float GetRadius() const;
-    float GetHeight() const;
-    float GetWidth() const;
+    int GetRadius() const { return r; }
+    int GetHeight() const { return h; }
+    int GetWidth() const { return w ; }
+    int GetPositionX() const { return x; }
+    int GetPositionY() const { return y; }
 
 private:
 
     ColorType colorType;
     ShapeType shapeType;
-    QBrush brush;
-    QPen pen;
+    int x, y;
+
 
     // CIRCLE
-    float r;
+    int r;
     // RECTANGLE
-    float w, h;
+    int w, h;
 };
 
 
