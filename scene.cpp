@@ -2,6 +2,7 @@
 #include <iostream>
 #include "mainwindow.h"
 #include "inspector.h"
+#include "shapewidget.h"
 
 Scene::Scene(QObject *parent) : QObject(parent)
 {
@@ -27,8 +28,24 @@ void Scene::OnDeleteSelectedObject()
 {
     if(selectedOject!=nullptr)
     {
+        GameObject* toDelete = selectedOject;
+
         sceneObjects.removeOne(selectedOject);
         selectedOject = nullptr;
+
+        for (int renderer_c = 0; renderer_c < w->shape_widget->GetShapes().size(); renderer_c++)
+                w->shape_widget->GetShapes().removeOne(w->shape_widget->GetShapes()[renderer_c]);
+
+        delete toDelete->transform;
+
+        for (uint i = 0; i < toDelete->components.size(); ++i) {
+             delete toDelete->components[i];
+        }
+
+        if(toDelete!= nullptr)
+        {
+            delete toDelete;
+        }
     }
 
 }
@@ -37,6 +54,16 @@ void Scene::OnDeleteObject(QString name)
 {
     GameObject* toDelete = GetObject(name);
     sceneObjects.removeOne(toDelete);
+
+    for (int renderer_c = 0; renderer_c < w->shape_widget->GetShapes().size(); renderer_c++)
+            w->shape_widget->GetShapes().removeOne(w->shape_widget->GetShapes()[renderer_c]);
+
+    delete toDelete->transform;
+
+    for (uint i = 0; i < toDelete->components.size(); ++i) {
+         delete toDelete->components[i];
+    }
+
     if(toDelete!= nullptr)
     {
         delete toDelete;
