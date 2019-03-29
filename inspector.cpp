@@ -66,6 +66,7 @@ void Inspector::ConnectEvents()
     connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
 
     connect(shapeCompoenentWidget->ui->comboBox, SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeType(QString)));
+    connect(shapeCompoenentWidget->ui->comboBox_2,SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeColor(QString)));
     connect(shapeCompoenentWidget->ui->ShapeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->ShapeHeight,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->ShapeRadius,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
@@ -89,12 +90,27 @@ void Inspector::OnAddComponent()
     }
 }
 
+void Inspector::OnChangeShapeColor(QString color)
+{
+    if(color == "Blue")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::BLUE);
+    else if(color == "White")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::WHITE);
+    else if(color == "Black")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::BLACK);
+
+    w->shape_widget->update();
+    UpdateContent();
+}
+
 void Inspector::OnChangeShapeParameter()
 {
     ComponentShape* c = shapeCompoenentWidget->GetComponentShape();
     if(c!= nullptr)
     {
         c->SetWidth(shapeCompoenentWidget->ui->ShapeWidth->value());
+        c->SetHeight(shapeCompoenentWidget->ui->ShapeHeight->value());
+        c->SetRadius(shapeCompoenentWidget->ui->ShapeRadius->value());
     }
 
     w->shape_widget->update();
