@@ -88,9 +88,9 @@ void Inspector::OnAddComponent()
 void Inspector::OnChangeShapeType(QString type)
 {
      if(type == "Circle")
-         shapeCompoenentWidget->GetComponentShape()->ChangeType(ShapeType::CIRCLE);
+         shapeCompoenentWidget->GetComponentShape()->SetShapeType(ShapeType::CIRCLE);
      else if(type == "Rectangle")
-         shapeCompoenentWidget->GetComponentShape()->ChangeType(ShapeType::RECTANGLE);
+         shapeCompoenentWidget->GetComponentShape()->SetShapeType(ShapeType::RECTANGLE);
 
      w->shape_widget->update();
      UpdateContent();
