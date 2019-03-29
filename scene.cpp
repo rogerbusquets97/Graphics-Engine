@@ -38,7 +38,7 @@ void Scene::OnDeleteSelectedObject()
 
         delete toDelete->transform;
 
-        for (uint i = 0; i < toDelete->components.size(); ++i) {
+        for (int i = 0; i < toDelete->components.size(); ++i) {
              delete toDelete->components[i];
         }
 
@@ -60,7 +60,7 @@ void Scene::OnDeleteObject(QString name)
 
     delete toDelete->transform;
 
-    for (uint i = 0; i < toDelete->components.size(); ++i) {
+    for (int i = 0; i < toDelete->components.size(); ++i) {
          delete toDelete->components[i];
     }
 
