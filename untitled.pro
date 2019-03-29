@@ -26,7 +26,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     myopenglwidget.cpp \
-    circlewidget.cpp \
     gameobject.cpp \
     gameobjectwidget.cpp \
     scene.cpp \
@@ -43,7 +42,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     myopenglwidget.h \
-    circlewidget.h \
     gameobject.h \
     component.h \
     gameobjectwidget.h \

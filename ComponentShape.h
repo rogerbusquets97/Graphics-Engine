@@ -20,8 +20,11 @@ class ComponentShape : public Component
 public:
 
     ComponentShape(GameObject* p, ComponentType t);
-    void SetColor(QColor color);
-    void ChangeType(ShapeType newType);
+    void SetColorType(ColorType color);
+    void SetShapeType(ShapeType shapeType);
+    void SetRadius (int r);
+    void SetWidth (int w);
+    void SetHeight (int h);
     ShapeType GetShapeType() const;
     ColorType GetColorType() const {return colorType;}
     int GetRadius() const { return r; }

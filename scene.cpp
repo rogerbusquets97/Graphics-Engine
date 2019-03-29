@@ -18,6 +18,7 @@ Scene::~Scene()
 
 void Scene::OnAddObject(GameObject* obj)
 {
+    // aixo no pot ser
     if (obj != nullptr)
     sceneObjects.push_back(obj);
 }

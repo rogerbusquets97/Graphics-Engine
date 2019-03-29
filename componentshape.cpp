@@ -7,8 +7,12 @@ ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
     w = 100;
     h = 100;
 }
+void ComponentShape::SetColorType(ColorType color)
+{
+    this->colorType = color;
+}
 
-void ComponentShape::ChangeType(ShapeType newType)
+void ComponentShape::SetShapeType(ShapeType newType)
 {
     if (shapeType == newType) return;
 
@@ -26,6 +30,19 @@ void ComponentShape::ChangeType(ShapeType newType)
     }
 
     shapeType = newType;
+}
+
+void ComponentShape::SetRadius (int r)
+{
+    this->r = r;
+}
+void ComponentShape::SetWidth (int w)
+{
+    this->w = w;
+}
+void ComponentShape::SetHeight (int h)
+{
+    this->h = h;
 }
 
 ShapeType ComponentShape::GetShapeType() const

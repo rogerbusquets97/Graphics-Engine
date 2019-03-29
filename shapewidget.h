@@ -18,7 +18,7 @@ public:
 
     QList<ComponentShape*> GetShapes() { return compShapes; }
     void AddComponentShape(ComponentShape* compShape);
-
+    void ClearShapesToRender();
 private:
     void paintEvent(QPaintEvent *event) override;
     QColor sortColor(ColorType t);
