@@ -30,9 +30,6 @@ public:
     int GetRadius() const { return r; }
     int GetHeight() const { return h; }
     int GetWidth() const { return w ; }
-    void SetRadius(int radius){r = radius;}
-    void SetHeight(int height){h=height;}
-    void SetWidth(int width){w = width;}
     int GetPositionX();
     int GetPositionY();
 
