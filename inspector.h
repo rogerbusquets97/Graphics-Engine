@@ -18,10 +18,12 @@ public:
     explicit Inspector(QWidget *parent = nullptr);
     GameObject* GetObject()const;
     void SetObject(GameObject* obj);
-
+    void ConnectEvents();
 private:
     void UpdateContent();
     void SetAllInvisible();
+    void UpdateTransform();
+    void BlockSignals(bool b);
     GameObject* selected = nullptr;
     ShapeComponentWidget* shapeCompoenentWidget;
     TransformComponentWidget* transformComponentWidget;
@@ -35,6 +37,7 @@ signals:
 
 public slots:
     void OnAddComponent();
+    void OnUpdateSelectedTransform();
 
 };
 

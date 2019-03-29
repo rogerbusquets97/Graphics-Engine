@@ -7,6 +7,10 @@
 #include "transformcomponentwidget.h"
 #include "ComponentShape.h"
 #include <iostream>
+#include "mainwindow.h"
+#include "shapewidget.h"
+#include "ui_transformcomponentwidget.h"
+#include "QString"
 
 
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
@@ -33,6 +37,7 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
    button = new QPushButton();
    button->setText("Add Component");
    connect(button,SIGNAL(clicked()),this,SLOT(OnAddComponent()));
+   ConnectEvents();
    layout->addWidget(button);
    //Spacer should be added last
    QSpacerItem* spacer = new QSpacerItem(1,0,QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -45,14 +50,30 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
 }
 
+void Inspector::ConnectEvents()
+{
+    connect(transformComponentWidget->ui->PositionX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+    connect(transformComponentWidget->ui->PositionY,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+    connect(transformComponentWidget->ui->PositionZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+
+    connect(transformComponentWidget->ui->RotationX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+    connect(transformComponentWidget->ui->RotationY,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+    connect(transformComponentWidget->ui->RotationZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+
+    connect(transformComponentWidget->ui->ScaleX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+    connect(transformComponentWidget->ui->ScaleY,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+    connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+}
 void Inspector::OnAddComponent()
 {
-    std::cout<< "OnAddComponent" << std::endl;
     if(selected!= nullptr)
     {
         if(comboBox->currentText() == "Shape Component")
         {
-            selected->OnAddComponent(new ComponentShape(selected,ComponentType::Shape));
+            ComponentShape* component = new ComponentShape(selected,ComponentType::Shape);
+            selected->OnAddComponent(component);
+            w->shape_widget->AddComponentShape(component);
+            w->shape_widget->update();
         }
         //other components
 
@@ -79,6 +100,37 @@ GameObject* Inspector::GetObject()const
 {
     return selected;
 }
+void Inspector::UpdateTransform()
+{
+    BlockSignals(true);
+    transformComponentWidget->ui->PositionX->setValue(selected->transform->GetPosition().x);
+    transformComponentWidget->ui->PositionY->setValue(selected->transform->GetPosition().y);
+    transformComponentWidget->ui->PositionZ->setValue(selected->transform->GetPosition().z);
+
+    transformComponentWidget->ui->RotationX->setValue(selected->transform->GetRotation().x);
+    transformComponentWidget->ui->RotationY->setValue(selected->transform->GetRotation().y);
+    transformComponentWidget->ui->RotationZ->setValue(selected->transform->GetRotation().z);
+
+    transformComponentWidget->ui->ScaleX->setValue(selected->transform->GetScale().x);
+    transformComponentWidget->ui->ScaleY->setValue(selected->transform->GetScale().y);
+    transformComponentWidget->ui->ScaleZ->setValue(selected->transform->GetScale().z);
+
+    BlockSignals(false);
+    transformComponentWidget->update();
+}
+void Inspector::BlockSignals(bool b)
+{
+    transformComponentWidget->ui->PositionX->blockSignals(b);
+    transformComponentWidget->ui->PositionY->blockSignals(b);
+    transformComponentWidget->ui->PositionZ->blockSignals(b);
+    transformComponentWidget->ui->RotationX->blockSignals(b);
+    transformComponentWidget->ui->RotationY->blockSignals(b);
+    transformComponentWidget->ui->RotationZ->blockSignals(b);
+
+    transformComponentWidget->ui->ScaleX->blockSignals(b);
+    transformComponentWidget->ui->ScaleY->blockSignals(b);
+    transformComponentWidget->ui->ScaleZ->blockSignals(b);
+}
 void Inspector::UpdateContent()
 {
     //Set all invisible before checking for available components
@@ -88,6 +140,7 @@ void Inspector::UpdateContent()
     if(selected!=nullptr)
     {
         transformComponentWidget->setVisible(true);
+        UpdateTransform();
         button->setVisible(true);
         comboBox->setVisible(true);
         for(QList<Component*>::iterator it = selected->components.begin(); it!= selected->components.end(); ++it)
@@ -106,4 +159,12 @@ void Inspector::UpdateContent()
     {
         SetAllInvisible();
     }
+}
+
+void Inspector::OnUpdateSelectedTransform()
+{
+    std::cout<< "OnUpdateSelectedTransf " << std::endl;
+    selected->transform->SetPosition((float)transformComponentWidget->ui->PositionX->value(),(float)transformComponentWidget->ui->PositionY->value(),(float)transformComponentWidget->ui->PositionZ->value());
+    selected->transform->SetRotation((float)transformComponentWidget->ui->RotationX->value(),(float)transformComponentWidget->ui->RotationY->value(),(float)transformComponentWidget->ui->RotationZ->value());
+    selected->transform->SetScale((float)transformComponentWidget->ui->ScaleX->value(),(float)transformComponentWidget->ui->ScaleY->value(),(float)transformComponentWidget->ui->ScaleZ->value());
 }

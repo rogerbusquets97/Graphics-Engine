@@ -1,9 +1,11 @@
 #include "gameobject.h"
 #include "mainwindow.h"
 #include "component.h"
+#include "transform.h"
 
 GameObject::GameObject(QObject *parent, QString n) : QObject(parent), name(n)
 {
+    transform = new Transform(this, ComponentType::Trans);
 }
 
 void GameObject::OnAddComponent(Component* c)

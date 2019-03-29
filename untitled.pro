@@ -37,7 +37,8 @@ SOURCES += \
     shapewidget.cpp \
     componentshapewidget.cpp \
     shapecomponentwidget.cpp \
-    transformcomponentwidget.cpp
+    transformcomponentwidget.cpp \
+    transform.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +54,8 @@ HEADERS += \
     shapewidget.h \
     componentshapewidget.h \
     shapecomponentwidget.h \
-    transformcomponentwidget.h
+    transformcomponentwidget.h \
+    transform.h
 
 FORMS += \
         mainwindow.ui \

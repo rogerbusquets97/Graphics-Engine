@@ -2,6 +2,7 @@
 #define COMPONENTSHAPE_H
 
 #include "component.h"
+#include "transform.h"
 
 #include <QWidget>
 #include <QPainter>
@@ -13,6 +14,7 @@ enum ColorType {
     BLUE = 0, WHITE, BLACK, COLOR_UNKNOWN
 };
 
+
 class ComponentShape : public Component
 {
 public:
@@ -21,18 +23,17 @@ public:
     void SetColor(QColor color);
     void ChangeType(ShapeType newType);
     ShapeType GetShapeType() const;
-    ColorType GetColorType() const {return colorType;};
+    ColorType GetColorType() const {return colorType;}
     int GetRadius() const { return r; }
     int GetHeight() const { return h; }
     int GetWidth() const { return w ; }
-    int GetPositionX() const { return x; }
-    int GetPositionY() const { return y; }
+    int GetPositionX();
+    int GetPositionY();
 
 private:
 
     ColorType colorType;
     ShapeType shapeType;
-    int x, y;
 
 
     // CIRCLE

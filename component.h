@@ -2,13 +2,16 @@
 #define COMPONENT_H
 
 #include <QObject>
-#include "gameobject.h"
+
+enum ComponentType
+{
+ Shape,
+ Trans,
+ Component_Unknow
+};
 
  //De moment nomes tenim aquest
 class GameObject;
-
-
-
 class Component
 {
 public:

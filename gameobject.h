@@ -4,15 +4,11 @@
 #include <QObject>
 #include <QList>
 #include <QString>
+#include "ComponentShape.h"
 
-enum ComponentType
-{
- Shape,
- Component_Unknow
-};
 
-class Component;
 class ComponentShape;
+class Transform;
 class GameObject : public QObject
 {
     Q_OBJECT
@@ -25,6 +21,7 @@ public:
     QString name;
     QList<Component*> components;
     Component* GetComponent(ComponentType t);
+    Transform* transform;
 signals:
 
 public slots:

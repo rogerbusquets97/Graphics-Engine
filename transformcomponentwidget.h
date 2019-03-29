@@ -15,7 +15,7 @@ public:
     explicit TransformComponentWidget(QWidget *parent = nullptr);
     ~TransformComponentWidget();
 
-private:
+public:
     Ui::TransformComponentWidget *ui;
 };
 
