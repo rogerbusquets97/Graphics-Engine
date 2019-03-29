@@ -124,3 +124,8 @@ QColor ShapeWidget::sortColor(ColorType t)
     }
     return ret;
 }
+
+void ShapeWidget::ClearShapesToRender()
+{
+   compShapes.clear();
+}
