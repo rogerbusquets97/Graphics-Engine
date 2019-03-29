@@ -39,6 +39,7 @@ public slots:
     void OnAddComponent();
     void OnUpdateSelectedTransform();
     void OnChangeShapeType(QString type);
+    void OnChangeShapeParameter();
 
 };
 
