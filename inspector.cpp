@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "shapewidget.h"
 #include "ui_transformcomponentwidget.h"
+#include "ui_shapecomponentwidget.h"
 #include "QString"
 
 
@@ -63,6 +64,8 @@ void Inspector::ConnectEvents()
     connect(transformComponentWidget->ui->ScaleX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
     connect(transformComponentWidget->ui->ScaleY,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
     connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
+
+    connect(shapeCompoenentWidget->ui->comboBox, SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeType()));
 }
 void Inspector::OnAddComponent()
 {
@@ -82,6 +85,10 @@ void Inspector::OnAddComponent()
     }
 }
 
+void Inspector::OnChangeShapeType()
+{
+     UpdateContent();
+}
 void Inspector::SetAllInvisible()
 {
     transformComponentWidget->setVisible(false);
@@ -149,6 +156,8 @@ void Inspector::UpdateContent()
             case ComponentType::Shape:
                 //Set visible shape component
                 shapeCompoenentWidget->setVisible(true);
+                shapeCompoenentWidget->SetComponentShape((ComponentShape*)(*it));
+                shapeCompoenentWidget->Update();
                 break;
             default:
                 break;
@@ -167,4 +176,6 @@ void Inspector::OnUpdateSelectedTransform()
     selected->transform->SetPosition((float)transformComponentWidget->ui->PositionX->value(),(float)transformComponentWidget->ui->PositionY->value(),(float)transformComponentWidget->ui->PositionZ->value());
     selected->transform->SetRotation((float)transformComponentWidget->ui->RotationX->value(),(float)transformComponentWidget->ui->RotationY->value(),(float)transformComponentWidget->ui->RotationZ->value());
     selected->transform->SetScale((float)transformComponentWidget->ui->ScaleX->value(),(float)transformComponentWidget->ui->ScaleY->value(),(float)transformComponentWidget->ui->ScaleZ->value());
+
+    w->shape_widget->update();
 }

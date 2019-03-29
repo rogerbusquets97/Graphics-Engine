@@ -2,6 +2,7 @@
 #define SHAPECOMPONENTWIDGET_H
 
 #include <QWidget>
+#include "ComponentShape.h"
 
 namespace Ui {
 class ShapeComponentWidget;
@@ -14,9 +15,14 @@ class ShapeComponentWidget : public QWidget
 public:
     explicit ShapeComponentWidget(QWidget *parent = nullptr);
     ~ShapeComponentWidget();
+    void SetComponentShape(ComponentShape* shape){this->shape = shape;}
+    ComponentShape* GetComponentShape()const{return shape;}
+    void Update();
 
-private:
     Ui::ShapeComponentWidget *ui;
+private:
+
+    ComponentShape* shape;
 };
 
 #endif // SHAPECOMPONENTWIDGET_H

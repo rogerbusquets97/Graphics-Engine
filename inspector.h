@@ -38,6 +38,7 @@ signals:
 public slots:
     void OnAddComponent();
     void OnUpdateSelectedTransform();
+    void OnChangeShapeType();
 
 };
 
