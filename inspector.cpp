@@ -65,7 +65,7 @@ void Inspector::ConnectEvents()
     connect(transformComponentWidget->ui->ScaleY,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
     connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
 
-    connect(shapeCompoenentWidget->ui->comboBox, SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeType()));
+    connect(shapeCompoenentWidget->ui->comboBox, SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeType(QString)));
 }
 void Inspector::OnAddComponent()
 {
@@ -85,8 +85,14 @@ void Inspector::OnAddComponent()
     }
 }
 
-void Inspector::OnChangeShapeType()
+void Inspector::OnChangeShapeType(QString type)
 {
+     if(type == "Circle")
+         shapeCompoenentWidget->GetComponentShape()->ChangeType(ShapeType::CIRCLE);
+     else if(type == "Rectangle")
+         shapeCompoenentWidget->GetComponentShape()->ChangeType(ShapeType::RECTANGLE);
+
+     w->shape_widget->update();
      UpdateContent();
 }
 void Inspector::SetAllInvisible()

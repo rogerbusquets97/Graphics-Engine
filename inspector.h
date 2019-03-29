@@ -38,7 +38,7 @@ signals:
 public slots:
     void OnAddComponent();
     void OnUpdateSelectedTransform();
-    void OnChangeShapeType();
+    void OnChangeShapeType(QString type);
 
 };
 
