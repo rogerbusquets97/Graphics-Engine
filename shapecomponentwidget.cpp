@@ -29,12 +29,23 @@ void ShapeComponentWidget::Update()
             ui->comboBox->setCurrentText("Circle");
         else if(shape->GetShapeType() == ShapeType::RECTANGLE)
             ui->comboBox->setCurrentText("Rectangle");
+
         if(shape->GetColorType() == ColorType::BLUE)
             ui->comboBox_2->setCurrentText("Blue");
         else if(shape->GetColorType() == ColorType::WHITE)
             ui->comboBox_2->setCurrentText("White");
         else if(shape->GetColorType()==ColorType::BLACK)
             ui->comboBox_2->setCurrentText("Black");
+        else if(shape->GetColorType()==ColorType::RED)
+            ui->comboBox_2->setCurrentText("Red");
+        else if(shape->GetColorType()==ColorType::GREEN)
+            ui->comboBox_2->setCurrentText("Green");
+        else if(shape->GetColorType()==ColorType::MAGENTA)
+            ui->comboBox_2->setCurrentText("Magenta");
+        else if(shape->GetColorType()==ColorType::ORANGE)
+            ui->comboBox_2->setCurrentText("Orange");
+        else if(shape->GetColorType()==ColorType::YELLOW)
+            ui->comboBox_2->setCurrentText("Yellow");
 
         ui->ShapeWidth->setValue(shape->GetWidth());
         ui->ShapeHeight->setValue(shape->GetHeight());

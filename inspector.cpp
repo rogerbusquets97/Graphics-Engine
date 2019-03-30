@@ -98,6 +98,16 @@ void Inspector::OnChangeShapeColor(QString color)
         shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::WHITE);
     else if(color == "Black")
         shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::BLACK);
+    else if(color == "Red")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::RED);
+    else if(color == "Green")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::GREEN);
+    else if(color == "Magenta")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::MAGENTA);
+    else if(color == "Orange")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::ORANGE);
+    else if(color == "Yellow")
+        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::YELLOW);
 
     w->shape_widget->update();
     UpdateContent();

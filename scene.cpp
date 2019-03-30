@@ -77,7 +77,6 @@ GameObject* Scene::GetObject(QString name)
         if((*it)->GetName() == name)
         {
             return *it;
-            break;
         }
     }
 

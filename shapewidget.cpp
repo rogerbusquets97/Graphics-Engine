@@ -97,6 +97,12 @@ QColor ShapeWidget::sortColor(ColorType t)
     QColor blueColor = QColor::fromRgb(127,190,220);
     QColor whiteColor = QColor::fromRgb(255,255,255);
     QColor blackColor = QColor::fromRgb(0,0,0);
+    QColor redColor = QColor::fromRgb(255,0,0);
+    QColor greenColor = QColor::fromRgb(0,255,0);
+    QColor magentaColor = QColor::fromRgb(255, 0, 255);
+    QColor orangeColor = QColor::fromRgb(255, 128, 0);
+    QColor yellowColor = QColor::fromRgb(255, 255, 0);
+
     QColor ret = whiteColor;
 
     switch(t)
@@ -114,6 +120,31 @@ QColor ShapeWidget::sortColor(ColorType t)
     case ColorType::BLACK:
         {
         ret = blackColor;
+        break;
+        }
+    case ColorType::RED:
+        {
+        ret = redColor;
+        break;
+        }
+    case ColorType::GREEN:
+        {
+        ret = greenColor;
+        break;
+        }
+    case ColorType::MAGENTA:
+        {
+        ret = magentaColor;
+        break;
+        }
+    case ColorType::ORANGE:
+        {
+        ret = orangeColor;
+        break;
+        }
+    case ColorType::YELLOW:
+        {
+        ret = yellowColor;
         break;
         }
     default:
