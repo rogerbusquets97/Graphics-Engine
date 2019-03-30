@@ -111,9 +111,11 @@ void MainWindow::openProject()
                             ComponentShape* shape = new ComponentShape(go, Shape);
                             shape->SetShapeType((ShapeType)settings.value("shapeType").toUInt());
                             shape->SetColorType((ColorType)settings.value("colorType").toUInt());
+                            shape->SetStrokeType((StrokeType)settings.value("strokeType").toUInt());
                             shape->SetRadius(settings.value("radius").toInt());
                             shape->SetWidth(settings.value("width").toInt());
                             shape->SetHeight(settings.value("height").toInt());
+                            shape->SetPenWidth(settings.value("penWidth").toInt());
 
                             go->OnAddComponent(shape);
                             shape_widget->AddComponentShape(shape);
@@ -204,9 +206,11 @@ void MainWindow::saveProject()
 
                     settings.setValue("shapeType", shape->GetShapeType());
                     settings.setValue("colorType", shape->GetColorType());
+                    settings.setValue("strokeType", shape->GetStrokeType());
                     settings.setValue("radius", shape->GetRadius());
                     settings.setValue("width", shape->GetWidth());
                     settings.setValue("height", shape->GetHeight());
+                    settings.setValue("penWidth", shape->GetPenWidth());
 
                     break;
                 }
