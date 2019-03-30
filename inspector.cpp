@@ -67,9 +67,11 @@ void Inspector::ConnectEvents()
 
     connect(shapeCompoenentWidget->ui->comboBox, SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeType(QString)));
     connect(shapeCompoenentWidget->ui->comboBox_2,SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeColor(QString)));
+    connect(shapeCompoenentWidget->ui->comboBox_3,SIGNAL(currentTextChanged(QString)), this, SLOT(OnChangeStrokeType(QString)));
     connect(shapeCompoenentWidget->ui->ShapeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->ShapeHeight,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->ShapeRadius,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
+
 
 }
 void Inspector::OnAddComponent()
@@ -108,6 +110,23 @@ void Inspector::OnChangeShapeColor(QString color)
         shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::ORANGE);
     else if(color == "Yellow")
         shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::YELLOW);
+
+    w->shape_widget->update();
+    UpdateContent();
+}
+
+void Inspector::OnChangeStrokeType(QString stroke)
+{
+    if(stroke == "Solid")
+        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::SOLID);
+    else if(stroke == "Dash")
+        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DASH);
+    else if(stroke == "Dot")
+        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DOT);
+    else if(stroke == "DashDot")
+        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DASHDOT);
+    else if(stroke == "DashDotDot")
+        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DASHDOTDOT);
 
     w->shape_widget->update();
     UpdateContent();

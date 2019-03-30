@@ -20,9 +20,17 @@ ComponentShapeWidget::ComponentShapeWidget(QWidget *parent) : QWidget(parent)
     combobox->addItem(QString("Circle"));
     combobox->addItem(QString("Rectangle"));
 
+    strokebox = new QComboBox();
+    strokebox->addItem(QString("Solid"));
+    strokebox->addItem(QString("Dash"));
+    strokebox->addItem(QString("Dot"));
+    strokebox->addItem(QString("DashDot"));
+    strokebox->addItem(QString("DashDotDot"));
+
     QBoxLayout* votavox = new QBoxLayout(QBoxLayout::TopToBottom);
     votavox->addWidget(combobox);
     votavox->addWidget(colorbox);
+    votavox->addWidget(strokebox);
 
     setLayout(votavox);
 }

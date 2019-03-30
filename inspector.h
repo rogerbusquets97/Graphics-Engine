@@ -41,6 +41,7 @@ public slots:
     void OnChangeShapeType(QString type);
     void OnChangeShapeColor(QString color);
     void OnChangeShapeParameter();
+    void OnChangeStrokeType(QString stroke);
 
 };
 

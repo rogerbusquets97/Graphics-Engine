@@ -32,6 +32,11 @@ void ComponentShape::SetShapeType(ShapeType newType)
     shapeType = newType;
 }
 
+void ComponentShape::SetStrokeType(StrokeType stroke)
+{
+    this->strokeType = stroke;
+}
+
 void ComponentShape::SetRadius (int r)
 {
     this->r = r;
@@ -44,11 +49,16 @@ void ComponentShape::SetHeight (int h)
 {
     this->h = h;
 }
+void ComponentShape::SetPenWidth(int penWidth)
+{
+    this->penWidth = penWidth;
+}
 
 ShapeType ComponentShape::GetShapeType() const
 {
     return shapeType;
 }
+
 int ComponentShape::GetPositionX()
 {
     return (int)parent->transform->GetPosition().x;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>294</height>
+    <height>443</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -150,6 +150,52 @@
       </property>
      </item>
     </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Stroke Type</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="comboBox_3">
+     <item>
+      <property name="text">
+       <string>Solid</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Dash</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Dot</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>DashDot</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>DashDotDot</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Stroke Width</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="StrokeWidth"/>
    </item>
    <item>
     <spacer name="verticalSpacer">

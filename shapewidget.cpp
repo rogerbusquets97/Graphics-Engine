@@ -48,7 +48,7 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
                 brush.setColor(sortColor(compShapes[i]->GetColorType()));
                 pen.setWidth(4);
                 pen.setColor(sortColor(compShapes[i]->GetColorType()));
-                pen.setStyle(Qt::PenStyle::DashLine);
+                pen.setStyle(SortStrokeType(compShapes[i]->GetStrokeType()));
                 painter.setPen(pen);
                 //---------
                 int x_circle = compShapes[i]->GetPositionX();
@@ -69,7 +69,8 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
                 brush.setColor(sortColor(compShapes[i]->GetColorType()));
                 pen.setWidth(4);
                 pen.setColor(sortColor(compShapes[i]->GetColorType()));
-                pen.setStyle(Qt::PenStyle::DashLine);
+                pen.setStyle(SortStrokeType(compShapes[i]->GetStrokeType()));
+
                 painter.setPen(pen);
 
                 int x_rect = compShapes[i]->GetPositionX();
@@ -90,6 +91,37 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
         }
     }
     painter.end();
+}
+
+Qt::PenStyle ShapeWidget::SortStrokeType(StrokeType t)
+{
+    switch (t) {
+        case StrokeType::SOLID:
+        {
+            return Qt::PenStyle::SolidLine;
+        }
+         case StrokeType::DASH:
+        {
+            return Qt::PenStyle::DashLine;
+        }
+        case StrokeType::DOT:
+        {
+            return Qt::PenStyle::DotLine;
+        }
+        case StrokeType::DASHDOT:
+        {
+            return Qt::PenStyle::DashDotLine;
+        }
+        case StrokeType::DASHDOTDOT:
+        {
+            return Qt::PenStyle::DashDotDotLine;
+        }
+        default:
+        {
+            return Qt::PenStyle::SolidLine;
+        }
+    }
+
 }
 
 QColor ShapeWidget::sortColor(ColorType t)

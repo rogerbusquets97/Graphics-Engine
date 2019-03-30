@@ -13,6 +13,7 @@ public:
     virtual ~ComponentShapeWidget();
     QComboBox* combobox;
     QComboBox* colorbox;
+    QComboBox* strokebox;
 signals:
 
 public slots:

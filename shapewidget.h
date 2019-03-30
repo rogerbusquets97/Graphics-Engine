@@ -22,6 +22,7 @@ public:
 private:
     void paintEvent(QPaintEvent *event) override;
     QColor sortColor(ColorType t);
+    Qt::PenStyle SortStrokeType(StrokeType t);
     QList<ComponentShape*> compShapes;
 signals:
 
