@@ -71,6 +71,7 @@ void Inspector::ConnectEvents()
     connect(shapeCompoenentWidget->ui->ShapeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->ShapeHeight,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->ShapeRadius,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
+    connect(shapeCompoenentWidget->ui->StrokeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
 
 
 }
@@ -140,6 +141,7 @@ void Inspector::OnChangeShapeParameter()
         c->SetWidth(shapeCompoenentWidget->ui->ShapeWidth->value());
         c->SetHeight(shapeCompoenentWidget->ui->ShapeHeight->value());
         c->SetRadius(shapeCompoenentWidget->ui->ShapeRadius->value());
+        c->SetPenWidth(shapeCompoenentWidget->ui->StrokeWidth->value());
     }
 
     w->shape_widget->update();

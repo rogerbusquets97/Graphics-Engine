@@ -3,6 +3,8 @@ ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
     shapeType = CIRCLE;
     colorType = BLUE;
+    strokeType = SOLID;
+    penWidth = 4;
     r = 25;
     w = 100;
     h = 100;

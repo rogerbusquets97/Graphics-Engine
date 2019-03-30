@@ -47,10 +47,21 @@ void ShapeComponentWidget::Update()
         else if(shape->GetColorType()==ColorType::YELLOW)
             ui->comboBox_2->setCurrentText("Yellow");
 
+        if(shape->GetStrokeType() == StrokeType::SOLID)
+            ui->comboBox_3->setCurrentText("Solid");
+        else if(shape->GetStrokeType() == StrokeType::DASH)
+            ui->comboBox_3->setCurrentText("Dash");
+        else if(shape->GetStrokeType() == StrokeType::DOT)
+            ui->comboBox_3->setCurrentText("Dot");
+        else if(shape->GetStrokeType() == StrokeType::DASHDOT)
+            ui->comboBox_3->setCurrentText("DashDot");
+        else if(shape->GetStrokeType() == StrokeType::DASHDOTDOT)
+            ui->comboBox_3->setCurrentText("DashDotDot");
+
         ui->ShapeWidth->setValue(shape->GetWidth());
         ui->ShapeHeight->setValue(shape->GetHeight());
         ui->ShapeRadius->setValue(shape->GetRadius());
-
+        ui->StrokeWidth->setValue(shape->GetPenWidth());
 
         ui->comboBox->blockSignals(false);
         ui->ShapeWidth->blockSignals(false);

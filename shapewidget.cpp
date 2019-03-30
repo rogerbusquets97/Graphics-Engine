@@ -46,7 +46,7 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
             {
                 // CIRCLE Render properties -------
                 brush.setColor(sortColor(compShapes[i]->GetColorType()));
-                pen.setWidth(4);
+                pen.setWidth(compShapes[i]->GetPenWidth());
                 pen.setColor(sortColor(compShapes[i]->GetColorType()));
                 pen.setStyle(SortStrokeType(compShapes[i]->GetStrokeType()));
                 painter.setPen(pen);
@@ -67,7 +67,7 @@ void ShapeWidget::paintEvent(QPaintEvent *event)
             {
                 // RECTANGLE Render properties -------
                 brush.setColor(sortColor(compShapes[i]->GetColorType()));
-                pen.setWidth(4);
+                pen.setWidth(compShapes[i]->GetPenWidth());
                 pen.setColor(sortColor(compShapes[i]->GetColorType()));
                 pen.setStyle(SortStrokeType(compShapes[i]->GetStrokeType()));
 
