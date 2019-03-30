@@ -48,12 +48,12 @@ HEADERS += \
     scene.h \
     hierarchy_widget.h \
     inspector.h \
-    ComponentShape.h \
     shapewidget.h \
     componentshapewidget.h \
     shapecomponentwidget.h \
     transformcomponentwidget.h \
-    transform.h
+    transform.h \
+    componentshape.h
 
 FORMS += \
         mainwindow.ui \

@@ -5,7 +5,7 @@
 #include "shapecomponentwidget.h"
 #include "QSpacerItem"
 #include "transformcomponentwidget.h"
-#include "ComponentShape.h"
+#include "componentshape.h"
 #include <iostream>
 #include "mainwindow.h"
 #include "shapewidget.h"

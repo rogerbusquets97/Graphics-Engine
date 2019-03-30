@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QList>
-#include "ComponentShape.h"
+#include "componentshape.h"
 
 class ShapeWidget : public QWidget
 {

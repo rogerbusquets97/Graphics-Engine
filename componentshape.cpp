@@ -1,4 +1,4 @@
-#include "ComponentShape.h"
+#include "componentshape.h"
 ComponentShape::ComponentShape(GameObject* p, ComponentType t) : Component(p,t)
 {
     shapeType = CIRCLE;

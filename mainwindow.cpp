@@ -12,7 +12,7 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QSettings>
-#include "ComponentShape.h"
+#include "componentshape.h"
 #include "transform.h"
 
 MainWindow::MainWindow(QWidget *parent) :

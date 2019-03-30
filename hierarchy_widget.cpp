@@ -7,7 +7,7 @@
 #include <iostream>
 #include "mainwindow.h"
 #include "scene.h"
-#include "ComponentShape.h"
+#include "componentshape.h"
 
 Hierarchy_Widget::Hierarchy_Widget(QWidget *parent) :
     QWidget(parent),

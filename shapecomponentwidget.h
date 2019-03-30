@@ -2,7 +2,7 @@
 #define SHAPECOMPONENTWIDGET_H
 
 #include <QWidget>
-#include "ComponentShape.h"
+#include "componentshape.h"
 
 namespace Ui {
 class ShapeComponentWidget;

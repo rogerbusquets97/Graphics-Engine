@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QString>
-#include "ComponentShape.h"
+#include "componentshape.h"
 
 
 class ComponentShape;
