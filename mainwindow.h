@@ -29,9 +29,11 @@ public:
 
     Inspector* inspector;
     ShapeWidget* shape_widget;
+    bool running;
+
 private:
     Ui::MainWindow *uiMainWindow;
-    Ui::Rendering *uiRendering;
+    //Ui::Rendering *uiRendering;
     Hierarchy_Widget* hierarchy;
 
 

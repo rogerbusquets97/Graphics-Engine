@@ -71,4 +71,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    icons.qrc
+    shaders.qrc
+
+DISTFILES += \
+    shader1_vert.vert \
+    shader1_frag.frag

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ui_rendering.h"
 #include "hierarchy_widget.h"
 #include "scene.h"
 #include "gameobject.h"
@@ -17,8 +16,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    uiMainWindow(new Ui::MainWindow),
-    uiRendering(new Ui::Rendering)
+    uiMainWindow(new Ui::MainWindow)
 {
     QCoreApplication::setApplicationName("Antimonored Engine");
 
@@ -26,12 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currScene = new Scene();
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
-
-     shape_widget = new ShapeWidget();
-    uiRendering->setupUi(shape_widget);
-    shape_widget->show();
-
-    uiMainWindow->RenderingDock_2->setWidget(shape_widget);
 
     uiMainWindow->RenderingDock_2->setFloating(false);
 
@@ -46,13 +38,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(uiMainWindow->actionSave_Project, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(uiMainWindow->actionExit, SIGNAL(triggered()), this, SLOT(exitProject()));
 
+    running = true;
 
 }
 
 MainWindow::~MainWindow()
 {
     delete uiMainWindow;
-    delete uiRendering;
     delete hierarchy;
     delete currScene;
     delete inspector;
@@ -65,9 +57,6 @@ void MainWindow::OnAddObject(GameObject* obj)
     {
         // Estoy hay que arreglarlo
         currScene->OnAddObject(obj);
-        ComponentShape* tmp_cmp_shape = (ComponentShape*)obj->GetComponent(Shape);
-        shape_widget->AddComponentShape(tmp_cmp_shape);
-        shape_widget->update();
     }
 }
 
@@ -76,6 +65,7 @@ void MainWindow::openProject()
     std::cout<< "Load Project" << std::endl;
 
     QString fileName = QFileDialog::getOpenFileName(this, "Open Project", "", tr(""));
+
     QSettings settings(fileName, QSettings::IniFormat);
 
     int gos_size = settings.beginReadArray("GameObjects");
@@ -257,6 +247,7 @@ void MainWindow::exitProject()
     {
         std::cout << "Exit without saving changes" << std::endl;
         qApp->quit();
+        running = false;
     }
     else
     {
