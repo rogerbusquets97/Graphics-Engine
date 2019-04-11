@@ -1,15 +1,8 @@
 #include "submesh.h"
-#pragma comment( lib, "OPenGL32.lib" )
 
 #include <iostream>
-#include <QOpenGLFunctions>
-#include <QOpenGLFunctions_3_3_Core>
-#include <QOpenGLFunctions_3_3_Core>
-#include <QOpenGLBuffer>
-#include <QOpenGLVertexArrayObject>
-#include <QOpenGLShaderProgram>
-#include <QOpenGLFunctions>
-#include <QOpenGLFunctions_3_3_Compatibility>
+
+
 void SubMesh::update()
 {
     // VAO: Vertex format description and stato of VBOs
@@ -41,9 +34,8 @@ void SubMesh::update()
 
         if(attr.enabled)
         {
-            glfuncs->glEnableVertexAttribArray(GLuint(location));
-            glfuncs->glVertexAttribPointer(GLuint(location), attr.ncomp, GL_FLOAT, GL_FALSE,
-                                           vertexFormat.size, (void*) (attr.offset));
+           glEnableVertexAttribArray(GLuint(location));
+           glVertexAttribPointer(GLuint(location), attr.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*) (attr.offset));
         }
     }
 
@@ -55,3 +47,27 @@ void SubMesh::update()
     if(ibo.isCreated())
         ibo.release();
 }
+
+
+void SubMesh::draw()
+{
+    int num_vertices = data_size /vertexFormat.size;
+    vao.bind();
+    if (indices_count > 0)
+    {
+        glDrawElements(GL_TRIANGLES,indices_count, GL_UNSIGNED_INT, nullptr);
+    }
+    else
+    {
+        glDrawArrays(GL_TRIANGLES, 0, num_vertices);
+    }
+    vao.release();
+}
+
+void SubMesh::cleanup()
+{
+    if (vbo.isCreated()){vbo.destroy();}
+    if(ibo.isCreated()){vbo.destroy();}
+    if(vao.isCreated()){vao.destroy();}
+}
+

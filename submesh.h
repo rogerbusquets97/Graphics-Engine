@@ -6,6 +6,7 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions>
+#include <QOpenGLExtraFunctions>
 
 #define MAX_VERTEX_ATTRIBUTES 8
 
