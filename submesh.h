@@ -4,10 +4,6 @@
 #include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLShaderProgram>
-#include <QOpenGLFunctions>
-#include <QOpenGLExtraFunctions>
-
 #define MAX_VERTEX_ATTRIBUTES 8
 
 struct VertexAttribute
