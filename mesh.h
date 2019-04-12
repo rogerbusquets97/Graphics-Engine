@@ -4,6 +4,13 @@
 #include "QVector"
 #include "submesh.h"
 
+//Assimp
+#include "assimp/scene.h"
+//Files
+#include <QFile>
+#include <QByteArray>
+#include <QIODevice>
+
 class Mesh : public Resource
 {
 public:
@@ -18,9 +25,13 @@ public:
     void loadModel(const char*filename);
 
     QVector<SubMesh*> submeshes;
+    bool needsUpdate;
 
 private:
     //Assimp stuff
+    void processNode(aiNode *node, const aiScene *scene);
+    SubMesh *processMesh(aiMesh *mesh, const aiScene *scene);
+
 };
 
 #endif // MESH_H
