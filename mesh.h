@@ -8,10 +8,10 @@ class Mesh : public Resource
 {
 public:
     Mesh();
-    virtual ~Mesh() override;
+    virtual ~Mesh() override{}
 
-    void update() override;
-    void cleanup() override;
+    void update() override{}
+    void cleanup() override{}
 
     void addSubMesh(VertexFormat vertexFormat, void *data, int bytes);
     void addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes);

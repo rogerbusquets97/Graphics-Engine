@@ -34,6 +34,7 @@ void SubMesh::update()
 
         if(attr.enabled)
         {
+
            glEnableVertexAttribArray(GLuint(location));
            glVertexAttribPointer(GLuint(location), attr.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*) (attr.offset));
         }

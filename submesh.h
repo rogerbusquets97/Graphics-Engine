@@ -33,9 +33,11 @@ public:
     int size = 0;
 };
 
-class SubMesh
+class SubMesh :
+        protected QOpenGLFunctions_3_3_Core
 {
 public:
+    SubMesh();
     SubMesh(VertexFormat vertexFormat, void *data, int size);
     SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indeces, int indeces_count);
     ~SubMesh();
