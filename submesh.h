@@ -4,6 +4,7 @@
 #include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
+#include <QOpenGLShaderProgram>
 #define MAX_VERTEX_ATTRIBUTES 8
 
 struct VertexAttribute
@@ -35,7 +36,7 @@ class SubMesh :
 public:
     SubMesh();
     SubMesh(VertexFormat vertexFormat, void *data, int size);
-    SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indeces, int indeces_count);
+    SubMesh(VertexFormat vertexFormat, unsigned int *data, int size, unsigned int *indices, int indices_count);
     ~SubMesh();
 
     void update();
@@ -43,15 +44,15 @@ public:
     void cleanup();
 
 private:
-    unsigned char *data = nullptr;
+    VertexFormat vertexFormat;
+    unsigned int *data = nullptr;
     size_t data_size = 0;
-
     unsigned int *indices = nullptr;
     size_t indices_count = 0;
 
-    VertexFormat vertexFormat;
     QOpenGLBuffer vbo;
     QOpenGLBuffer ibo;
     QOpenGLVertexArrayObject vao;
+    QOpenGLShaderProgram program;
 };
 #endif // SUBMESH_H

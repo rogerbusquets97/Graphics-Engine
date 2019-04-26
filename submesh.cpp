@@ -3,6 +3,58 @@
 #include <iostream>
 
 
+SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indices, int indices_count) :
+    vertexFormat(vertexFormat),
+    data(data),
+    data_size(size),
+    indices(indices),
+    indices_count(indices_count)
+{
+   program.create();
+   program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shader1_vert.vert");
+   program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shader1_frag.frag");
+   program.link();
+   program.bind();
+
+   vao.create();
+   vao.bind();
+
+   if(this->data!= nullptr)
+   {
+       vbo.create();
+       vbo.bind();
+       vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
+       vbo.allocate(this->data,sizeof(float)*6*size);
+   }
+   else
+       return;
+
+   if(this->indices!= nullptr)
+   {
+       ibo.create();
+       ibo.bind();
+       ibo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
+       ibo.allocate(this->indices,sizeof(unsigned int) * indices_count);
+   }
+
+   for(int location = 0; location< MAX_VERTEX_ATTRIBUTES; ++location)
+   {
+       VertexAttribute &attribute = vertexFormat.attribute[location];
+       if(attribute.enabled)
+       {
+           glEnableVertexAttribArray(GLuint(location));
+           glVertexAttribPointer(GLuint(location), attribute.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*)(attribute.offset));
+       }
+   }
+
+
+   vao.release();
+   vbo.release();
+
+   if(ibo.isCreated())
+       ibo.release();
+}
+
 void SubMesh::update()
 {
     // VAO: Vertex format description and stato of VBOs
