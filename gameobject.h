@@ -16,7 +16,7 @@ public:
     GameObject(QObject *parent = nullptr, QString n = "GameObject");
     inline void SetName(const QString n){ name = n; }
     inline QString GetName() const { return name; }
-
+    void Update();
 public:
     QString name;
     QList<Component*> components;

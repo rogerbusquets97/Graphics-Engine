@@ -23,6 +23,7 @@ public:
     void addSubMesh(VertexFormat vertexFormat, void *data, int bytes);
     void addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes);
     void loadModel(const char*filename);
+    void Draw();
 
     QVector<SubMesh*> submeshes;
     bool needsUpdate;

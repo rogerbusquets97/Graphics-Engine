@@ -2,6 +2,12 @@
 
 #pragma comment( lib, "OPenGL32.lib" )
 #include <iostream>
+#include "mesh.h"
+#include "mainwindow.h"
+#include "meshcomponent.h"
+#include "scene.h"
+
+extern QOpenGLFunctions_3_3_Core* gl = nullptr;
 
 myopenglwidget::myopenglwidget(QWidget *parent) : QOpenGLWidget(parent)
 {
@@ -10,6 +16,7 @@ myopenglwidget::myopenglwidget(QWidget *parent) : QOpenGLWidget(parent)
 
 myopenglwidget::~myopenglwidget()
 {
+    scene = nullptr;
     makeCurrent();
     FinalizeGL();
 }
@@ -17,8 +24,8 @@ void myopenglwidget::initializeGL()
 {
     initializeOpenGLFunctions();
     connect(context(),SIGNAL(aboutToBeDestroyed()),this,SLOT(FinalizeGL));
-
-    program.create();
+    gl = this;
+    /*program.create();
     program.addShaderFromSourceFile(QOpenGLShader::Vertex,":/shaders/shader1_vert.vert");
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
@@ -51,7 +58,19 @@ void myopenglwidget::initializeGL()
     //Release
     vao.release();
     vbo.release();
-    program.release();
+    program.release();*/
+
+    Mesh* patrick = new Mesh();
+    patrick->loadModel(":/Models/Patrick/Patrick.obj");
+
+    GameObject* patrick_obj = new GameObject();
+    patrick_obj->SetName("Patricio Huguet");
+
+    w->GetCurrScene()->OnAddObject(patrick_obj);
+
+    MeshComponent* mesh = new MeshComponent(patrick, patrick_obj,ComponentType::mesh);
+
+    patrick_obj->OnAddComponent(mesh);
 }
 void myopenglwidget::resizeGL(int w, int h)
 {
@@ -61,15 +80,23 @@ void myopenglwidget::paintGL()
 {
     glClearColor(0.8f, 0.2f, 0.9, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    if(program.bind())
+    if(scene!=nullptr)
     {
-        vao.bind();
-        glDrawArrays(GL_TRIANGLES,0,3);
-        vao.release();
-        program.release();
-    }
+        scene->Update();
+        std::cout << "Paint Scene Objects" << std::endl;
+        /*if(program.bind())
+        {
+            vao.bind();
+            glDrawArrays(GL_TRIANGLES,0,3);
+            vao.release();
+            program.release();
+        }*/
 
+    }
+    else
+    {
+        std::cout << "Scene is nullptr" << std::endl;
+    }
 }
 
 void myopenglwidget::FinalizeGL()

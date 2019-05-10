@@ -6,6 +6,7 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
+#include "scene.h"
 
 class myopenglwidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
@@ -18,10 +19,10 @@ public:
     void resizeGL(int w, int h) override;
     void paintGL() override;
 
-    QOpenGLBuffer vbo;
-    QOpenGLVertexArrayObject vao;
+    /*QOpenGLBuffer vbo;
+    QOpenGLVertexArrayObject vao;*/
     QOpenGLShaderProgram program;
-
+    Scene* scene;
 signals:
 
 public slots:

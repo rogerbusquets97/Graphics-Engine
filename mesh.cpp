@@ -16,6 +16,7 @@ Mesh::Mesh()
 
 void Mesh::loadModel(const char* path)
 {
+    std::cout << "Load Model " << std::endl;
     Assimp::Importer import;
 
     QFile file(path);
@@ -49,6 +50,7 @@ void Mesh::loadModel(const char* path)
 
 void Mesh:: processNode(aiNode *node, const aiScene *scene)
 {
+    std::cout << "Process Node " << std::endl;
     //process all the node's meshes (if any)
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
     {
@@ -65,6 +67,7 @@ void Mesh:: processNode(aiNode *node, const aiScene *scene)
 
 SubMesh* Mesh::processMesh(aiMesh *mesh, const aiScene *scene)
 {
+    std::cout << "Process Mesh " << std::endl;
     QVector<float> vertices;
     QVector<unsigned int> indices;
 
@@ -106,5 +109,14 @@ SubMesh* Mesh::processMesh(aiMesh *mesh, const aiScene *scene)
         vertexFormat.setVertexAttribute(2, 6 *sizeof(float), 2);
     }
 
-    return new SubMesh(vertexFormat, &vertices[0], vertices.size() *sizeof (float), &indices[0], indices.size());
+    std::cout << "Finish Process Mesh " << std::endl;
+    return new SubMesh(vertexFormat, (void*)&vertices[0], vertices.size() *sizeof (float), &indices[0], indices.size());
+}
+
+void Mesh::Draw()
+{
+    for(int i = 0; i<submeshes.length(); ++i)
+    {
+        submeshes[i]->draw();
+    }
 }

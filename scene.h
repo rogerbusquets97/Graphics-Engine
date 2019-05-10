@@ -15,6 +15,7 @@ public:
    int GetSceneGoCount()const;
    void SetSelectedObject(QString n);
    void SetSelectedObjectByInt(int i);
+   void Update();
    virtual ~Scene();
 
 private:

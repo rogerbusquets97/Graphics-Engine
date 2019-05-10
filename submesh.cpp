@@ -1,18 +1,20 @@
 #include "submesh.h"
 
 #include <iostream>
+#include "myopenglwidget.h"
 
+extern QOpenGLFunctions_3_3_Core* gl;
 
-SubMesh::SubMesh(VertexFormat vertexFormat, float *data, int size, unsigned int *indices, int indices_count) :
+SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indices, int indices_count) :
     vertexFormat(vertexFormat),
-    data(data),
+    data((unsigned char*)data),
     data_size(size),
     indices(indices),
     indices_count(indices_count)
 {
    program.create();
    program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shader1_vert.vert");
-   program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shader1_frag.frag");
+   program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
    program.link();
    program.bind();
 
@@ -21,16 +23,18 @@ SubMesh::SubMesh(VertexFormat vertexFormat, float *data, int size, unsigned int 
 
    if(this->data!= nullptr)
    {
+       std::cout<< "Data" << std::endl;
        vbo.create();
        vbo.bind();
        vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
-       vbo.allocate(this->data,sizeof(float)*6*size);
+       vbo.allocate(this->data, size);
    }
    else
        return;
 
    if(this->indices!= nullptr)
    {
+       std::cout<< "Indexes" << std::endl;
        ibo.create();
        ibo.bind();
        ibo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
@@ -42,8 +46,8 @@ SubMesh::SubMesh(VertexFormat vertexFormat, float *data, int size, unsigned int 
        VertexAttribute &attribute = vertexFormat.attribute[location];
        if(attribute.enabled)
        {
-           glEnableVertexAttribArray(GLuint(location));
-           glVertexAttribPointer(GLuint(location), attribute.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*)(attribute.offset));
+           gl->glEnableVertexAttribArray(GLuint(location));
+           gl->glVertexAttribPointer(GLuint(location), attribute.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*)(attribute.offset));
        }
    }
 
@@ -53,6 +57,9 @@ SubMesh::SubMesh(VertexFormat vertexFormat, float *data, int size, unsigned int 
 
    if(ibo.isCreated())
        ibo.release();
+
+
+  // update();
 }
 
 SubMesh::~SubMesh()
@@ -91,8 +98,8 @@ void SubMesh::update()
         if(attr.enabled)
         {
 
-           glEnableVertexAttribArray(GLuint(location));
-           glVertexAttribPointer(GLuint(location), attr.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*) (attr.offset));
+           gl->glEnableVertexAttribArray(GLuint(location));
+           gl->glVertexAttribPointer(GLuint(location), attr.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void*) (attr.offset));
         }
     }
 
@@ -112,11 +119,11 @@ void SubMesh::draw()
     vao.bind();
     if (indices_count > 0)
     {
-        glDrawElements(GL_TRIANGLES,indices_count, GL_UNSIGNED_INT, nullptr);
+        gl->glDrawElements(GL_TRIANGLES,indices_count, GL_UNSIGNED_INT, indices);
     }
     else
     {
-        glDrawArrays(GL_TRIANGLES, 0, num_vertices);
+        gl->glDrawArrays(GL_TRIANGLES, 0, num_vertices);
     }
     vao.release();
 }

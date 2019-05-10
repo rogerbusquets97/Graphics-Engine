@@ -13,6 +13,8 @@
 #include <QSettings>
 #include "componentshape.h"
 #include "transform.h"
+#include "mesh.h"
+#include "meshcomponent.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     uiMainWindow->setupUi(this);
 
     currScene = new Scene();
+    uiMainWindow->openGLWidget->scene = currScene;
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 
     uiMainWindow->RenderingDock_2->setFloating(false);
@@ -37,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(uiMainWindow->actionOpen_Project, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(uiMainWindow->actionSave_Project, SIGNAL(triggered()), this, SLOT(saveProject()));
     connect(uiMainWindow->actionExit, SIGNAL(triggered()), this, SLOT(exitProject()));
+
+
 
     running = true;
 

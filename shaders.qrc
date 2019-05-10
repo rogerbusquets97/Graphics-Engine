@@ -3,4 +3,7 @@
         <file>shader1_vert.vert</file>
         <file>shader1_frag.frag</file>
     </qresource>
+    <qresource prefix="/Models">
+        <file>Patrick/Patrick.obj</file>
+    </qresource>
 </RCC>

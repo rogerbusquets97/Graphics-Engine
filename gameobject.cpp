@@ -27,3 +27,11 @@ Component* GameObject::GetComponent(ComponentType t)
                 ret = components[i];
     return ret;
 }
+
+void GameObject::Update()
+{
+    for(int i = 0; i< components.length(); ++i)
+    {
+        components[i]->Update();
+    }
+}

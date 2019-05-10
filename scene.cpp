@@ -123,3 +123,10 @@ QList<GameObject*> Scene::GetGameObjects() const
     return sceneObjects;
 }
 
+void Scene::Update()
+{
+    for(int i = 0; i<sceneObjects.length(); ++i)
+    {
+        sceneObjects[i]->Update();
+    }
+}

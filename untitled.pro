@@ -40,7 +40,8 @@ SOURCES += \
     transform.cpp \
     mesh.cpp \
     resource.cpp \
-    submesh.cpp
+    submesh.cpp \
+    meshcomponent.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -59,7 +60,8 @@ HEADERS += \
     componentshape.h \
     mesh.h \
     resource.h \
-    submesh.h
+    submesh.h \
+    meshcomponent.h
 
 FORMS += \
         mainwindow.ui \
@@ -81,7 +83,8 @@ RESOURCES += \
 
 DISTFILES += \
     shader1_vert.vert \
-    shader1_frag.frag
+    shader1_frag.frag \
+    Patrick/Patrick.obj
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/ -lassimp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/ -lassimpd

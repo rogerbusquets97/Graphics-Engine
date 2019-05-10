@@ -7,6 +7,7 @@ enum ComponentType
 {
  Shape,
  Trans,
+ mesh,
  Component_Unknow
 };
 
@@ -22,6 +23,7 @@ public:
 
     ComponentType GetType()const{return type;}
     GameObject* GetParent()const{return parent;}
+    virtual void Update(){}
 
 protected:
 
