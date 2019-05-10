@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indices, int indices_count) :
+SubMesh::SubMesh(VertexFormat vertexFormat, float *data, int size, unsigned int *indices, int indices_count) :
     vertexFormat(vertexFormat),
     data(data),
     data_size(size),
@@ -55,6 +55,10 @@ SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *
        ibo.release();
 }
 
+SubMesh::~SubMesh()
+{
+
+}
 void SubMesh::update()
 {
     // VAO: Vertex format description and stato of VBOs
