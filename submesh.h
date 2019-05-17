@@ -7,6 +7,8 @@
 #include <QOpenGLShaderProgram>
 #define MAX_VERTEX_ATTRIBUTES 3
 
+struct Vertex { QVector3D pos; QVector3D norm; };
+
 struct VertexAttribute
 {
     bool enabled = false;
@@ -35,8 +37,7 @@ class SubMesh :
 {
 public:
     SubMesh();
-    SubMesh(VertexFormat vertexFormat, void *data, int size);
-    SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indices, int indices_count);
+    SubMesh(VertexFormat vertexFormat, void* d, size_t d_size, uint* indices, uint indices_count);
     ~SubMesh();
 
     void update();

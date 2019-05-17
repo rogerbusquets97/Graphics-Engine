@@ -5,7 +5,7 @@
 
 extern QOpenGLFunctions_3_3_Core* gl;
 
-SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indices, int indices_count) :
+/*SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *indices, int indices_count) :
     vertexFormat(vertexFormat),
     data((unsigned char*)data),
     data_size(size),
@@ -60,6 +60,16 @@ SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size, unsigned int *
 
 
   // update();
+}*/
+
+SubMesh::SubMesh(VertexFormat vertexFormat, void* d, size_t d_size, uint* indices, uint indices_count) :
+                             vertexFormat(vertexFormat), data_size(d_size), indices_count(indices_count),
+                             ibo(QOpenGLBuffer::Type::IndexBuffer)
+{
+    this->data = new byte[d_size];
+    memcpy(data, d, d_size);
+    this->indices = new unsigned int[indices_count];
+    memcpy(this->indices, indices, indices_count * sizeof(unsigned int));
 }
 
 SubMesh::~SubMesh()
@@ -73,13 +83,19 @@ void SubMesh::update()
     vao.bind();
 
     //VBO: Buffer with vertex data
-    vbo.create();
-    vbo.bind();
-    vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
-    vbo.allocate(data, int(data_size));
-    delete[] data;
-    data = nullptr;
-
+    if(data!=nullptr)
+    {
+        vbo.create();
+        vbo.bind();
+        vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
+        vbo.allocate(data, int(data_size));
+        delete[] data;
+        data = nullptr;
+    }
+    else
+    {
+        return;
+    }
     // IBO: Buffer with Indexes
     if (indices != nullptr)
     {

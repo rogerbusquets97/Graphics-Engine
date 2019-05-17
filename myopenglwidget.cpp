@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "meshcomponent.h"
 #include "scene.h"
+#include <QOpenGLFramebufferObject>
 
 extern QOpenGLFunctions_3_3_Core* gl = nullptr;
 
@@ -25,40 +26,11 @@ void myopenglwidget::initializeGL()
     initializeOpenGLFunctions();
     connect(context(),SIGNAL(aboutToBeDestroyed()),this,SLOT(FinalizeGL));
     gl = this;
-    /*program.create();
-    program.addShaderFromSourceFile(QOpenGLShader::Vertex,":/shaders/shader1_vert.vert");
+
+    program.create();
+    program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shader1_vert.vert");
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
-    program.bind();
-
-    //VBO
-    QVector3D vertices[] = {
-        QVector3D(-0.5f,-0.5f,0.0f),QVector3D(1.0f,0.0f,0.0f),
-        QVector3D(0.5f,-0.5f,0.0f),QVector3D(0.0f,1.0f,0.0f),
-        QVector3D(0.0f,0.5f,0.0f),QVector3D(0.0f,0.0f,1.0f)
-    };
-
-    vbo.create();
-    vbo.bind();
-    vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
-    vbo.allocate(vertices,6*sizeof (QVector3D));
-
-    //vao
-    vao.create();
-    vao.bind();
-    const GLint compCount = 3;
-    const int strideBytes = 2*sizeof(QVector3D);
-    const int offsetBytes0 = 0;
-    const int offsetBytes1 = sizeof(QVector3D);
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(0,compCount,GL_FLOAT,GL_FALSE,strideBytes,(void*)(offsetBytes0));
-    glVertexAttribPointer(1,compCount,GL_FLOAT,GL_FALSE,strideBytes,(void*)(offsetBytes1));
-
-    //Release
-    vao.release();
-    vbo.release();
-    program.release();*/
 
     Mesh* patrick = new Mesh();
     patrick->loadModel(":/Models/Patrick/Patrick.obj");
@@ -76,21 +48,39 @@ void myopenglwidget::resizeGL(int w, int h)
 {
     //Resize textures
 }
+void myopenglwidget::UseShader()
+{
+    program.bind();
+    QMatrix4x4 projectionMatrix;
+    const float fovy = 60.0f;
+    const float aspectRatio = (float)width()/(float)height();
+    const float znear = 0.1;
+    const float zfar = 0.1;
+    projectionMatrix.perspective(fovy,aspectRatio,znear,zfar);
+
+    QMatrix4x4 viewMatrix;
+    QVector3D eyePosition(0.0,1.0,3.0);
+    QVector3D center(0.0,0.0,0.0);
+    QVector3D up(0.0,1.0,0.0);
+    viewMatrix.lookAt(eyePosition,center,up);
+
+    QMatrix4x4 worldMatrix;
+    QMatrix4x4 worldViewMatrix = viewMatrix * worldMatrix;
+
+    program.setUniformValue("projectionMatrix", projectionMatrix);
+    program.setUniformValue("worldViewMatrix", worldViewMatrix);
+}
 void myopenglwidget::paintGL()
 {
-    glClearColor(0.8f, 0.2f, 0.9, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearDepth(1.0f);
+    glClearColor(0.4f, 0.4f, 0.5, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_CULL_FACE);
     if(scene!=nullptr)
     {
+        UseShader();
         scene->Update();
-        std::cout << "Paint Scene Objects" << std::endl;
-        /*if(program.bind())
-        {
-            vao.bind();
-            glDrawArrays(GL_TRIANGLES,0,3);
-            vao.release();
-            program.release();
-        }*/
+        QOpenGLFramebufferObject::bindDefault();
 
     }
     else

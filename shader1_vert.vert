@@ -1,14 +1,21 @@
 #version 330 core
+
 layout(location=0) in vec3 position;
-layout(location=1) in vec3 color;
+layout(location=1) in vec3 normal;
+
+
+uniform mat4 projectionMatrix;
+uniform mat4 worldViewMatrix;
 
 out Data
 {
-   vec3 color;
+    vec3 positionViewspace;
+    vec3 normalViewspace;
 } VSOut;
 
 void main(void)
 {
-        gl_Position = vec4(position,1.0);
-        VSOut.color = color;
+    VSOut.positionViewspace = (worldViewMatrix * vec4(position, 1)).xyz;
+    VSOut.normalViewspace = (worldViewMatrix * vec4(normal, 0)).xyz;
+    gl_Position = projectionMatrix * vec4(VSOut.positionViewspace, 1.0);
 }
