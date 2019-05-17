@@ -6,6 +6,7 @@
 #include <iostream>
 //
 #include "mesh.h"
+#include <QVector>
 
 Mesh::Mesh()
 {
@@ -15,16 +16,6 @@ Mesh::Mesh()
 Mesh::~Mesh()
 {
     destroy();
-}
-
-void Mesh::addSubMesh(VertexFormat vertexFormat, void *data, int bytes)
-{
-
-}
-
-void Mesh::addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes)
-{
-    submeshes.push_back(new SubMesh(vertexFormat, data, (size_t)bytes, indexes, bytes_indexes));
 }
 
 void Mesh::update()
@@ -101,7 +92,7 @@ void Mesh:: processNode(aiNode *node, const aiScene *scene)
 
 SubMesh* Mesh::processMesh(aiMesh *mesh, const aiScene *scene)
 {
-       QVector<float> vertices;
+    QVector<float> vertices;
        QVector<unsigned int> indices;
 
        // Process vertices

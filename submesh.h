@@ -5,7 +5,7 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
-#define MAX_VERTEX_ATTRIBUTES 3
+#define MAX_VERTEX_ATTRIBUTES 4
 
 struct Vertex { QVector3D pos; QVector3D norm; };
 
