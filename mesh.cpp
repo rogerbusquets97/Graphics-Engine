@@ -20,14 +20,12 @@ Mesh::~Mesh()
 
 void Mesh::update()
 {
-    if(needsUpdate)
-    {
+    std::cout << "Mesh update"<< std::endl;
+
         for(int i = 0; i < submeshes.size(); ++i)
         {
-            submeshes.at(i)->update();
+            submeshes[i]->draw();
         }
-        needsUpdate = false;
-    }
 }
 
 void Mesh::destroy()

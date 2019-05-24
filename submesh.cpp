@@ -131,6 +131,8 @@ void SubMesh::update()
 
 void SubMesh::draw()
 {
+    update();
+    std::cout << "SubMesh draw"<< std::endl;
     int num_vertices = data_size /vertexFormat.size;
     vao.bind();
     if (indices_count > 0)
@@ -142,6 +144,9 @@ void SubMesh::draw()
         gl->glDrawArrays(GL_TRIANGLES, 0, num_vertices);
     }
     vao.release();
+
+    std::cout << num_vertices<< std::endl;
+    std::cout << indices_count<< std::endl;
 }
 
 void SubMesh::cleanup()

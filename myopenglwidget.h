@@ -6,7 +6,9 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
+#include <QMouseEvent>
 #include "scene.h"
+#include <QOpenGLDebugLogger>
 
 class myopenglwidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
@@ -24,10 +26,13 @@ public:
     QOpenGLVertexArrayObject vao;*/
     QOpenGLShaderProgram program;
     Scene* scene;
+
+    void mousePressEvent(QMouseEvent * event);
 signals:
 
 public slots:
     void FinalizeGL();
+    void handleLoggedMessage(const QOpenGLDebugMessage &debugMessage);
 };
 
 #endif // MYOPENGLWIDGET_H

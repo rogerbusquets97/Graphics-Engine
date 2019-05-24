@@ -1,4 +1,5 @@
 #include "meshcomponent.h"
+#include <iostream>
 
 MeshComponent::MeshComponent(Mesh* mesh, GameObject* p, ComponentType t) : Component(p,t)
 {
@@ -14,6 +15,7 @@ void MeshComponent::Update()
 {
     if(mesh != nullptr)
     {
-        mesh->Draw();
+        mesh->update();
+        std::cout << "Component shape update"<< std::endl;
     }
 }

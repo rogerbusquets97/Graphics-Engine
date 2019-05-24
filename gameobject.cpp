@@ -33,5 +33,6 @@ void GameObject::Update()
     for(int i = 0; i< components.length(); ++i)
     {
         components[i]->Update();
+        std::cout << "GO update" << std::endl;
     }
 }
