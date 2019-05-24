@@ -31,7 +31,6 @@ SubMesh::~SubMesh()
 
 void SubMesh::update()
 {
-
     //VAO: Vertex foormat description and state of VBOs
     vao.create();
     vao.bind();

@@ -11,9 +11,12 @@ float ambientTerm = 0.5;
 
 void main(void)
 {
+    outColor.rgb = vec3(0,0,1);
+    outColor.a = 1.0;
+    return;
     vec3 L = -normalize(FSIn.positionViewspace);
     vec3 N = normalize(FSIn.normalViewspace);
-    vec3 albedo = vec3(1, 0, 0);
+    vec3 albedo = vec3(0, 0, 1);
     float kD = max(0.0, dot(L,N));
     //outColor.rgb = albedo * kD;
     outColor.rgb += albedo * ambientTerm;
@@ -21,5 +24,4 @@ void main(void)
 
     // Gamma Correction
     outColor.rgb = pow(outColor.rgb, vec3(1.0/2.4));
-
 }

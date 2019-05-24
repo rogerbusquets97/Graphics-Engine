@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     uiMainWindow->setupUi(this);
 
     currScene = new Scene();
-    uiMainWindow->openGLWidget->scene = currScene;
+    //uiMainWindow->openGLWidget->scene = currScene;
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 
     uiMainWindow->RenderingDock_2->setFloating(false);
