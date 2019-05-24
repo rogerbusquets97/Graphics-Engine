@@ -9,6 +9,7 @@
 #include <QMouseEvent>
 #include "scene.h"
 #include <QOpenGLDebugLogger>
+#include "mesh.h"
 
 class myopenglwidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
@@ -21,11 +22,15 @@ public:
     void resizeGL(int w, int h) override;
     void paintGL() override;
     void UseShader();
+    Mesh* CreateMesh();
+    void UpdateMeshes();
+    void DrawMeshes();
 
     /*QOpenGLBuffer vbo;
     QOpenGLVertexArrayObject vao;*/
     QOpenGLShaderProgram program;
     Scene* scene;
+    QList<Mesh*>meshes;
 
     void mousePressEvent(QMouseEvent * event);
 signals:

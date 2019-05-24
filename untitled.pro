@@ -61,7 +61,8 @@ HEADERS += \
     mesh.h \
     resource.h \
     submesh.h \
-    meshcomponent.h
+    meshcomponent.h \
+    vertex.h
 
 FORMS += \
         mainwindow.ui \

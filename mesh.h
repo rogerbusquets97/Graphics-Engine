@@ -1,37 +1,40 @@
 #ifndef MESH_H
 #define MESH_H
-#include "resource.h"
-#include "QVector"
-#include "submesh.h"
 
-//Assimp
+#include "resource.h"
+#include "vertex.h"
+#include "submesh.h"
 #include "assimp/scene.h"
-//Files
-#include <QFile>
-#include <QByteArray>
-#include <QIODevice>
+
+#include <QVector>
+
+class Resource;
 
 class Mesh : public Resource
 {
 public:
     Mesh();
-    virtual ~Mesh() override;
+    ~Mesh(); //override;
 
-    void update() override;
-    void cleanup() override{}
+    //Mesh * asMesh() override { return this; }
 
-    void loadModel(const char*filename);
-    void Draw();
-    void destroy();
+    void update(); //override;
+    void destroy(); //override;
+
+    void addSubMesh(VertexFormat vertexFormat, void *data, int bytes);
+    void addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes);
+    void loadModel(const char *filename);
+
+    void draw();
 
     QVector<SubMesh*> submeshes;
     bool needsUpdate;
 
 private:
-    //Assimp stuff
-    void processNode(aiNode *node, const aiScene *scene);
-    SubMesh *processMesh(aiMesh *mesh, const aiScene *scene);
 
+    //Assimp
+    void processNode(aiNode *node, const aiScene *scene);
+    SubMesh * processMesh(aiMesh *mesh, const aiScene *scene);
 };
 
 #endif // MESH_H

@@ -11,9 +11,6 @@ float ambientTerm = 0.5;
 
 void main(void)
 {
-    outColor = vec4(1.0, 0.0, 0.0, 1.0);
-    return;
-
     vec3 L = -normalize(FSIn.positionViewspace);
     vec3 N = normalize(FSIn.normalViewspace);
     vec3 albedo = vec3(1, 0, 0);

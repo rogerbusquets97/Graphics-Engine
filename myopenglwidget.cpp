@@ -46,22 +46,39 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
-    Mesh* patrick = new Mesh();
+    Mesh* patrick = CreateMesh();
     patrick->loadModel(":/Models/Patrick/Patrick.obj");
 
-    GameObject* patrick_obj = new GameObject();
+    /*GameObject* patrick_obj = new GameObject();
     patrick_obj->SetName("Patricio Huguet");
     w->GetCurrScene()->OnAddObject(patrick_obj);
     MeshComponent* mesh = new MeshComponent(patrick, patrick_obj,ComponentType::mesh);
-    patrick_obj->OnAddComponent(mesh);
+    patrick_obj->OnAddComponent(mesh);*/
 }
 void myopenglwidget::resizeGL(int w, int h)
 {
     //Resize textures
     this->resize(w, h);
 }
+
+void myopenglwidget::DrawMeshes()
+{
+    for (QList<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it)
+    {
+        (*it)->draw();
+    }
+}
+
+void myopenglwidget::UpdateMeshes()
+{
+    for (QList<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it)
+    {
+        (*it)->update();
+    }
+}
 void myopenglwidget::UseShader()
 {
+    std::cout << "Use shader" << std::endl;
     if (program.bind())
     {
         QMatrix4x4 projectionMatrix;
@@ -78,7 +95,6 @@ void myopenglwidget::UseShader()
         viewMatrix.lookAt(eyePosition,center,up);
 
         QMatrix4x4 worldMatrix;
-        worldMatrix.scale(0.1);
         QMatrix4x4 worldViewMatrix = viewMatrix * worldMatrix;
 
         program.setUniformValue("projectionMatrix", projectionMatrix);
@@ -87,24 +103,26 @@ void myopenglwidget::UseShader()
         program.release();
     }
 }
+
+Mesh* myopenglwidget::CreateMesh()
+{
+    Mesh* m = new Mesh();
+    meshes.push_back(m);
+    return m;
+}
 void myopenglwidget::paintGL()
 {
+    UpdateMeshes();
+
     glClearDepth(1.0f);
     glClearColor(0.4f, 0.4f, 0.5, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
-    if(scene!=nullptr)
-    {
-        UseShader();
-        scene->Update();
-        //QOpenGLFramebufferObject::bindDefault();
-        std::cout << "Update" << std::endl;
-    }
-    else
-    {
-        std::cout << "Scene is nullptr" << std::endl;
-    }
+
+    UseShader();
+    DrawMeshes();
+    QOpenGLFramebufferObject::bindDefault();
 }
 
 void myopenglwidget::FinalizeGL()
