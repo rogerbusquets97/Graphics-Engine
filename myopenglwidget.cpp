@@ -305,13 +305,13 @@ void myopenglwidget::initialize3DModel(const char* filename)
     //mesh->name = filename;
     mesh->loadModel(filename);
     QImage diffuse;
-    diffuse.load(":/Models/StoneFloor/StoneFloorDiffuse.png");
+    diffuse.load(":/Models/StoneFloor/diffuse.png");
     Diffuse = new QOpenGLTexture(diffuse.mirrored());
     Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
 
     QImage normalmap;
-    normalmap.load(":/Models/StoneFloor/StoneFloorNormals.png");
+    normalmap.load(":/Models/StoneFloor/n.png");
     NormalMap = new QOpenGLTexture(normalmap.mirrored());
     NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);

@@ -48,7 +48,7 @@ void main(void)
     vec3 diffuse = albedo * dot(normalView, L);
 
 
-    outColor.rgb = ambient + diffuse + specular;
+    outColor.rgb = ambient + diffuse;
 
     outColor.a = 1.0;
 

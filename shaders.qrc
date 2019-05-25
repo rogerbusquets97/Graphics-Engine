@@ -9,5 +9,7 @@
         <file>StoneFloor/StoneFloor.obj</file>
         <file>StoneFloor/StoneFloorDiffuse.png</file>
         <file>StoneFloor/StoneFloorNormals.png</file>
+        <file>StoneFloor/diffuse.png</file>
+        <file>StoneFloor/n.png</file>
     </qresource>
 </RCC>
