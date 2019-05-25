@@ -8,6 +8,7 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLDebugLogger>
+#include <QOpenGLTexture>
 
 #include "mesh.h"
 
@@ -65,6 +66,8 @@ private:
     QOpenGLBuffer vbo;
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram program;
+    QOpenGLTexture* Diffuse;
+    QOpenGLTexture* NormalMap;
 
     std::list<Mesh*> meshes;
 

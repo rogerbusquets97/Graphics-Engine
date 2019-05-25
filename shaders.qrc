@@ -5,5 +5,9 @@
     </qresource>
     <qresource prefix="/Models">
         <file>Patrick/Patrick.obj</file>
+        <file>Patrick/Skin_Patrick.png</file>
+        <file>StoneFloor/StoneFloor.obj</file>
+        <file>StoneFloor/StoneFloorDiffuse.png</file>
+        <file>StoneFloor/StoneFloorNormals.png</file>
     </qresource>
 </RCC>

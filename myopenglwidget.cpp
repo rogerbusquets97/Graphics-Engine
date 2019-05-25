@@ -53,12 +53,7 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
-    showInfo();
-
-    //initializeTriangle();
-    //initializeSphere();
-    //initializeCube();
-    initialize3DModel(":/Models/Patrick/Patrick.obj");
+    initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
 }
 
@@ -180,19 +175,15 @@ void myopenglwidget::UseShader()
         // Object transformation
         QMatrix4x4 worldMatrix;
         QMatrix4x4 worldViewMatrix = viewMatrix * worldMatrix;
-
         program.setUniformValue("projectionMatrix", projectionMatrix);
         program.setUniformValue("worldViewMatrix", worldViewMatrix);
 
-        QImage img;
-        img.load("Resources/Patrick/Skin_Patrick.png");
-        QOpenGLTexture *normMapping = new QOpenGLTexture(img.mirrored());
-        normMapping->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        normMapping->setMagnificationFilter(QOpenGLTexture::Linear);
-
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, normMapping->textureId());
-        program.setUniformValue("normalMap", 0);
+        glBindTexture(GL_TEXTURE_2D, Diffuse->textureId());
+        program.setUniformValue("Albedo", 0);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, NormalMap->textureId());
+        program.setUniformValue("NormalMap", 0);
     }
 }
 
@@ -310,6 +301,17 @@ void myopenglwidget::initialize3DModel(const char* filename)
     Mesh *mesh = this->CreateMesh();
     //mesh->name = filename;
     mesh->loadModel(filename);
+    QImage diffuse;
+    diffuse.load(":/Models/StoneFloor/StoneFloorDiffuse.png");
+    Diffuse = new QOpenGLTexture(diffuse.mirrored());
+    Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
+
+    QImage normalmap;
+    normalmap.load(":/Models/StoneFloor/StoneFloorNormals.png");
+    NormalMap = new QOpenGLTexture(normalmap.mirrored());
+    NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);
 }
 
 void myopenglwidget::CleanUpMeshes()
