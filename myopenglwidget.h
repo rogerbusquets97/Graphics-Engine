@@ -9,6 +9,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLDebugLogger>
 #include <QOpenGLTexture>
+#include <QTimer>
 
 #include "mesh.h"
 
@@ -53,6 +54,12 @@ public:
                              GLsizei stride,
                              const GLvoid * pointer);
 
+    /*void keyPressedEvent(QKeyEvent* event);
+    void keyReleasedEvent(QKeyEvent* event);
+    void mousePressedEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);*/
+
 signals:
     void messageLogged(const QOpenGLDebugMessage &);
 
@@ -61,6 +68,7 @@ public slots:
     //Not virtual
     void finalizeGL();
     void handleLoggedMessage(const QOpenGLDebugMessage &);
+    void Frame();
 
 private:
     QOpenGLBuffer vbo;
@@ -73,6 +81,8 @@ private:
     GLuint diffuse;
 
     std::list<Mesh*> meshes;
+
+    QTimer timer;
 
 };
 

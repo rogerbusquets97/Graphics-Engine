@@ -18,6 +18,26 @@ myopenglwidget::myopenglwidget(QWidget *parent)
     : QOpenGLWidget (parent)
 {
     setMinimumSize(QSize(256, 256));
+    setMouseTracking(true);
+
+    connect(&timer, SIGNAL(timeout()),this,SLOT(Frame()));
+    if(format().swapInterval() == -1)
+    {
+        qDebug("Swap Buffers at v_blank not available: refresh at approx 60fps.");
+        timer.setInterval(17);
+    }
+    else
+    {
+        qInfo("V_blank synchronization available");
+        timer.setInterval(0);
+    }
+    timer.start();
+}
+
+void myopenglwidget::Frame()
+{
+    //Update
+
 }
 
 myopenglwidget::~myopenglwidget()

@@ -22,7 +22,8 @@ vec3 lightColor = vec3(1,1,1);
 
 void main(void)
 {
-
+    vec2 st = FSIn.texCoords;
+    st*=0.1;
     vec3 V = -normalize(FSIn.positionViewspace);
 
     // NORMAL MAPPING
@@ -34,14 +35,14 @@ void main(void)
 
 
     // obtain normal from normal map in range [0,1]
-    vec3 normalTangent = texture(NormalMap, FSIn.texCoords).rgb;
+    vec3 normalTangent = texture(NormalMap, st).rgb;
     // transform normal vector to range [-1,1]
     normalTangent = normalize(normalTangent * 2.0 - 1.0);
     vec3 normalLocal = normalize(TBN * normalTangent);
 
     // Convert normal from tangent space to local space and view space
     vec3 normalView = normalize(worldViewMatrix * vec4(normalLocal, 0.0)).xyz;
-    vec3 albedo = texture(Albedo, FSIn.texCoords).rgb;
+    vec3 albedo = texture(Albedo, st).rgb;
     // LIGHT
     vec3 ambient = albedo * ambientTerm;
     vec3 specular = lightColor * dot(normalView, normalize(V + L));

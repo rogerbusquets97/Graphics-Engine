@@ -41,7 +41,9 @@ SOURCES += \
     mesh.cpp \
     resource.cpp \
     submesh.cpp \
-    meshcomponent.cpp
+    meshcomponent.cpp \
+    camera.cpp \
+    input.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -62,7 +64,9 @@ HEADERS += \
     resource.h \
     submesh.h \
     meshcomponent.h \
-    vertex.h
+    vertex.h \
+    camera.h \
+    input.h
 
 FORMS += \
         mainwindow.ui \
