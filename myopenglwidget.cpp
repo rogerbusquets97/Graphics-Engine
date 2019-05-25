@@ -53,6 +53,8 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
+    diffuse = glGetUniformLocation(program.programId(), "Albedo");
+    normal = glGetUniformLocation(program.programId(), "NormalMap");
     initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
 }
@@ -180,10 +182,11 @@ void myopenglwidget::UseShader()
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, Diffuse->textureId());
-        program.setUniformValue("Albedo", 0);
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, NormalMap->textureId());
-        program.setUniformValue("NormalMap", 0);
+
+        glUniform1i(diffuse, 0);
+        glUniform1i(normal, 1);
     }
 }
 

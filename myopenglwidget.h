@@ -69,6 +69,9 @@ private:
     QOpenGLTexture* Diffuse;
     QOpenGLTexture* NormalMap;
 
+    GLuint normal;
+    GLuint diffuse;
+
     std::list<Mesh*> meshes;
 
 };

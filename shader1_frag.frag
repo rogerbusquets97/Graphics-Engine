@@ -1,10 +1,10 @@
 #version 330 core
 
 // Uniform inputs
-uniform mat4 worldViewMatrix;
+
 uniform sampler2D Albedo;
 uniform sampler2D NormalMap;
-
+uniform mat4 worldViewMatrix;
 in Data
 {
     vec3 positionViewspace;
