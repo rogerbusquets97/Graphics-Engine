@@ -31,6 +31,8 @@ myopenglwidget::myopenglwidget(QWidget *parent)
         qInfo("V_blank synchronization available");
         timer.setInterval(0);
     }
+
+    input = new Input();
     timer.start();
 }
 
@@ -40,10 +42,45 @@ void myopenglwidget::Frame()
 
 }
 
+void myopenglwidget::keyPressEvent(QKeyEvent *event)
+{
+    input->keyPressedEvent(event);
+}
+
+void myopenglwidget::keyReleaseEvent(QKeyEvent *event)
+{
+    input->keyReleasedEvent(event);
+}
+
+void myopenglwidget::mousePressEvent(QMouseEvent *event)
+{
+    input->mousePressedEvent(event);
+}
+
+void myopenglwidget::mouseMoveEvent(QMouseEvent *event)
+{
+    input->mouseMoveEvent(event);
+}
+
+void myopenglwidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    input->mouseReleaseEvent(event);
+}
+
+void myopenglwidget::enterEvent(QEvent *)
+{
+    grabKeyboard();
+}
+
+void myopenglwidget::leaveEvent(QEvent *)
+{
+    releaseKeyboard();
+}
 myopenglwidget::~myopenglwidget()
 {
     makeCurrent();
     finalizeGL();
+    delete input;
 }
 
 void myopenglwidget::initializeGL()

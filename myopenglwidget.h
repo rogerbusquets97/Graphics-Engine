@@ -12,6 +12,7 @@
 #include <QTimer>
 
 #include "mesh.h"
+#include "input.h"
 
 // Sphere //
 #define H 32
@@ -54,11 +55,13 @@ public:
                              GLsizei stride,
                              const GLvoid * pointer);
 
-    /*void keyPressedEvent(QKeyEvent* event);
-    void keyReleasedEvent(QKeyEvent* event);
-    void mousePressedEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);*/
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void enterEvent(QEvent* )override ;
+    void leaveEvent(QEvent*)override;
 
 signals:
     void messageLogged(const QOpenGLDebugMessage &);
@@ -83,6 +86,7 @@ private:
     std::list<Mesh*> meshes;
 
     QTimer timer;
+    Input* input;
 
 };
 

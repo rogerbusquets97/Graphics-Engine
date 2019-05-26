@@ -9,6 +9,7 @@ class Input
 {
 public:
     Input();
+    ~Input();
 
     void keyPressedEvent(QKeyEvent* event);
     void keyReleasedEvent(QKeyEvent* event);
