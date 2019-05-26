@@ -13,6 +13,8 @@
 
 #include "mesh.h"
 #include "input.h"
+#include "interaction.h"
+#include "camera.h"
 
 // Sphere //
 #define H 32
@@ -87,6 +89,8 @@ private:
 
     QTimer timer;
     Input* input;
+    Interaction* interaction;
+    Camera* camera;
 
 };
 

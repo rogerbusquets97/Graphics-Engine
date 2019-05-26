@@ -33,12 +33,25 @@ myopenglwidget::myopenglwidget(QWidget *parent)
     }
 
     input = new Input();
+    camera = new Camera();
+
+    interaction = new Interaction();
+    interaction->input = input;
+    interaction->camera = camera;
+
     timer.start();
 }
 
 void myopenglwidget::Frame()
 {
     //Update
+    bool interacted = interaction->Update();
+    if(interacted)
+    {
+        update();
+    }
+
+    input->postUpdate();
 
 }
 
@@ -81,6 +94,8 @@ myopenglwidget::~myopenglwidget()
     makeCurrent();
     finalizeGL();
     delete input;
+    delete camera;
+    delete interaction;
 }
 
 void myopenglwidget::initializeGL()
@@ -216,25 +231,26 @@ void myopenglwidget::UseShader()
 {
     if(program.bind())
     {
+        camera->PrepareMatrices();
         // Projection transformation
-        QMatrix4x4 projectionMatrix;
+        /*QMatrix4x4 projectionMatrix;
         const float fovy = 60.0f;
         const float aspectRatio = (float)width() / (float)height();
         const float znear = 0.1;
         const float zfar = 1000.0;
         projectionMatrix.perspective(fovy, aspectRatio, znear, zfar);
-
+*/
         // Camera transformation
-        QMatrix4x4 viewMatrix;
         QVector3D eyePosition(5.0, 5.0, 10.0);
         QVector3D center(0.0, 0.0, 0.0);
         QVector3D up(0.0, 1.0, 0.0);
-        viewMatrix.lookAt(eyePosition, center, up);
+        camera->viewMatrix.lookAt(eyePosition, center, up);
 
         // Object transformation
+
         QMatrix4x4 worldMatrix;
-        QMatrix4x4 worldViewMatrix = viewMatrix * worldMatrix;
-        program.setUniformValue("projectionMatrix", projectionMatrix);
+        QMatrix4x4 worldViewMatrix = camera->viewMatrix * worldMatrix;
+        program.setUniformValue("projectionMatrix", camera->projectionMatrix);
         program.setUniformValue("worldViewMatrix", worldViewMatrix);
 
         glActiveTexture(GL_TEXTURE0);
