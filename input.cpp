@@ -11,28 +11,35 @@ Input::~Input()
 
 void Input::keyPressedEvent(QKeyEvent *event)
 {
-    std::cout<< "Key pressed" << std::endl;
-
+    keys[event->key()] = KeyState::Pressed;
 }
 
 void Input::keyReleasedEvent(QKeyEvent *event)
 {
-    std::cout<< "Key released" << std::endl;
+    keys[event->key()] = KeyState::Up;
 }
 
 void Input::mousePressedEvent(QMouseEvent *event)
 {
-    std::cout<< "mouse pressed" << std::endl;
+    mouseButtons[event->button()] = MouseButtonState::Pressed;
 }
 
 void Input::mouseReleaseEvent(QMouseEvent *event)
 {
-    std::cout<< "mouse released" << std::endl;
+     mouseButtons[event->button()] = MouseButtonState::Up;
 }
 
 void Input::mouseMoveEvent(QMouseEvent *event)
 {
-    std::cout<< "Mouse move" << std::endl;
+    mousex_prev = mousex;
+    mousey_prev = mousey;
+
+    mousex = event->x();
+    mousey = event->y();
 }
 
+void Input::postUpdate()
+{
+
+}
 
