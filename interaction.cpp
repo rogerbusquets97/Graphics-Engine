@@ -74,7 +74,7 @@ bool Interaction::Navigate()
     float &yaw = camera->yaw;
     float &pitch = camera->pitch;
 
-    if(mousex_delta != 0 || mousey_delta != 0)
+    if(mousex_delta > 2 || mousey_delta > 2 || mousex_delta < -2 ||  mousey_delta < -2)
     {
         cameraChanged = true;
         yaw -= 0.3f * mousex_delta;
@@ -106,6 +106,12 @@ bool Interaction::Navigate()
     if(input->keys[Qt::Key_S] == KeyState::Pressed)
     {
         //Backwards
+        std::cout<< "Move forward"<< std::endl;
+        //Forward
+        cameraChanged = true;
+        displacementVector += QVector3D(sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
+                                        -sinf(qDegreesToRadians(pitch)),
+                                        cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
     }
 
     if(input->keys[Qt::Key_D] == KeyState::Pressed)

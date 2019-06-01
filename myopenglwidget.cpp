@@ -17,7 +17,7 @@ QOpenGLFunctions_3_3_Core *gl = nullptr;
 myopenglwidget::myopenglwidget(QWidget *parent)
     : QOpenGLWidget (parent)
 {
-    setMinimumSize(QSize(256, 256));
+   // setMinimumSize(QSize(256, 256));
     setMouseTracking(true);
 
     connect(&timer, SIGNAL(timeout()),this,SLOT(Frame()));
