@@ -101,6 +101,10 @@ bool Interaction::Navigate()
     if(input->keys[Qt::Key_A] == KeyState::Pressed)
     {
         //Left
+        cameraChanged = true;
+        displacementVector += QVector3D(-cosf(qDegreesToRadians(yaw) * cosf(qDegreesToRadians(pitch))),
+                                        sinf(qDegreesToRadians(pitch)),
+                                        sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
     }
 
     if(input->keys[Qt::Key_S] == KeyState::Pressed)
@@ -117,6 +121,10 @@ bool Interaction::Navigate()
     if(input->keys[Qt::Key_D] == KeyState::Pressed)
     {
         //Right
+        cameraChanged = true;
+        displacementVector += QVector3D(cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
+                                        sinf(qDegreesToRadians(pitch)),
+                                        -sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
     }
 
     displacementVector *= camera->speed/60.0f;
