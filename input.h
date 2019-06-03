@@ -2,8 +2,13 @@
 #define INPUT_H
 
 #include <QKeyEvent>
+#include <QWheelEvent>
+
 enum class KeyState {Up, Pressed, Down};
 enum class MouseButtonState {Up, Pressed, Down};
+enum class Zooming {Unknown_Zoom = 0, In, Out };
+
+class Interaction;
 
 class Input
 {
@@ -24,6 +29,7 @@ public:
         MAX_KEYS = 300
     };
 
+    Zooming zooming_state = Zooming::Unknown_Zoom;
     KeyState keys[MAX_KEYS];
     MouseButtonState mouseButtons[MAX_BUTTONS];
 

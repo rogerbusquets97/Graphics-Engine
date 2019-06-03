@@ -10,6 +10,8 @@ public:
     Interaction();
     bool Update();
 
+    void ZoomInOut(int x);
+
 private:
     bool Idle();
     bool Navigate();
@@ -20,6 +22,9 @@ private:
 
     enum State {Idling, Navigating, Focusing, Transalting, Rotating, Scaling};
     State state = State::Idling;
+
+
+    bool cameraChanged;
 
 public:
     Input* input;

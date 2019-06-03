@@ -66,7 +66,7 @@ bool Interaction::Navigate()
         return false;
     }
 
-    bool cameraChanged = false;
+    cameraChanged = false;
 
     int mousex_delta = input->mousex - input->mousex_prev;
     int mousey_delta = input->mousey - input->mousey_prev;
@@ -152,4 +152,45 @@ bool Interaction::Rotate()
 bool Interaction::Scale()
 {
     return false;
+}
+
+void Interaction::ZoomInOut(int x)
+{
+
+    QVector3D displacementVector;
+
+    int mousex_delta = input->mousex - input->mousex_prev;
+    int mousey_delta = input->mousey - input->mousey_prev;
+
+    float &yaw = camera->yaw;
+    float &pitch = camera->pitch;
+
+    if(mousex_delta > 2 || mousey_delta > 2 || mousex_delta < -2 ||  mousey_delta < -2)
+    {
+        cameraChanged = true;
+        yaw -= 0.3f * mousex_delta;
+        pitch -= 0.3f * mousey_delta;
+
+        while(yaw < 0.0f) yaw += 360.0f;
+        while(yaw > 360.0f) yaw -= 360.0f;
+        if(pitch > 89.0f) pitch = 89.0f;
+        if(pitch < -89.0f) pitch = -89.0f;
+    }
+
+    if (x > 0)
+    {
+        displacementVector += (QVector3D(-sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
+                                        sinf(qDegreesToRadians(pitch)),
+                                        -cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch))) * 3 ) ;
+    }
+    else {
+        displacementVector += (QVector3D(sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
+                                        -sinf(qDegreesToRadians(pitch)),
+                                        cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch))) * 3 ) ;
+    }
+    QVector3D vec(x, 0, 0);
+
+    camera->position+= displacementVector;
+
+    cameraChanged = true;
 }

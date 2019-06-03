@@ -1,4 +1,7 @@
 #include "input.h"
+#include "QPoint"
+#include "mainwindow.h"
+
 #include <iostream>
 Input::Input()
 {

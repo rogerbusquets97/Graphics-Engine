@@ -89,6 +89,12 @@ void myopenglwidget::leaveEvent(QEvent *)
 {
     releaseKeyboard();
 }
+
+void myopenglwidget::wheelEvent(QWheelEvent* event)
+{
+    interaction->ZoomInOut(event->angleDelta().y());
+}
+
 myopenglwidget::~myopenglwidget()
 {
     makeCurrent();
@@ -97,6 +103,8 @@ myopenglwidget::~myopenglwidget()
     delete camera;
     delete interaction;
 }
+
+
 
 void myopenglwidget::initializeGL()
 {

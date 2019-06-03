@@ -10,6 +10,7 @@
 #include <QOpenGLDebugLogger>
 #include <QOpenGLTexture>
 #include <QTimer>
+#include <QWheelEvent>
 
 #include "mesh.h"
 #include "input.h"
@@ -64,6 +65,9 @@ public:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void enterEvent(QEvent* )override ;
     void leaveEvent(QEvent*)override;
+    void wheelEvent(QWheelEvent* event)override;
+
+    Interaction* interaction;
 
 signals:
     void messageLogged(const QOpenGLDebugMessage &);
@@ -89,7 +93,7 @@ private:
 
     QTimer timer;
     Input* input;
-    Interaction* interaction;
+
     Camera* camera;
 
 };
