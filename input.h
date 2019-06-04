@@ -21,6 +21,7 @@ public:
     void mousePressedEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
+    void mouseWheelEvent(QWheelEvent* event);
 
     void postUpdate();
 

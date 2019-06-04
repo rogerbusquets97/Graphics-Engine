@@ -31,6 +31,9 @@ bool Interaction::Update()
         case State::Scaling:
         changed = Scale();
         break;
+        case State::Zooming:
+        changed = Zoom();
+        break;
     }
 
     return changed;
@@ -38,16 +41,25 @@ bool Interaction::Update()
 
 bool Interaction::Idle()
 {
-    if(input->mouseButtons[Qt::RightButton]==MouseButtonState::Pressed)
+    if(input->mouseButtons[Qt::RightButton]==MouseButtonState::Pressed )
     {
         state = State::Navigating;
         std::cout<<"GO to navigate" << std::endl;
+
     }
+
+   else if (input->zooming_state != Zooming::Unknown_Zoom)
+   {
+            state = State::Zooming;
+             std::cout<< "Zooming"<< std::endl;
+   }
 
     else if(input->mouseButtons[Qt::LeftButton]==MouseButtonState::Pressed)
     {
         //Selection
     }
+
+
 
     // else if(selection->count() > 0)
    //{
@@ -127,6 +139,7 @@ bool Interaction::Navigate()
                                         -sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
     }
 
+
     displacementVector *= camera->speed/60.0f;
 
     camera->position += displacementVector;
@@ -154,9 +167,15 @@ bool Interaction::Scale()
     return false;
 }
 
-void Interaction::ZoomInOut(int x)
+bool Interaction::Zoom()
 {
 
+    if (input->zooming_state == Zooming::Unknown_Zoom)
+    {
+        state = State::Idling;
+        return false;
+
+    }
     QVector3D displacementVector;
 
     int mousex_delta = input->mousex - input->mousex_prev;
@@ -177,20 +196,25 @@ void Interaction::ZoomInOut(int x)
         if(pitch < -89.0f) pitch = -89.0f;
     }
 
-    if (x > 0)
+    if (input->zooming_state == Zooming::In)
     {
+
         displacementVector += (QVector3D(-sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
                                         sinf(qDegreesToRadians(pitch)),
-                                        -cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch))) * 3 ) ;
+                                        -cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch))) * 8 ) ;
     }
-    else {
+    else if (input->zooming_state == Zooming::Out)
+    {
         displacementVector += (QVector3D(sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
                                         -sinf(qDegreesToRadians(pitch)),
-                                        cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch))) * 3 ) ;
+                                        cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch))) * 8 ) ;
     }
-    QVector3D vec(x, 0, 0);
-
-    camera->position+= displacementVector;
 
     cameraChanged = true;
+
+    camera->position += displacementVector;
+
+    input->zooming_state = Zooming::Unknown_Zoom;
+
+    return cameraChanged;
 }

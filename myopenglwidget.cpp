@@ -92,7 +92,7 @@ void myopenglwidget::leaveEvent(QEvent *)
 
 void myopenglwidget::wheelEvent(QWheelEvent* event)
 {
-    interaction->ZoomInOut(event->angleDelta().y());
+    input->mouseWheelEvent(event);
 }
 
 myopenglwidget::~myopenglwidget()

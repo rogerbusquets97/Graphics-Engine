@@ -19,8 +19,9 @@ private:
     bool Transalte();
     bool Rotate();
     bool Scale();
+    bool Zoom();
 
-    enum State {Idling, Navigating, Focusing, Transalting, Rotating, Scaling};
+    enum State {Idling, Navigating, Focusing, Transalting, Rotating, Scaling, Zooming};
     State state = State::Idling;
 
 

@@ -40,7 +40,19 @@ void Input::mouseMoveEvent(QMouseEvent *event)
     mousex = event->x();
     mousey = event->y();
 }
+void Input::mouseWheelEvent(QWheelEvent* event)
+{
 
+  if(event->angleDelta().y()>0)
+      zooming_state = Zooming::In;
+  else if (event->angleDelta().y()<0)
+      zooming_state = Zooming::Out;
+  else
+      zooming_state = Zooming::Unknown_Zoom;
+
+  std::cout<< event->angleDelta().y()<< std::endl;
+  std::cout<< (int)zooming_state << std::endl;
+}
 void Input::postUpdate()
 {
 
