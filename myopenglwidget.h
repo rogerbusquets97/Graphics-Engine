@@ -16,6 +16,7 @@
 #include "input.h"
 #include "interaction.h"
 #include "camera.h"
+#include "gbuffer.h"
 
 // Sphere //
 #define H 32
@@ -68,6 +69,8 @@ public:
     void wheelEvent(QWheelEvent* event)override;
 
     Interaction* interaction;
+
+    GBuffer* gbuffer;
 
 signals:
     void messageLogged(const QOpenGLDebugMessage &);

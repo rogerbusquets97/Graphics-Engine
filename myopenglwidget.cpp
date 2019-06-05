@@ -133,6 +133,9 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
+    gbuffer = new GBuffer();
+    gbuffer->Init(this->size().width(), this->size().height());
+
     diffuse = glGetUniformLocation(program.programId(), "Albedo");
     normal = glGetUniformLocation(program.programId(), "NormalMap");
     initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
