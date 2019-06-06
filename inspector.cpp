@@ -2,17 +2,22 @@
 #include "component.h"
 
 #include "QVBoxLayout"
-#include "shapecomponentwidget.h"
 #include "QSpacerItem"
 #include "transformcomponentwidget.h"
-#include "componentshape.h"
 #include <iostream>
 #include "mainwindow.h"
-#include "shapewidget.h"
 #include "ui_transformcomponentwidget.h"
 #include "ui_shapecomponentwidget.h"
 #include "ui_meshcomponentwidget.h"
 #include "QString"
+#include "transform.h"
+
+#include <QWidget>
+#include <QPainter>
+
+#include <QObject>
+#include <QWidget>
+#include <QComboBox>
 
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
@@ -21,20 +26,17 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
    transformComponentWidget = new TransformComponentWidget();
    transformComponentWidget->setVisible(false);
 
-   shapeCompoenentWidget = new ShapeComponentWidget();
-
    meshComponentWidget = new MeshComponentWidget();
 
    //Add them to a vertical layout
    QVBoxLayout* layout = new QVBoxLayout;
    layout->addWidget(transformComponentWidget);
-   layout->addWidget(shapeCompoenentWidget);
    layout->addWidget(meshComponentWidget);
 
 
    //Combo box for adding Components
    comboBox = new QComboBox();
-   comboBox->addItem("Shape Component"); // Only shape for now
+  // comboBox->addItem("Shape Component"); // Only shape for now
    comboBox->addItem("Mesh Component");
    layout->addWidget(comboBox);
    //Button to add Components
@@ -57,7 +59,6 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 Inspector::~Inspector()
 {
     delete transformComponentWidget;
-    delete shapeCompoenentWidget;
     delete meshComponentWidget;
 }
 
@@ -73,15 +74,7 @@ void Inspector::ConnectEvents()
 
     connect(transformComponentWidget->ui->ScaleX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
     connect(transformComponentWidget->ui->ScaleY,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
-    connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
-
-    connect(shapeCompoenentWidget->ui->comboBox, SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeType(QString)));
-    connect(shapeCompoenentWidget->ui->comboBox_2,SIGNAL(currentTextChanged(QString)),this,SLOT(OnChangeShapeColor(QString)));
-    connect(shapeCompoenentWidget->ui->comboBox_3,SIGNAL(currentTextChanged(QString)), this, SLOT(OnChangeStrokeType(QString)));
-    connect(shapeCompoenentWidget->ui->ShapeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
-    connect(shapeCompoenentWidget->ui->ShapeHeight,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
-    connect(shapeCompoenentWidget->ui->ShapeRadius,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
-    connect(shapeCompoenentWidget->ui->StrokeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
+    connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform())); 
 
     connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
 }
@@ -89,15 +82,8 @@ void Inspector::OnAddComponent()
 {
     if(selected!= nullptr)
     {
-        if(comboBox->currentText() == "Shape Component")
-        {
-            ComponentShape* component = new ComponentShape(selected,ComponentType::Shape);
-            selected->OnAddComponent(component);
-            w->shape_widget->AddComponentShape(component);
-            w->shape_widget->update();
-        }
 
-        else if(comboBox->currentText() == "Mesh Component")
+        if(comboBox->currentText() == "Mesh Component")
         {
             Mesh* m = new Mesh();
             MeshComponent* component = new MeshComponent(m, selected, ComponentType::mesh);
@@ -110,80 +96,17 @@ void Inspector::OnAddComponent()
     }
 }
 
-void Inspector::OnChangeShapeColor(QString color)
-{
-    if(color == "Blue")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::BLUE);
-    else if(color == "White")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::WHITE);
-    else if(color == "Black")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::BLACK);
-    else if(color == "Red")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::RED);
-    else if(color == "Green")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::GREEN);
-    else if(color == "Magenta")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::MAGENTA);
-    else if(color == "Orange")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::ORANGE);
-    else if(color == "Yellow")
-        shapeCompoenentWidget->GetComponentShape()->SetColorType(ColorType::YELLOW);
-
-    w->shape_widget->update();
-    UpdateContent();
-}
-
-void Inspector::OnChangeStrokeType(QString stroke)
-{
-    if(stroke == "Solid")
-        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::SOLID);
-    else if(stroke == "Dash")
-        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DASH);
-    else if(stroke == "Dot")
-        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DOT);
-    else if(stroke == "DashDot")
-        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DASHDOT);
-    else if(stroke == "DashDotDot")
-        shapeCompoenentWidget->GetComponentShape()->SetStrokeType(StrokeType::DASHDOTDOT);
-
-    w->shape_widget->update();
-    UpdateContent();
-}
 
 void Inspector::OnLoadMesh()
 {
     meshComponentWidget->OnLoadMesh();
     UpdateContent();
 }
-void Inspector::OnChangeShapeParameter()
-{
-    ComponentShape* c = shapeCompoenentWidget->GetComponentShape();
-    if(c!= nullptr)
-    {
-        c->SetWidth(shapeCompoenentWidget->ui->ShapeWidth->value());
-        c->SetHeight(shapeCompoenentWidget->ui->ShapeHeight->value());
-        c->SetRadius(shapeCompoenentWidget->ui->ShapeRadius->value());
-        c->SetPenWidth(shapeCompoenentWidget->ui->StrokeWidth->value());
-    }
 
-    w->shape_widget->update();
-    UpdateContent();
-}
 
-void Inspector::OnChangeShapeType(QString type)
-{
-     if(type == "Circle")
-         shapeCompoenentWidget->GetComponentShape()->SetShapeType(ShapeType::CIRCLE);
-     else if(type == "Rectangle")
-         shapeCompoenentWidget->GetComponentShape()->SetShapeType(ShapeType::RECTANGLE);
-
-     w->shape_widget->update();
-     UpdateContent();
-}
 void Inspector::SetAllInvisible()
 {
     transformComponentWidget->setVisible(false);
-    shapeCompoenentWidget->setVisible(false);
     meshComponentWidget->setVisible(false);
     comboBox->setVisible(false);
     button->setVisible(false);
@@ -233,7 +156,6 @@ void Inspector::BlockSignals(bool b)
 void Inspector::UpdateContent()
 {
     //Set all invisible before checking for available components
-    shapeCompoenentWidget->setVisible(false);
     transformComponentWidget->setVisible(false);
     meshComponentWidget->setVisible(false);
 
@@ -248,9 +170,6 @@ void Inspector::UpdateContent()
             switch ((*it)->GetType()) {
             case ComponentType::Shape:
                 //Set visible shape component
-                shapeCompoenentWidget->setVisible(true);
-                shapeCompoenentWidget->SetComponentShape((ComponentShape*)(*it));
-                shapeCompoenentWidget->Update();
                 break;
             case ComponentType::mesh:
                 meshComponentWidget->setVisible(true);
@@ -276,5 +195,4 @@ void Inspector::OnUpdateSelectedTransform()
     selected->transform->SetRotation((float)transformComponentWidget->ui->RotationX->value(),(float)transformComponentWidget->ui->RotationY->value(),(float)transformComponentWidget->ui->RotationZ->value());
     selected->transform->SetScale((float)transformComponentWidget->ui->ScaleX->value(),(float)transformComponentWidget->ui->ScaleY->value(),(float)transformComponentWidget->ui->ScaleZ->value());
 
-    w->shape_widget->update();
 }

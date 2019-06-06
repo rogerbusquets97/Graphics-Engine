@@ -3,7 +3,6 @@
 #include "hierarchy_widget.h"
 #include "scene.h"
 #include "gameobject.h"
-#include "shapewidget.h"
 #include "inspector.h"
 
 #include <Qlist>
@@ -11,7 +10,6 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QSettings>
-#include "componentshape.h"
 #include "transform.h"
 #include "mesh.h"
 #include "meshcomponent.h"
@@ -53,7 +51,6 @@ MainWindow::~MainWindow()
     delete hierarchy;
     delete currScene;
     delete inspector;
-    delete shape_widget;
 }
 
 void MainWindow::OnAddObject(GameObject* obj)
@@ -102,19 +99,6 @@ void MainWindow::openProject()
                   {
                         case (uint)Shape:
                         {
-                       std::cout<< "Loaded a component shape." << std::endl;
-                            ComponentShape* shape = new ComponentShape(go, Shape);
-                            shape->SetShapeType((ShapeType)settings.value("shapeType").toUInt());
-                            shape->SetColorType((ColorType)settings.value("colorType").toUInt());
-                            shape->SetStrokeType((StrokeType)settings.value("strokeType").toUInt());
-                            shape->SetRadius(settings.value("radius").toInt());
-                            shape->SetWidth(settings.value("width").toInt());
-                            shape->SetHeight(settings.value("height").toInt());
-                            shape->SetPenWidth(settings.value("penWidth").toInt());
-
-                            go->OnAddComponent(shape);
-                            shape_widget->AddComponentShape(shape);
-
                             break;
                         }
                         case (uint) Trans:
@@ -196,17 +180,6 @@ void MainWindow::saveProject()
             {
                 case Shape:
                 {
-                    settings.setValue("ComponentType", Shape);
-                    ComponentShape* shape = (ComponentShape*) currScene->GetGameObjects()[i]->components[c_i];
-
-                    settings.setValue("shapeType", shape->GetShapeType());
-                    settings.setValue("colorType", shape->GetColorType());
-                    settings.setValue("strokeType", shape->GetStrokeType());
-                    settings.setValue("radius", shape->GetRadius());
-                    settings.setValue("width", shape->GetWidth());
-                    settings.setValue("height", shape->GetHeight());
-                    settings.setValue("penWidth", shape->GetPenWidth());
-
                     break;
                 }
                 case Trans:
@@ -269,5 +242,5 @@ void MainWindow::DeleteMainWindowScene()
 {
     hierarchy->ClearHierarchy();
     currScene->ClearScene();
-    shape_widget->ClearShapesToRender();
+    //shape_widget->ClearShapesToRender();
 }

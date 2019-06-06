@@ -142,6 +142,8 @@ void myopenglwidget::initializeGL()
     normal = glGetUniformLocation(program.programId(), "NormalMap");
    // initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
+
+
 }
 
 void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage)
@@ -424,4 +426,8 @@ void myopenglwidget::EnableVertexAttribArray(GLuint index)
 void myopenglwidget::VertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer)
 {
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+}
+
+void GeometryPass()
+{
 }

@@ -9,7 +9,6 @@
 #include "QPushButton"
 #include "meshcomponentwidget.h"
 
-class ShapeComponentWidget;
 class TransformComponentWidget;
 
 class Inspector : public QWidget
@@ -27,7 +26,6 @@ private:
     void UpdateTransform();
     void BlockSignals(bool b);
     GameObject* selected = nullptr;
-    ShapeComponentWidget* shapeCompoenentWidget;
     TransformComponentWidget* transformComponentWidget;
     MeshComponentWidget* meshComponentWidget;
 
@@ -41,10 +39,6 @@ signals:
 public slots:
     void OnAddComponent();
     void OnUpdateSelectedTransform();
-    void OnChangeShapeType(QString type);
-    void OnChangeShapeColor(QString color);
-    void OnChangeShapeParameter();
-    void OnChangeStrokeType(QString stroke);
     void OnLoadMesh();
 
 };

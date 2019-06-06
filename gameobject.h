@@ -4,10 +4,8 @@
 #include <QObject>
 #include <QList>
 #include <QString>
-#include "componentshape.h"
+#include "component.h"
 
-
-class ComponentShape;
 class Transform;
 class GameObject : public QObject
 {

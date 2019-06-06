@@ -70,7 +70,10 @@ public:
 
     Interaction* interaction;
 
+    // GBuffer
     GBuffer* gbuffer;
+
+    void GeometryPass();
 
 signals:
     void messageLogged(const QOpenGLDebugMessage &);

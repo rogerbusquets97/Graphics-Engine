@@ -10,12 +10,10 @@ class MainWindow;
 class Rendering;
 }
 
-class ShapeWidget;
 class Hierarchy_Widget;
 class Scene;
 class GameObject;
 class Inspector;
-class ShapeWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -28,7 +26,6 @@ public:
     Scene* GetCurrScene()const;
 
     Inspector* inspector;
-    ShapeWidget* shape_widget;
     bool running;
 
 private:

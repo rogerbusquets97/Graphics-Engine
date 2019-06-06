@@ -32,10 +32,6 @@ SOURCES += \
     hierarchy_widget.cpp \
     inspector.cpp \
     component.cpp \
-    componentshape.cpp \
-    shapewidget.cpp \
-    componentshapewidget.cpp \
-    shapecomponentwidget.cpp \
     transformcomponentwidget.cpp \
     transform.cpp \
     mesh.cpp \
@@ -57,12 +53,8 @@ HEADERS += \
     scene.h \
     hierarchy_widget.h \
     inspector.h \
-    shapewidget.h \
-    componentshapewidget.h \
-    shapecomponentwidget.h \
     transformcomponentwidget.h \
     transform.h \
-    componentshape.h \
     mesh.h \
     resource.h \
     submesh.h \
