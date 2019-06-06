@@ -11,8 +11,8 @@
 #include "shapewidget.h"
 #include "ui_transformcomponentwidget.h"
 #include "ui_shapecomponentwidget.h"
+#include "ui_meshcomponentwidget.h"
 #include "QString"
-
 
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
@@ -23,16 +23,19 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
    shapeCompoenentWidget = new ShapeComponentWidget();
 
+   meshComponentWidget = new MeshComponentWidget();
 
    //Add them to a vertical layout
    QVBoxLayout* layout = new QVBoxLayout;
    layout->addWidget(transformComponentWidget);
    layout->addWidget(shapeCompoenentWidget);
+   layout->addWidget(meshComponentWidget);
 
 
    //Combo box for adding Components
    comboBox = new QComboBox();
    comboBox->addItem("Shape Component"); // Only shape for now
+   comboBox->addItem("Mesh Component");
    layout->addWidget(comboBox);
    //Button to add Components
    button = new QPushButton();
@@ -51,6 +54,12 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
 
 }
 
+Inspector::~Inspector()
+{
+    delete transformComponentWidget;
+    delete shapeCompoenentWidget;
+    delete meshComponentWidget;
+}
 void Inspector::ConnectEvents()
 {
     connect(transformComponentWidget->ui->PositionX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
@@ -73,7 +82,7 @@ void Inspector::ConnectEvents()
     connect(shapeCompoenentWidget->ui->ShapeRadius,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
     connect(shapeCompoenentWidget->ui->StrokeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
 
-
+    connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
 }
 void Inspector::OnAddComponent()
 {
@@ -85,6 +94,13 @@ void Inspector::OnAddComponent()
             selected->OnAddComponent(component);
             w->shape_widget->AddComponentShape(component);
             w->shape_widget->update();
+        }
+
+        else if(comboBox->currentText() == "Mesh Component")
+        {
+            Mesh* m = new Mesh();
+            MeshComponent* component = new MeshComponent(m, selected, ComponentType::mesh);
+            selected->OnAddComponent(component);
         }
         //other components
 
@@ -133,6 +149,10 @@ void Inspector::OnChangeStrokeType(QString stroke)
     UpdateContent();
 }
 
+void Inspector::OnLoadMesh()
+{
+    meshComponentWidget->OnLoadMesh();
+}
 void Inspector::OnChangeShapeParameter()
 {
     ComponentShape* c = shapeCompoenentWidget->GetComponentShape();
@@ -162,6 +182,7 @@ void Inspector::SetAllInvisible()
 {
     transformComponentWidget->setVisible(false);
     shapeCompoenentWidget->setVisible(false);
+    meshComponentWidget->setVisible(false);
     comboBox->setVisible(false);
     button->setVisible(false);
 
@@ -212,6 +233,7 @@ void Inspector::UpdateContent()
     //Set all invisible before checking for available components
     shapeCompoenentWidget->setVisible(false);
     transformComponentWidget->setVisible(false);
+    meshComponentWidget->setVisible(false);
 
     if(selected!=nullptr)
     {
@@ -227,6 +249,11 @@ void Inspector::UpdateContent()
                 shapeCompoenentWidget->setVisible(true);
                 shapeCompoenentWidget->SetComponentShape((ComponentShape*)(*it));
                 shapeCompoenentWidget->Update();
+                break;
+            case ComponentType::mesh:
+                meshComponentWidget->setVisible(true);
+                meshComponentWidget->SetMeshComponent(static_cast<MeshComponent*>(*it));
+                meshComponentWidget->Update();
                 break;
             default:
                 break;

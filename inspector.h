@@ -7,6 +7,7 @@
 #include "gameobject.h"
 #include "QComboBox"
 #include "QPushButton"
+#include "meshcomponentwidget.h"
 
 class ShapeComponentWidget;
 class TransformComponentWidget;
@@ -16,6 +17,7 @@ class Inspector : public QWidget
     Q_OBJECT
 public:
     explicit Inspector(QWidget *parent = nullptr);
+    ~Inspector();
     GameObject* GetObject()const;
     void SetObject(GameObject* obj);
     void ConnectEvents();
@@ -27,6 +29,7 @@ private:
     GameObject* selected = nullptr;
     ShapeComponentWidget* shapeCompoenentWidget;
     TransformComponentWidget* transformComponentWidget;
+    MeshComponentWidget* meshComponentWidget;
 
 
     QComboBox* comboBox;
@@ -42,6 +45,7 @@ public slots:
     void OnChangeShapeColor(QString color);
     void OnChangeShapeParameter();
     void OnChangeStrokeType(QString stroke);
+    void OnLoadMesh();
 
 };
 

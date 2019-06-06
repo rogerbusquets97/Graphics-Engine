@@ -140,7 +140,7 @@ void myopenglwidget::initializeGL()
 
     diffuse = glGetUniformLocation(program.programId(), "Albedo");
     normal = glGetUniformLocation(program.programId(), "NormalMap");
-    initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
+   // initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
 }
 
@@ -263,13 +263,13 @@ void myopenglwidget::UseShader()
         program.setUniformValue("projectionMatrix", camera->projectionMatrix);
         program.setUniformValue("worldViewMatrix", worldViewMatrix);
 
-        glActiveTexture(GL_TEXTURE0);
+        /*glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, Diffuse->textureId());
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, NormalMap->textureId());
 
         glUniform1i(diffuse, 0);
-        glUniform1i(normal, 1);
+        glUniform1i(normal, 1);*/
     }
 }
 

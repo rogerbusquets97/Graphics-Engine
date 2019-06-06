@@ -45,7 +45,8 @@ SOURCES += \
     camera.cpp \
     input.cpp \
     interaction.cpp \
-    gbuffer.cpp
+    gbuffer.cpp \
+    meshcomponentwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -70,14 +71,16 @@ HEADERS += \
     camera.h \
     input.h \
     interaction.h \
-    gbuffer.h
+    gbuffer.h \
+    meshcomponentwidget.h
 
 FORMS += \
         mainwindow.ui \
     rendering.ui \
     hierarchy_widget.ui \
     shapecomponentwidget.ui \
-    transformcomponentwidget.ui
+    transformcomponentwidget.ui \
+    meshcomponentwidget.ui
 QT      += opengl
 
 CONFIG += console
