@@ -98,6 +98,17 @@ void Inspector::OnAddComponent()
     }
 }
 
+void Inspector::OnLoadNormal()
+{
+    meshComponentWidget->OnLoadNormal();
+    UpdateContent();
+}
+
+void Inspector::OnLoadDiffuse()
+{
+    meshComponentWidget->OnLoadDiffuse();
+    UpdateContent();
+}
 
 void Inspector::OnLoadMesh()
 {
