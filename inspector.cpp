@@ -77,6 +77,8 @@ void Inspector::ConnectEvents()
     connect(transformComponentWidget->ui->ScaleZ,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform())); 
 
     connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
+    connect(meshComponentWidget->ui->DiffuseLoadButton, SIGNAL(clicked()),this, SLOT(OnLoadDiffuse()));
+    connect(meshComponentWidget->ui->NormalLoadButton, SIGNAL(clicked()), this, SLOT(OnLoadNormal()));
 }
 void Inspector::OnAddComponent()
 {
@@ -175,6 +177,7 @@ void Inspector::UpdateContent()
                 meshComponentWidget->setVisible(true);
                 meshComponentWidget->SetMeshComponent(static_cast<MeshComponent*>(*it));
                 meshComponentWidget->ui->PathText->setText(static_cast<MeshComponent*>(*it)->mesh->GetPath());
+                meshComponentWidget->SetPreviewTextures();
                 meshComponentWidget->Update();
                 break;
             default:

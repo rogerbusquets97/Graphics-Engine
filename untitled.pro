@@ -42,7 +42,8 @@ SOURCES += \
     input.cpp \
     interaction.cpp \
     gbuffer.cpp \
-    meshcomponentwidget.cpp
+    meshcomponentwidget.cpp \
+    material.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -64,7 +65,8 @@ HEADERS += \
     input.h \
     interaction.h \
     gbuffer.h \
-    meshcomponentwidget.h
+    meshcomponentwidget.h \
+    material.h
 
 FORMS += \
         mainwindow.ui \

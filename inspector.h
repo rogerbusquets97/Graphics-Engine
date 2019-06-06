@@ -40,6 +40,8 @@ public slots:
     void OnAddComponent();
     void OnUpdateSelectedTransform();
     void OnLoadMesh();
+    void OnLoadDiffuse();
+    void OnLoadNormal();
 
 };
 

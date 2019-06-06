@@ -16,6 +16,5 @@ void MeshComponent::Update()
     if(mesh != nullptr)
     {
         mesh->update();
-        std::cout << "Component shape update"<< std::endl;
     }
 }

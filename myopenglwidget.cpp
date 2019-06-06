@@ -163,8 +163,6 @@ void myopenglwidget::paintGL()
 
     UpdateMeshes();
 
-    //w->camera->prepareMatrices();
-
     glClearDepth(1.0f);
     glClearColor(0.4f, 0.4f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -241,8 +239,49 @@ void myopenglwidget::DrawMeshes()
 {
     QList<Mesh*> Scenemeshes;
     w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
+    GLint normalUniform = glGetUniformLocation(program.programId(), "normalEnabled");
+    GLint diffuseUniform = glGetUniformLocation(program.programId(), "diffuseEnabled");
+
     for(QList<Mesh*>::iterator it = Scenemeshes.begin(); it!= Scenemeshes.end(); ++it)
     {
+        if((*it)->GetMaterial()->GetDiffuse() != nullptr)
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
+            glUniform1i(diffuse, 0);
+
+            if(diffuseUniform != -1)
+            {
+                glUniform1i(diffuseUniform, 1);
+            }
+        }
+        else
+        {
+            if(diffuseUniform != -1)
+            {
+                glUniform1i(diffuseUniform, 0);
+            }
+        }
+
+        if((*it)->GetMaterial()->GetNormalMap() != nullptr)
+        {
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetNormalMap()->textureId());
+            glUniform1i(normal, 1);
+
+            if(normalUniform != -1)
+            {
+                glUniform1i(normalUniform, 1);
+            }
+        }
+        else
+        {
+            if(normalUniform != -1)
+            {
+                glUniform1i(normalUniform, 0);
+            }
+        }
+
         (*it)->draw();
     }
 }
@@ -396,7 +435,7 @@ void myopenglwidget::initialize3DModel(const char* filename)
     newGo->OnAddComponent(meshComponent);
     w->GetCurrScene()->OnAddObject(newGo);
 
-    QImage diffuse;
+    /*QImage diffuse;
     diffuse.load(":/Models/StoneFloor/diffuse.png");
     Diffuse = new QOpenGLTexture(diffuse.mirrored());
     Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
@@ -406,7 +445,7 @@ void myopenglwidget::initialize3DModel(const char* filename)
     normalmap.load(":/Models/StoneFloor/n.png");
     NormalMap = new QOpenGLTexture(normalmap.mirrored());
     NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);
+    NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);*/
 }
 
 void myopenglwidget::CleanUpMeshes()

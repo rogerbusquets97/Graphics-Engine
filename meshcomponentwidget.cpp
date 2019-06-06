@@ -2,6 +2,7 @@
 #include "ui_meshcomponentwidget.h"
 #include <QFileDialog>
 #include "mainwindow.h"
+#include <QPixmap>
 
 MeshComponentWidget::MeshComponentWidget(QWidget *parent) :
     QWidget(parent),
@@ -29,3 +30,42 @@ void MeshComponentWidget::OnLoadMesh()
         w->update();
     }
 }
+
+void MeshComponentWidget::SetPreviewTextures()
+{
+    QString diffusePath = meshComponent->mesh->GetMaterial()->GetDiffusePath();
+    if(!diffusePath.isEmpty())
+    {
+        QPixmap pix(diffusePath);
+        ui->DiffuseImage->setPixmap(pix.scaled(100,100,Qt::KeepAspectRatio));
+    }
+
+    QString normalPath = meshComponent->mesh->GetMaterial()->GetNormalPath();
+    if(!normalPath.isEmpty())
+    {
+        QPixmap pix(normalPath);
+        ui->NormalImage->setPixmap(pix.scaled(100,100, Qt::KeepAspectRatio));
+
+    }
+}
+
+void MeshComponentWidget::OnLoadNormal()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Load Normal");
+    if(!path.isEmpty())
+    {
+        meshComponent->mesh->GetMaterial()->SetNormalMap(path);
+        w->update();
+    }
+}
+
+void MeshComponentWidget::OnLoadDiffuse()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Load Diffuse");
+    if(!path.isEmpty())
+    {
+        meshComponent->mesh->GetMaterial()->SetDiffuse(path);
+        w->update();
+    }
+}
+
