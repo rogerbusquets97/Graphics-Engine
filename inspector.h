@@ -46,6 +46,8 @@ public slots:
     void OnChangeShapeParameter();
     void OnChangeStrokeType(QString stroke);
     void OnLoadMesh();
+    void OnLoadDiffuse();
+    void OnLoadNormal();
 
 };
 

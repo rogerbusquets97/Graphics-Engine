@@ -9,6 +9,7 @@
 
 Mesh::Mesh()
 {
+    material = new Material();
     needsUpdate =true;
 }
 

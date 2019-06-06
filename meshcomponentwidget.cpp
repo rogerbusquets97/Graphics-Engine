@@ -29,3 +29,24 @@ void MeshComponentWidget::OnLoadMesh()
         w->update();
     }
 }
+
+void MeshComponentWidget::OnLoadNormal()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Load Normal");
+    if(!path.isEmpty())
+    {
+        meshComponent->mesh->GetMaterial()->SetNormalMap(path);
+        w->update();
+    }
+}
+
+void MeshComponentWidget::OnLoadDiffuse()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Load Diffuse");
+    if(!path.isEmpty())
+    {
+        meshComponent->mesh->GetMaterial()->SetDiffuse(path);
+        w->update();
+    }
+}
+

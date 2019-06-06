@@ -18,6 +18,8 @@ public:
     inline void SetMeshComponent(MeshComponent* m) {meshComponent = m;}
     inline MeshComponent* GetMeshComponent() const {return meshComponent;}
     void OnLoadMesh();
+    void OnLoadDiffuse();
+    void OnLoadNormal();
     void Update();
      Ui::MeshComponentWidget *ui;
 private:

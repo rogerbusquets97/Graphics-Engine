@@ -84,6 +84,8 @@ void Inspector::ConnectEvents()
     connect(shapeCompoenentWidget->ui->StrokeWidth,SIGNAL(valueChanged(double)),this,SLOT(OnChangeShapeParameter()));
 
     connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
+    connect(meshComponentWidget->ui->DiffuseLoadButton, SIGNAL(clicked()),this, SLOT(OnLoadDiffuse()));
+    connect(meshComponentWidget->ui->NormalLoadButton, SIGNAL(clicked()), this, SLOT(OnLoadNormal()));
 }
 void Inspector::OnAddComponent()
 {
@@ -153,6 +155,18 @@ void Inspector::OnChangeStrokeType(QString stroke)
 void Inspector::OnLoadMesh()
 {
     meshComponentWidget->OnLoadMesh();
+    UpdateContent();
+}
+
+void Inspector::OnLoadNormal()
+{
+    meshComponentWidget->OnLoadNormal();
+    UpdateContent();
+}
+
+void Inspector::OnLoadDiffuse()
+{
+    meshComponentWidget->OnLoadDiffuse();
     UpdateContent();
 }
 void Inspector::OnChangeShapeParameter()
