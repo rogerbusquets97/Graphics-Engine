@@ -36,3 +36,16 @@ void GameObject::Update()
         std::cout << "GO update" << std::endl;
     }
 }
+
+bool GameObject::HasComponentOfType(ComponentType t)
+{
+    for(QList<Component*>::iterator it = components.begin(); it!= components.end(); ++it)
+    {
+        if((*it)->GetType() == t)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}

@@ -5,6 +5,7 @@
 #include <QList>
 #include <QString>
 #include "gameobject.h"
+#include "mesh.h"
 
 class Scene : public QObject
 {
@@ -15,6 +16,8 @@ public:
    int GetSceneGoCount()const;
    void SetSelectedObject(QString n);
    void SetSelectedObjectByInt(int i);
+   const QList<GameObject*>& GetObjectsList() const;
+   void GetSceneMeshes(QList<Mesh*>& meshList)const;
    void Update();
    virtual ~Scene();
 

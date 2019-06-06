@@ -21,6 +21,7 @@ public:
     QString name;
     QList<Component*> components;
     Component* GetComponent(ComponentType t);
+    bool HasComponentOfType(ComponentType t);
     Transform* transform;
 signals:
 

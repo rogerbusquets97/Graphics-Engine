@@ -2,6 +2,8 @@
 #include "vertex.h"
 #include "submesh.h"
 #include "mesh.h"
+#include "scene.h"
+#include "meshcomponent.h"
 
 #include <iostream>
 #include <QOpenGLDebugLogger>
@@ -214,25 +216,30 @@ void myopenglwidget::showInfo()
 Mesh* myopenglwidget::CreateMesh()
 {
     Mesh* newMesh = new Mesh();
-    meshes.push_back(newMesh);
+   // meshes.push_back(newMesh);
     return newMesh;
 }
 
 void myopenglwidget::UpdateMeshes()
 {
-    for (std::list<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it)
+    QList<Mesh*> Scenemeshes;
+    w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
+    for(QList<Mesh*>::iterator it = Scenemeshes.begin(); it!= Scenemeshes.end(); ++it)
     {
-         if((*it)->needsUpdate)
-         {
-             (*it)->update();
-             (*it)->needsUpdate = false;
-         }
+        if((*it)->needsUpdate)
+        {
+            (*it)->update();
+            (*it)->needsUpdate = false;
+        }
     }
 }
 
+
 void myopenglwidget::DrawMeshes()
 {
-    for (std::list<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it)
+    QList<Mesh*> Scenemeshes;
+    w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
+    for(QList<Mesh*>::iterator it = Scenemeshes.begin(); it!= Scenemeshes.end(); ++it)
     {
         (*it)->draw();
     }
@@ -243,14 +250,6 @@ void myopenglwidget::UseShader()
     if(program.bind())
     {
         camera->PrepareMatrices();
-        // Projection transformation
-        /*QMatrix4x4 projectionMatrix;
-        const float fovy = 60.0f;
-        const float aspectRatio = (float)width() / (float)height();
-        const float znear = 0.1;
-        const float zfar = 1000.0;
-        projectionMatrix.perspective(fovy, aspectRatio, znear, zfar);
-*/
         // Camera transformation
         QVector3D eyePosition(5.0, 5.0, 10.0);
         QVector3D center(0.0, 0.0, 0.0);
@@ -388,6 +387,13 @@ void myopenglwidget::initialize3DModel(const char* filename)
     Mesh *mesh = this->CreateMesh();
     //mesh->name = filename;
     mesh->loadModel(filename);
+
+    GameObject* newGo = new GameObject(nullptr, "Patrick");
+    MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
+
+    newGo->OnAddComponent(meshComponent);
+    w->GetCurrScene()->OnAddObject(newGo);
+
     QImage diffuse;
     diffuse.load(":/Models/StoneFloor/diffuse.png");
     Diffuse = new QOpenGLTexture(diffuse.mirrored());

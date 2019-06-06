@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "inspector.h"
 #include "shapewidget.h"
+#include "meshcomponent.h"
 
 Scene::Scene(QObject *parent) : QObject(parent)
 {
@@ -24,6 +25,21 @@ void Scene::OnAddObject(GameObject* obj)
     sceneObjects.push_back(obj);
 }
 
+const QList<GameObject*>& Scene::GetObjectsList()const
+{
+    return sceneObjects;
+}
+
+void Scene::GetSceneMeshes(QList<Mesh *> &meshList) const
+{
+    for(QList<GameObject*>::const_iterator it = sceneObjects.begin();  it!= sceneObjects.end(); ++it)
+    {
+        if((*it)->HasComponentOfType(ComponentType::mesh))
+        {
+            meshList.push_back(static_cast<MeshComponent*>((*it)->GetComponent(ComponentType::mesh))->mesh);
+        }
+    }
+}
 void Scene::OnDeleteSelectedObject()
 {
     if(selectedOject!=nullptr)

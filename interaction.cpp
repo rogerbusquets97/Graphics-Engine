@@ -44,14 +44,11 @@ bool Interaction::Idle()
     if(input->mouseButtons[Qt::RightButton]==MouseButtonState::Pressed )
     {
         state = State::Navigating;
-        std::cout<<"GO to navigate" << std::endl;
-
     }
 
    else if (input->zooming_state != Zooming::Unknown_Zoom)
    {
             state = State::Zooming;
-             std::cout<< "Zooming"<< std::endl;
    }
 
     else if(input->mouseButtons[Qt::LeftButton]==MouseButtonState::Pressed)
@@ -102,7 +99,6 @@ bool Interaction::Navigate()
 
     if(input->keys[Qt::Key_W] == KeyState::Pressed)
     {
-        std::cout<< "Move forward"<< std::endl;
         //Forward
         cameraChanged = true;
         displacementVector += QVector3D(-sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
@@ -122,7 +118,6 @@ bool Interaction::Navigate()
     if(input->keys[Qt::Key_S] == KeyState::Pressed)
     {
         //Backwards
-        std::cout<< "Move forward"<< std::endl;
         //Forward
         cameraChanged = true;
         displacementVector += QVector3D(sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
