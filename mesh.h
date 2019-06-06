@@ -24,6 +24,7 @@ public:
     void addSubMesh(VertexFormat vertexFormat, void *data, int bytes);
     void addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes);
     void loadModel(const char *filename);
+    inline QString GetPath(){return path;}
 
     void draw();
 
@@ -35,6 +36,7 @@ private:
     //Assimp
     void processNode(aiNode *node, const aiScene *scene);
     SubMesh * processMesh(aiMesh *mesh, const aiScene *scene);
+    QString path;
 };
 
 #endif // MESH_H

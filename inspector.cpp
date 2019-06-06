@@ -60,6 +60,7 @@ Inspector::~Inspector()
     delete shapeCompoenentWidget;
     delete meshComponentWidget;
 }
+
 void Inspector::ConnectEvents()
 {
     connect(transformComponentWidget->ui->PositionX,SIGNAL(valueChanged(double)),this,SLOT(OnUpdateSelectedTransform()));
@@ -152,6 +153,7 @@ void Inspector::OnChangeStrokeType(QString stroke)
 void Inspector::OnLoadMesh()
 {
     meshComponentWidget->OnLoadMesh();
+    UpdateContent();
 }
 void Inspector::OnChangeShapeParameter()
 {
@@ -253,6 +255,7 @@ void Inspector::UpdateContent()
             case ComponentType::mesh:
                 meshComponentWidget->setVisible(true);
                 meshComponentWidget->SetMeshComponent(static_cast<MeshComponent*>(*it));
+                meshComponentWidget->ui->PathText->setText(static_cast<MeshComponent*>(*it)->mesh->GetPath());
                 meshComponentWidget->Update();
                 break;
             default:

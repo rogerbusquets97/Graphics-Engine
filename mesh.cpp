@@ -50,6 +50,7 @@ void Mesh::destroy()
 
 void Mesh::loadModel(const char *filename)
 {
+    path = filename;
     Assimp::Importer import;
 
     QFile file(filename);
