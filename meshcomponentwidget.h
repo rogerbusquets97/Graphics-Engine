@@ -17,6 +17,7 @@ public:
     ~MeshComponentWidget();
     inline void SetMeshComponent(MeshComponent* m) {meshComponent = m;}
     inline MeshComponent* GetMeshComponent() const {return meshComponent;}
+    void SetPreviewTextures();
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();

@@ -23,6 +23,8 @@ void Material::SetNormalMap(QString path)
     NormalMap = new QOpenGLTexture(normalMap.mirrored());
     NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);
+
+    normalPath = path;
 }
 
 void Material::SetDiffuse(QString path)
@@ -35,4 +37,8 @@ void Material::SetDiffuse(QString path)
     Diffuse = new QOpenGLTexture(diffuse.mirrored());
     Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
+
+    diffusePath = path;
 }
+
+

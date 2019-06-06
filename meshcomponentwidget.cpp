@@ -2,6 +2,7 @@
 #include "ui_meshcomponentwidget.h"
 #include <QFileDialog>
 #include "mainwindow.h"
+#include <QPixmap>
 
 MeshComponentWidget::MeshComponentWidget(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +28,24 @@ void MeshComponentWidget::OnLoadMesh()
     {
         meshComponent->mesh->loadModel(path.toStdString().c_str());
         w->update();
+    }
+}
+
+void MeshComponentWidget::SetPreviewTextures()
+{
+    QString diffusePath = meshComponent->mesh->GetMaterial()->GetDiffusePath();
+    if(!diffusePath.isEmpty())
+    {
+        QPixmap pix(diffusePath);
+        ui->DiffuseImage->setPixmap(pix.scaled(100,100,Qt::KeepAspectRatio));
+    }
+
+    QString normalPath = meshComponent->mesh->GetMaterial()->GetNormalPath();
+    if(!normalPath.isEmpty())
+    {
+        QPixmap pix(normalPath);
+        ui->NormalImage->setPixmap(pix.scaled(100,100, Qt::KeepAspectRatio));
+
     }
 }
 

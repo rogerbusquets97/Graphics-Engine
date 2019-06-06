@@ -51,6 +51,10 @@ void Mesh::destroy()
 
 void Mesh::loadModel(const char *filename)
 {
+    if(!submeshes.empty())
+    {
+        destroy();
+    }
     path = filename;
     Assimp::Importer import;
 

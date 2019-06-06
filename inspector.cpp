@@ -270,6 +270,7 @@ void Inspector::UpdateContent()
                 meshComponentWidget->setVisible(true);
                 meshComponentWidget->SetMeshComponent(static_cast<MeshComponent*>(*it));
                 meshComponentWidget->ui->PathText->setText(static_cast<MeshComponent*>(*it)->mesh->GetPath());
+                meshComponentWidget->SetPreviewTextures();
                 meshComponentWidget->Update();
                 break;
             default:
