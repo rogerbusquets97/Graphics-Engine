@@ -90,7 +90,9 @@ RESOURCES += \
 DISTFILES += \
     shader1_vert.vert \
     shader1_frag.frag \
-    Patrick/Patrick.obj
+    Patrick/Patrick.obj \
+    geometry.vert \
+    geometry.frag
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/ -lassimp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/ -lassimpd

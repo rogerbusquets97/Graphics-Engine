@@ -89,6 +89,7 @@ private:
     QOpenGLBuffer vbo;
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram program;
+    QOpenGLShaderProgram GeometryProgram;
     QOpenGLTexture* Diffuse;
     QOpenGLTexture* NormalMap;
 
