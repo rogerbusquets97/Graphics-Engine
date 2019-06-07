@@ -453,14 +453,14 @@ void myopenglwidget::initializeSphere()
 
 void myopenglwidget::initialize3DModel(const char* filename)
 {
-
+    Mesh *mesh = this->CreateMesh();
+    //mesh->name = filename;
+    mesh->loadModel(filename);
 
     GameObject* newGo = new GameObject(nullptr, "Patrick");
     MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
 
-    Mesh *mesh = this->CreateMesh();
-    //mesh->name = filename;
-    mesh->loadModel(filename);
+
 
     mesh->SetParent(newGo);
 
