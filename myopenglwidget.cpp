@@ -136,11 +136,15 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
+    GeometryProgram.create();
+    GeometryProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/geometry.vert");
+    GeometryProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/geometry.frag");
+    program.link();
+
     diffuse = glGetUniformLocation(program.programId(), "Albedo");
     normal = glGetUniformLocation(program.programId(), "NormalMap");
-   // initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
-    InitGBuffer();
+  //  InitGBuffer();
 
 }
 
@@ -177,7 +181,7 @@ void myopenglwidget::paintGL()
 
     glDisable(GL_CULL_FACE);
 
-    UseShader();
+   // UseShader();
     DrawMeshes();
 
     QOpenGLFramebufferObject::bindDefault();
@@ -248,14 +252,24 @@ void myopenglwidget::DrawMeshes()
 
     glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-           QMatrix4x4 projection = camera->projectionMatrix;
-           QMatrix4x4 view = camera->viewMatrix;
            QMatrix4x4 model;
            model.fill(1.0f);
+// Geometry Pass
+           GeometryProgram.bind();
+           camera->PrepareMatrices();
+           // Camera transformation
+           QVector3D eyePosition(5.0, 5.0, 10.0);
+           QVector3D center(0.0, 0.0, 0.0);
+           QVector3D up(0.0, 1.0, 0.0);
+           camera->viewMatrix.lookAt(eyePosition, center, up);
 
-           //shaderGeometryPass.use();
-           //shaderGeometryPass.setMat4("projection", projection);
-           //shaderGeometryPass.setMat4("view", view);
+           // Object transformation
+
+           //QMatrix4x4 worldMatrix;
+           //QMatrix4x4 worldViewMatrix = camera->viewMatrix * worldMatrix;
+           program.setUniformValue("projection", camera->projectionMatrix);
+           program.setUniformValue("view", camera->viewMatrix);
+
 
     QList<Mesh*> Scenemeshes;
     w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
@@ -305,9 +319,7 @@ void myopenglwidget::DrawMeshes()
         //---------
 
         model.translate((*it)->GetParent()->transform->GetPosition().x,(*it)->GetParent()->transform->GetPosition().y, (*it)->GetParent()->transform->GetPosition().z );
-        //shaderGeometryPass.setMat4("model", model);
-
-
+        program.setUniformValue("model", model);
         (*it)->draw();
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -449,35 +461,6 @@ void myopenglwidget::initializeSphere()
     //mesh->name = "Sphere";
     mesh->addSubMesh(vertexFormat, sphere, sizeof(sphere), &sphereIndices[0][0][0], H*V*6);
     mesh->needsUpdate = true;
-}
-
-void myopenglwidget::initialize3DModel(const char* filename)
-{
-    Mesh *mesh = this->CreateMesh();
-    //mesh->name = filename;
-    mesh->loadModel(filename);
-
-    GameObject* newGo = new GameObject(nullptr, "Patrick");
-    MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
-
-
-
-    mesh->SetParent(newGo);
-
-    newGo->OnAddComponent(meshComponent);
-    w->GetCurrScene()->OnAddObject(newGo);
-
-    /*QImage diffuse;
-    diffuse.load(":/Models/StoneFloor/diffuse.png");
-    Diffuse = new QOpenGLTexture(diffuse.mirrored());
-    Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
-
-    QImage normalmap;
-    normalmap.load(":/Models/StoneFloor/n.png");
-    NormalMap = new QOpenGLTexture(normalmap.mirrored());
-    NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);*/
 }
 
 void myopenglwidget::CleanUpMeshes()

@@ -46,7 +46,7 @@ public:
     Mesh* initializeTriangle();
     void initializeSphere();
     void initializeCube();
-    void initialize3DModel(const char* filename);
+
 
     void UseShader();
 

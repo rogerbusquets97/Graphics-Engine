@@ -61,7 +61,7 @@ void main(void)
 
 
 
-        outColor.rgb = ambient + diffuse;
+        outColor.rgb = normalLocal;
 
         outColor.a = 1.0;
     }
