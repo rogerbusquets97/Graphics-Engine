@@ -106,7 +106,43 @@ myopenglwidget::~myopenglwidget()
     delete interaction;
 }
 
+void myopenglwidget::InitGBuffer()
+{
+    glGenFramebuffers(1, &gBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    //Position
+    glGenTextures(1, &gPosition);
+    glBindTexture(GL_TEXTURE_2D, gPosition);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
 
+    //Nomal
+    glGenTextures(1, &gNormal);
+    glBindTexture(GL_TEXTURE_2D, gNormal);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+
+    //Color
+    glGenTextures(1, &gAlbedo);
+    glBindTexture(GL_TEXTURE_2D, gAlbedo);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
+
+
+    unsigned int attachments[3] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
+    glDrawBuffers(3, attachments);
+
+    glUniform1i(glGetUniformLocation(program.programId(),"gPosition"),0);
+    glUniform1i(glGetUniformLocation(program.programId(),"gNormal"),1);
+    glUniform1i(glGetUniformLocation(program.programId(),"gAlbedo"),2);
+
+}
 
 void myopenglwidget::initializeGL()
 {
@@ -130,13 +166,22 @@ void myopenglwidget::initializeGL()
     glEnable(GL_DEPTH_TEST);
 
     //Shaders
+    //Lightning shaders
     program.create();
-    program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shader1_vert.vert");
-    program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
+    program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/lightning.vert");
+    program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/lightning.frag");
     program.link();
 
-    diffuse = glGetUniformLocation(program.programId(), "Albedo");
-    normal = glGetUniformLocation(program.programId(), "NormalMap");
+   /* diffuse = glGetUniformLocation(program.programId(), "Albedo");
+    normal = glGetUniformLocation(program.programId(), "NormalMap");*/
+
+    // Geometry shaders
+    geometryProgram.create();
+    geometryProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/geometry.vert");
+    geometryProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/geometry.frag");
+    program.link();
+
+    InitGBuffer();
 }
 
 void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage)
@@ -168,15 +213,27 @@ void myopenglwidget::paintGL()
     UpdateMeshes();
 
     glClearDepth(1.0f);
-    glClearColor(0.4f, 0.4f, 0.5f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     glDisable(GL_CULL_FACE);
 
-    UseShader();
+    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    UseGeometryShader();
     DrawMeshes();
-
     QOpenGLFramebufferObject::bindDefault();
+
+    //Use lightning shader
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    UseLightningShader();
+    //Render quad
+    RenderQuad();
+
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glBlitFramebuffer(0,0, this->width(), this->height(), 0,0,this->width(), this->height(), GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 
 }
 
@@ -231,61 +288,53 @@ void myopenglwidget::UpdateMeshes()
     }
 }
 
+void myopenglwidget::RenderQuad()
+{
+    if(quadVAO == 0)
+    {
+        float quadVertices[] = {
+                    -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+                    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+                     1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+                     1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+                };
 
+        glGenVertexArrays(1,&quadVAO);
+        glGenBuffers(1, &quadVBO);
+        glBindVertexArray(quadVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,5*sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE, 5*sizeof(float), (void*)(3 * sizeof (float)));
+    }
+
+    glBindVertexArray(quadVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0,4);
+    glBindVertexArray(0);
+}
 void myopenglwidget::DrawMeshes()
 {
     QList<Mesh*> Scenemeshes;
     w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
-    GLint normalUniform = glGetUniformLocation(program.programId(), "normalEnabled");
-    GLint diffuseUniform = glGetUniformLocation(program.programId(), "diffuseEnabled");
 
     for(QList<Mesh*>::iterator it = Scenemeshes.begin(); it!= Scenemeshes.end(); ++it)
     {
-        if((*it)->GetMaterial()->GetDiffuse() != nullptr)
+        if((*it)->GetMaterial()->GetDiffuse()!= nullptr)
         {
+            diffuse = glGetUniformLocation(program.programId(), "diffuseTexture");
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
             glUniform1i(diffuse, 0);
-
-            if(diffuseUniform != -1)
-            {
-                glUniform1i(diffuseUniform, 1);
-            }
         }
-        else
-        {
-            if(diffuseUniform != -1)
-            {
-                glUniform1i(diffuseUniform, 0);
-            }
-        }
-
-        if((*it)->GetMaterial()->GetNormalMap() != nullptr)
-        {
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetNormalMap()->textureId());
-            glUniform1i(normal, 1);
-
-            if(normalUniform != -1)
-            {
-                glUniform1i(normalUniform, 1);
-            }
-        }
-        else
-        {
-            if(normalUniform != -1)
-            {
-                glUniform1i(normalUniform, 0);
-            }
-        }
-
         (*it)->draw();
     }
 }
 
-void myopenglwidget::UseShader()
+void myopenglwidget::UseGeometryShader()
 {
-    if(program.bind())
+    if(geometryProgram.bind())
     {
         camera->PrepareMatrices();
         // Camera transformation
@@ -298,8 +347,21 @@ void myopenglwidget::UseShader()
 
         QMatrix4x4 worldMatrix;
         QMatrix4x4 worldViewMatrix = camera->viewMatrix * worldMatrix;
-        program.setUniformValue("projectionMatrix", camera->projectionMatrix);
-        program.setUniformValue("worldViewMatrix", worldViewMatrix);
+        geometryProgram.setUniformValue("projectionMatrix", camera->projectionMatrix);
+        geometryProgram.setUniformValue("worldViewMatrix", worldViewMatrix);
+    }
+}
+
+void myopenglwidget::UseLightningShader()
+{
+    if(program.bind())
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, gPosition);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, gNormal);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, gAlbedo);
     }
 }
 

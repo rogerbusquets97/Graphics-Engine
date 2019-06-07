@@ -40,9 +40,11 @@ public:
     // Meshes //
     void UpdateMeshes();
     void DrawMeshes();
+    void RenderQuad();
 
-    void UseShader();
-
+    void UseGeometryShader();
+    void UseLightningShader();
+    void InitGBuffer();
     void EnableVertexAttribArray(GLuint index);
     void VertexAttribPointer(GLuint index,
                              GLint size,
@@ -76,6 +78,7 @@ private:
     QOpenGLBuffer vbo;
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram program;
+    QOpenGLShaderProgram geometryProgram;
     QOpenGLTexture* Diffuse;
     QOpenGLTexture* NormalMap;
 
@@ -86,6 +89,16 @@ private:
     Input* input;
 
     Camera* camera;
+
+    //GBuffer
+    unsigned int gBuffer;
+    unsigned int gPosition;
+    unsigned int gNormal;
+    unsigned int gAlbedo;
+
+    //Screen Quad
+    unsigned int quadVAO = 0;
+    unsigned int quadVBO;
 
 };
 

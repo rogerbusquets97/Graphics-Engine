@@ -90,7 +90,9 @@ DISTFILES += \
     shader1_frag.frag \
     Patrick/Patrick.obj \
     geometry.vert \
-    geometry.frag
+    geometry.frag \
+    lightning.frag \
+    lightning.vert
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/ -lassimp
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/ -lassimpd

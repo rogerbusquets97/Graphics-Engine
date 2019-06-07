@@ -4,6 +4,8 @@
         <file>shader1_frag.frag</file>
         <file>geometry.frag</file>
         <file>geometry.vert</file>
+        <file>lightning.frag</file>
+        <file>lightning.vert</file>
     </qresource>
     <qresource prefix="/Models">
         <file>Patrick/Patrick.obj</file>
