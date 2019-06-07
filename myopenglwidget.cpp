@@ -4,7 +4,6 @@
 #include "mesh.h"
 #include "scene.h"
 #include "meshcomponent.h"
-#include "transform.h"
 
 #include <iostream>
 #include <QOpenGLDebugLogger>
@@ -136,15 +135,11 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
-    GeometryProgram.create();
-    GeometryProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/geometry.vert");
-    GeometryProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/geometry.frag");
-    program.link();
-
     diffuse = glGetUniformLocation(program.programId(), "Albedo");
     normal = glGetUniformLocation(program.programId(), "NormalMap");
+   // initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
-  //  InitGBuffer();
+
 
 }
 
@@ -157,16 +152,17 @@ void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage
 void myopenglwidget::resizeGL(int width, int height)
 {
     this->resize(width, height);
-
-
     int side = qMin(width, height);
-    glViewport((width - side) / 2, (height - side) / 2, side, side);
+        glViewport((width - side) / 2, (height - side) / 2, side, side);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0, 15.0);
-    glMatrixMode(GL_MODELVIEW);
-
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+    #ifdef QT_OPENGL_ES_1
+        glOrthof(-2, +2, -2, +2, 1.0, 15.0);
+    #else
+        glOrtho(-2, +2, -2, +2, 1.0, 15.0);
+    #endif
+        glMatrixMode(GL_MODELVIEW);
 }
 
 void myopenglwidget::paintGL()
@@ -181,7 +177,7 @@ void myopenglwidget::paintGL()
 
     glDisable(GL_CULL_FACE);
 
-   // UseShader();
+    UseShader();
     DrawMeshes();
 
     QOpenGLFramebufferObject::bindDefault();
@@ -249,28 +245,6 @@ void myopenglwidget::UpdateMeshes()
 
 void myopenglwidget::DrawMeshes()
 {
-
-    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-           QMatrix4x4 model;
-           model.fill(1.0f);
-// Geometry Pass
-           GeometryProgram.bind();
-           camera->PrepareMatrices();
-           // Camera transformation
-           QVector3D eyePosition(5.0, 5.0, 10.0);
-           QVector3D center(0.0, 0.0, 0.0);
-           QVector3D up(0.0, 1.0, 0.0);
-           camera->viewMatrix.lookAt(eyePosition, center, up);
-
-           // Object transformation
-
-           //QMatrix4x4 worldMatrix;
-           //QMatrix4x4 worldViewMatrix = camera->viewMatrix * worldMatrix;
-           program.setUniformValue("projection", camera->projectionMatrix);
-           program.setUniformValue("view", camera->viewMatrix);
-
-
     QList<Mesh*> Scenemeshes;
     w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
     GLint normalUniform = glGetUniformLocation(program.programId(), "normalEnabled");
@@ -316,13 +290,7 @@ void myopenglwidget::DrawMeshes()
             }
         }
 
-        //---------
-
-        model.translate((*it)->GetParent()->transform->GetPosition().x,(*it)->GetParent()->transform->GetPosition().y, (*it)->GetParent()->transform->GetPosition().z );
-        program.setUniformValue("model", model);
         (*it)->draw();
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 }
 
@@ -348,7 +316,6 @@ void myopenglwidget::UseShader()
         glBindTexture(GL_TEXTURE_2D, Diffuse->textureId());
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, NormalMap->textureId());
-
         glUniform1i(diffuse, 0);
         glUniform1i(normal, 1);*/
     }
@@ -463,6 +430,30 @@ void myopenglwidget::initializeSphere()
     mesh->needsUpdate = true;
 }
 
+void myopenglwidget::initialize3DModel(const char* filename)
+{
+    Mesh *mesh = this->CreateMesh();
+    //mesh->name = filename;
+    mesh->loadModel(filename);
+
+    GameObject* newGo = new GameObject(nullptr, "Patrick");
+    MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
+
+    newGo->OnAddComponent(meshComponent);
+    w->GetCurrScene()->OnAddObject(newGo);
+
+    /*QImage diffuse;
+    diffuse.load(":/Models/StoneFloor/diffuse.png");
+    Diffuse = new QOpenGLTexture(diffuse.mirrored());
+    Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
+    QImage normalmap;
+    normalmap.load(":/Models/StoneFloor/n.png");
+    NormalMap = new QOpenGLTexture(normalmap.mirrored());
+    NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);*/
+}
+
 void myopenglwidget::CleanUpMeshes()
 {
     for (std::list<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it)
@@ -482,45 +473,8 @@ void myopenglwidget::VertexAttribPointer(GLuint index, GLint size, GLenum type, 
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
-void myopenglwidget::InitGBuffer()
+void GeometryPass()
 {
-    //---------
-    gl->glGenFramebuffers(1, &gBuffer);
-    gl->glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-    unsigned int gPosition, gNormal, gAlbedoSpec;
-    glGenTextures(1, &gPosition);
-       glBindTexture(GL_TEXTURE_2D, gPosition);
-       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width(), height(), 0, GL_RGB, GL_FLOAT, NULL);
-       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
-       // normal color buffer
-       glGenTextures(1, &gNormal);
-       glBindTexture(GL_TEXTURE_2D, gNormal);
-       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width(), height(), 0, GL_RGB, GL_FLOAT, NULL);
-       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
-       // color + specular color buffer
-       glGenTextures(1, &gAlbedoSpec);
-       glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
-       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width(), height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoSpec, 0);
-       // tell OpenGL which color attachments we'll use (of this framebuffer) for rendering
-       unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-       glDrawBuffers(3, attachments);
-
-       unsigned int rboDepth;
-          glGenRenderbuffers(1, &rboDepth);
-          glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-          glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width(), height());
-          glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
-          // finally check if framebuffer is complete
-          if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-              std::cout << "Framebuffer not complete!" << std::endl;
-          glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    //------------
 }
+
+

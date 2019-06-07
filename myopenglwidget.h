@@ -46,7 +46,7 @@ public:
     Mesh* initializeTriangle();
     void initializeSphere();
     void initializeCube();
-
+    void initialize3DModel(const char* filename);
 
     void UseShader();
 
@@ -69,9 +69,8 @@ public:
 
     Interaction* interaction;
 
-    //GBuffer
-     unsigned int gBuffer;
-    void InitGBuffer();
+    // GBuffer
+    void GeometryPass();
 
 signals:
     void messageLogged(const QOpenGLDebugMessage &);
@@ -87,7 +86,6 @@ private:
     QOpenGLBuffer vbo;
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram program;
-    QOpenGLShaderProgram GeometryProgram;
     QOpenGLTexture* Diffuse;
     QOpenGLTexture* NormalMap;
 

@@ -10,15 +10,12 @@
 #include <QVector>
 
 class Resource;
-class GameObject;
 
 class Mesh : public Resource
 {
 public:
     Mesh();
     ~Mesh(); //override;
-
-    //Mesh * asMesh() override { return this; }
 
     void update(); //override;
     void destroy(); //override;
@@ -34,11 +31,8 @@ public:
     QVector<SubMesh*> submeshes;
     bool needsUpdate;
 
-    GameObject* GetParent(){ return parent; }
-    void SetParent(GameObject* go) { parent = go;}
-
 private:
-    GameObject* parent;
+
     //Assimp
     void processNode(aiNode *node, const aiScene *scene);
     SubMesh * processMesh(aiMesh *mesh, const aiScene *scene);

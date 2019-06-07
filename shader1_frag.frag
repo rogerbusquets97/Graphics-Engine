@@ -25,7 +25,7 @@ vec3 lightColor = vec3(1,1,1);
 void main(void)
 {
     vec2 st = FSIn.texCoords;
-   // st*=0.1;
+    st*=0.1;
 
     if(normalEnabled == 1)
     {
@@ -61,7 +61,7 @@ void main(void)
 
 
 
-        outColor.rgb = normalLocal;
+        outColor.rgb = ambient + diffuse;
 
         outColor.a = 1.0;
     }
