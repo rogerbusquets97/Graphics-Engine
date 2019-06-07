@@ -153,6 +153,16 @@ void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage
 void myopenglwidget::resizeGL(int width, int height)
 {
     this->resize(width, height);
+
+
+    int side = qMin(width, height);
+    glViewport((width - side) / 2, (height - side) / 2, side, side);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0, 15.0);
+    glMatrixMode(GL_MODELVIEW);
+
 }
 
 void myopenglwidget::paintGL()
