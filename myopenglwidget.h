@@ -38,15 +38,8 @@ public:
     void showInfo();
 
     // Meshes //
-    Mesh* CreateMesh();
     void UpdateMeshes();
     void DrawMeshes();
-    void CleanUpMeshes();
-
-    Mesh* initializeTriangle();
-    void initializeSphere();
-    void initializeCube();
-    void initialize3DModel(const char* filename);
 
     void UseShader();
 
@@ -69,9 +62,6 @@ public:
 
     Interaction* interaction;
 
-    // GBuffer
-    void GeometryPass();
-
 signals:
     void messageLogged(const QOpenGLDebugMessage &);
 
@@ -91,8 +81,6 @@ private:
 
     GLuint normal;
     GLuint diffuse;
-
-    std::list<Mesh*> meshes;
 
     QTimer timer;
     Input* input;

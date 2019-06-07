@@ -137,10 +137,6 @@ void myopenglwidget::initializeGL()
 
     diffuse = glGetUniformLocation(program.programId(), "Albedo");
     normal = glGetUniformLocation(program.programId(), "NormalMap");
-   // initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
-
-
-
 }
 
 void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage)
@@ -219,13 +215,6 @@ void myopenglwidget::showInfo()
     std::cout << context()->format().blueBufferSize() << std::endl;
     std::cout << context()->format().alphaBufferSize() << std::endl;
     std::cout << context()->format().depthBufferSize() << std::endl;
-}
-
-Mesh* myopenglwidget::CreateMesh()
-{
-    Mesh* newMesh = new Mesh();
-   // meshes.push_back(newMesh);
-    return newMesh;
 }
 
 void myopenglwidget::UpdateMeshes()
@@ -311,155 +300,6 @@ void myopenglwidget::UseShader()
         QMatrix4x4 worldViewMatrix = camera->viewMatrix * worldMatrix;
         program.setUniformValue("projectionMatrix", camera->projectionMatrix);
         program.setUniformValue("worldViewMatrix", worldViewMatrix);
-
-        /*glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, Diffuse->textureId());
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, NormalMap->textureId());
-        glUniform1i(diffuse, 0);
-        glUniform1i(normal, 1);*/
-    }
-}
-
-
-
-void myopenglwidget::initializeCube()
-{
-    QVector3D vertices[] = {
-        QVector3D(-0.5f, -0.5f, 0.0f),
-        QVector3D(-0.5f, 0.5f, 0.0f),
-        QVector3D(0.5f, 0.5f, 0.0f),
-        QVector3D(0.5f, -0.5f, 0.0f)
-    };
-    unsigned int indices[] = {
-        0, 2, 1,
-        0, 3, 2
-    };
-
-    VertexFormat vertexFormat;
-    vertexFormat.setVertexAttribute(0, 0, 3);
-
-    Mesh *mesh = this->CreateMesh();
-    //mesh->name = "Cube";
-    mesh->addSubMesh(vertexFormat, vertices, sizeof(vertices), indices, sizeof(indices));
-    mesh->needsUpdate = true;
-}
-
-Mesh* myopenglwidget::initializeTriangle()
-{
-    //Program
-    program.create();
-    program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/shaders/shader1.vert");
-    program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shaders/shader1.frag");
-    program.link();
-    program.bind();
-
-    //VBO
-    QVector3D vertices[] = {
-        QVector3D(-0.5f, -0.5f, 0.0f), QVector3D(1.0f, 0.0f, 0.0f), //Vertex 1
-        QVector3D( 0.5f, -0.5f, 0.0f), QVector3D(0.0f, 1.0f, 0.0f), //Vertex 2
-        QVector3D( 0.0f,  0.5f, 0.0f), QVector3D(0.0f, 0.0f, 1.0f)  //Vertex 3
-    };
-
-    vbo.create();
-    vbo.bind();
-    vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
-    vbo.allocate(vertices, 6 * sizeof(QVector3D));
-
-    //VAO: Captures state of VBOs
-    vao.create();
-    vao.bind();
-    const GLint compCount = 3;
-    const int strideBytes = 2 * sizeof(QVector3D);
-    const int offsetBytes0 = 0;
-    const int offsetBytes1 = sizeof(QVector3D);
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(0, compCount, GL_FLOAT, GL_FALSE, strideBytes, (void*)(offsetBytes0));
-    glVertexAttribPointer(1, compCount, GL_FLOAT, GL_FALSE, strideBytes, (void*)(offsetBytes1));
-
-    vao.release();
-    program.release();
-    vbo.release();
-
-    return nullptr;
-}
-
-void myopenglwidget::initializeSphere()
-{
-
-    Vertex sphere[H][V + 1];
-    for(int i = 0; i < H; ++i)
-    {
-        for(int j = 0; j < V + 1; ++j)
-        {
-            float nh = float(i) / H;
-            float nv = float(j) / V - 0.5f;
-            float angleh = 2 * pi * nh;
-            float anglev = -pi * nv;
-
-            sphere[i][j].pos.setX(sinf(angleh) * cosf(anglev));
-            sphere[i][j].pos.setY(-sinf(anglev));
-            sphere[i][j].pos.setZ(cosf(angleh) * cosf(anglev));
-            sphere[i][j].norm = sphere[i][j].pos;
-        }
-    }
-
-    unsigned int sphereIndices[H][V][6];
-
-    for (unsigned int i = 0; i < H; ++i)
-    {
-        for (unsigned int j = 0; j < V + 1; ++j)
-        {
-            sphereIndices[i][j][0] = (i+0)      * (V+1) + j;
-            sphereIndices[i][j][1] = ((i+1)%H)  * (V+1) + j;
-            sphereIndices[i][j][2] = ((i+1)%H)  * (V+1) + j+1;
-            sphereIndices[i][j][3] = (i+0)      * (V+1) + j;
-            sphereIndices[i][j][4] = ((i+1)%H)  * (V+1) + j+1;
-            sphereIndices[i][j][5] = (i+0)      * (V+1) + j+1;
-        }
-    }
-
-    VertexFormat vertexFormat;
-    vertexFormat.setVertexAttribute(0,0,3);
-    vertexFormat.setVertexAttribute(1, sizeof(QVector3D), 3);
-
-    Mesh *mesh = this->CreateMesh();
-    //mesh->name = "Sphere";
-    mesh->addSubMesh(vertexFormat, sphere, sizeof(sphere), &sphereIndices[0][0][0], H*V*6);
-    mesh->needsUpdate = true;
-}
-
-void myopenglwidget::initialize3DModel(const char* filename)
-{
-    Mesh *mesh = this->CreateMesh();
-    //mesh->name = filename;
-    mesh->loadModel(filename);
-
-    GameObject* newGo = new GameObject(nullptr, "Patrick");
-    MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
-
-    newGo->OnAddComponent(meshComponent);
-    w->GetCurrScene()->OnAddObject(newGo);
-
-    /*QImage diffuse;
-    diffuse.load(":/Models/StoneFloor/diffuse.png");
-    Diffuse = new QOpenGLTexture(diffuse.mirrored());
-    Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
-    QImage normalmap;
-    normalmap.load(":/Models/StoneFloor/n.png");
-    NormalMap = new QOpenGLTexture(normalmap.mirrored());
-    NormalMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    NormalMap->setMagnificationFilter(QOpenGLTexture::Linear);*/
-}
-
-void myopenglwidget::CleanUpMeshes()
-{
-    for (std::list<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it)
-    {
-        if((*it) != nullptr)
-            delete (*it);
     }
 }
 
@@ -473,8 +313,5 @@ void myopenglwidget::VertexAttribPointer(GLuint index, GLint size, GLenum type, 
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
-void GeometryPass()
-{
-}
 
 
