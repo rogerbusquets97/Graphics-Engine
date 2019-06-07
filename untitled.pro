@@ -41,7 +41,6 @@ SOURCES += \
     camera.cpp \
     input.cpp \
     interaction.cpp \
-    gbuffer.cpp \
     meshcomponentwidget.cpp \
     material.cpp
 
@@ -64,7 +63,6 @@ HEADERS += \
     camera.h \
     input.h \
     interaction.h \
-    gbuffer.h \
     meshcomponentwidget.h \
     material.h
 

@@ -16,7 +16,6 @@
 #include "input.h"
 #include "interaction.h"
 #include "camera.h"
-#include "gbuffer.h"
 
 // Sphere //
 #define H 32
@@ -70,10 +69,9 @@ public:
 
     Interaction* interaction;
 
-    // GBuffer
-    GBuffer* gbuffer;
-
-    void GeometryPass();
+    //GBuffer
+     unsigned int gBuffer;
+    void InitGBuffer();
 
 signals:
     void messageLogged(const QOpenGLDebugMessage &);

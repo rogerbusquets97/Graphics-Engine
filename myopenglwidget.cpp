@@ -4,6 +4,7 @@
 #include "mesh.h"
 #include "scene.h"
 #include "meshcomponent.h"
+#include "transform.h"
 
 #include <iostream>
 #include <QOpenGLDebugLogger>
@@ -135,14 +136,11 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/shader1_frag.frag");
     program.link();
 
-    gbuffer = new GBuffer();
-    gbuffer->Init(this->size().width(), this->size().height());
-
     diffuse = glGetUniformLocation(program.programId(), "Albedo");
     normal = glGetUniformLocation(program.programId(), "NormalMap");
    // initialize3DModel(":/Models/StoneFloor/StoneFloor.obj");
 
-
+    InitGBuffer();
 
 }
 
@@ -237,6 +235,18 @@ void myopenglwidget::UpdateMeshes()
 
 void myopenglwidget::DrawMeshes()
 {
+
+    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+           QMatrix4x4 projection = camera->projectionMatrix;
+           QMatrix4x4 view = camera->viewMatrix;
+           QMatrix4x4 model;
+           model.fill(1.0f);
+
+           //shaderGeometryPass.use();
+           //shaderGeometryPass.setMat4("projection", projection);
+           //shaderGeometryPass.setMat4("view", view);
+
     QList<Mesh*> Scenemeshes;
     w->GetCurrScene()->GetSceneMeshes(Scenemeshes);
     GLint normalUniform = glGetUniformLocation(program.programId(), "normalEnabled");
@@ -282,7 +292,15 @@ void myopenglwidget::DrawMeshes()
             }
         }
 
+        //---------
+
+        model.translate((*it)->GetParent()->transform->GetPosition().x,(*it)->GetParent()->transform->GetPosition().y, (*it)->GetParent()->transform->GetPosition().z );
+        //shaderGeometryPass.setMat4("model", model);
+
+
         (*it)->draw();
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 }
 
@@ -425,12 +443,16 @@ void myopenglwidget::initializeSphere()
 
 void myopenglwidget::initialize3DModel(const char* filename)
 {
+
+
+    GameObject* newGo = new GameObject(nullptr, "Patrick");
+    MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
+
     Mesh *mesh = this->CreateMesh();
     //mesh->name = filename;
     mesh->loadModel(filename);
 
-    GameObject* newGo = new GameObject(nullptr, "Patrick");
-    MeshComponent* meshComponent = new MeshComponent(mesh,newGo, ComponentType::mesh);
+    mesh->SetParent(newGo);
 
     newGo->OnAddComponent(meshComponent);
     w->GetCurrScene()->OnAddObject(newGo);
@@ -467,6 +489,45 @@ void myopenglwidget::VertexAttribPointer(GLuint index, GLint size, GLenum type, 
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
-void GeometryPass()
+void myopenglwidget::InitGBuffer()
 {
+    //---------
+    gl->glGenFramebuffers(1, &gBuffer);
+    gl->glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    unsigned int gPosition, gNormal, gAlbedoSpec;
+    glGenTextures(1, &gPosition);
+       glBindTexture(GL_TEXTURE_2D, gPosition);
+       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width(), height(), 0, GL_RGB, GL_FLOAT, NULL);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+       // normal color buffer
+       glGenTextures(1, &gNormal);
+       glBindTexture(GL_TEXTURE_2D, gNormal);
+       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width(), height(), 0, GL_RGB, GL_FLOAT, NULL);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+       // color + specular color buffer
+       glGenTextures(1, &gAlbedoSpec);
+       glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
+       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width(), height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoSpec, 0);
+       // tell OpenGL which color attachments we'll use (of this framebuffer) for rendering
+       unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+       glDrawBuffers(3, attachments);
+
+       unsigned int rboDepth;
+          glGenRenderbuffers(1, &rboDepth);
+          glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+          glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width(), height());
+          glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+          // finally check if framebuffer is complete
+          if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+              std::cout << "Framebuffer not complete!" << std::endl;
+          glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    //------------
 }
