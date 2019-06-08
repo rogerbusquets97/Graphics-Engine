@@ -7,14 +7,17 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
-#include <vector>
+
+static const float pi = 3.1416f;
+struct Vertex { QVector3D pos; QVector3D norm; };
 
 class SubMesh :
         protected QOpenGLFunctions_3_3_Core
 {
 public:
     SubMesh();
-    SubMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+    SubMesh(VertexFormat vertexFormat, void *data, int size);
+    SubMesh(VertexFormat vertexFormat, void *vertices, size_t size, unsigned int *indices, unsigned int indices_count);
     ~SubMesh();
 
     void update();
@@ -23,10 +26,19 @@ public:
 
 private:
 
-    std::vector<Vertex>vertices;
-    std::vector<unsigned int> ind;
+    unsigned char *data = nullptr;
+    size_t data_size = 0;
 
-    unsigned int VAO, VBO, EBO;
+    unsigned int *indices = nullptr;
+    size_t indices_count = 0;
+
+    VertexFormat vertexFormat;
+    QOpenGLBuffer vbo;
+    QOpenGLBuffer ibo;
+
+    QOpenGLVertexArrayObject vao;
+
+    QOpenGLShaderProgram program;
 
 };
 

@@ -40,5 +40,5 @@ void main(void)
     FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.4));
 
 
-   // FragColor.rgb = fragDiffuse;
+    FragColor.rgb = fragDiffuse;
 }
