@@ -27,7 +27,7 @@ void main()
     vec3 N = normalize(FSIn.normalLocalspace);
 
     mat3 TBN = mat3(T, B, N);
-    vec3 normalTangent = texture(normalMap, FSIn.texCoords * 0.1).rgb;
+    vec3 normalTangent = texture(normalMap, FSIn.texCoords).rgb;
     normalTangent = normalize(normalTangent * 2.0 - 1.0);
 
     vec3 normalLocal = normalize(TBN * normalTangent);

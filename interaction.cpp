@@ -41,7 +41,7 @@ bool Interaction::Update()
 
 bool Interaction::Idle()
 {
-    if(input->mouseButtons[Qt::RightButton]==MouseButtonState::Pressed )
+    if(input->mouseButtons[Qt::RightButton]==MouseButtonState::Pressed && input->zooming_state == Zooming::Unknown_Zoom)
     {
         state = State::Navigating;
     }
@@ -72,10 +72,11 @@ bool Interaction::Navigate()
     if(input->mouseButtons[Qt::RightButton] != MouseButtonState::Pressed)
     {
         state = State::Idling;
+        cameraChanged = false;
         return false;
     }
 
-    cameraChanged = false;
+
 
     int mousex_delta = input->mousex - input->mousex_prev;
     int mousey_delta = input->mousey - input->mousey_prev;
@@ -181,7 +182,6 @@ bool Interaction::Zoom()
 
     if(mousex_delta > 2 || mousey_delta > 2 || mousex_delta < -2 ||  mousey_delta < -2)
     {
-        cameraChanged = true;
         yaw -= 0.3f * mousex_delta;
         pitch -= 0.3f * mousey_delta;
 
