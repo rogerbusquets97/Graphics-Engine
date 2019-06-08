@@ -12,6 +12,7 @@
 #include <QOpenGLTexture>
 
 #include "mainwindow.h"
+#include "transform.h"
 
 #pragma comment( lib, "OpenGL32.lib" )
 
@@ -47,13 +48,8 @@ myopenglwidget::myopenglwidget(QWidget *parent)
 
 void myopenglwidget::Frame()
 {
-    //Update
-    bool interacted = interaction->Update();
-    if(interacted)
-    {
-        update();
-    }
-
+    interaction->Update();
+    update();
     input->postUpdate();
 
 }
@@ -375,7 +371,18 @@ void myopenglwidget::DrawMeshes()
         else
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 0);
 
+        QMatrix4x4 worldMatrix;
+        worldMatrix.setToIdentity();
 
+        if((*it)->GetParent()->GetTransorm() != nullptr)
+        {
+            Transform* trans = (*it)->GetParent()->GetTransorm();
+            worldMatrix.translate(trans->GetPosition().x, trans->GetPosition().y, trans->GetPosition().z);
+            worldMatrix.scale(trans->GetScale().x, trans->GetScale().y, trans->GetScale().z);
+            worldMatrix.rotate(trans->GetRotation().x, trans->GetRotation().y, trans->GetRotation().z);
+        }
+
+         geometryProgram.setUniformValue("modelMatrix", worldMatrix);
         (*it)->draw();
     }
 }
@@ -395,8 +402,8 @@ void myopenglwidget::UseGeometryShader()
 
         QMatrix4x4 worldMatrix;
         worldMatrix.setToIdentity();
+
         geometryProgram.setUniformValue("projectionMatrix", camera->projectionMatrix);
-        geometryProgram.setUniformValue("modelMatrix", worldMatrix);
         geometryProgram.setUniformValue("viewMatrix", camera->viewMatrix);
     }
 }

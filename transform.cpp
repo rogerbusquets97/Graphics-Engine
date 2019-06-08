@@ -3,6 +3,8 @@
 Transform::Transform(GameObject* p, ComponentType t)  : Component(p,t)
 {
     position = Float3(0,0,0);
+    rotation = Float3(0,0,0);
+    scale = Float3(1,1,1);
 }
 
 void Transform::SetPosition(float x, float y, float z)

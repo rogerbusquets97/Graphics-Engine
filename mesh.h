@@ -6,15 +6,15 @@
 #include "submesh.h"
 #include "assimp/scene.h"
 #include "material.h"
-
 #include <QVector>
+#include "gameobject.h"
 
 class Resource;
 
 class Mesh : public Resource
 {
 public:
-    Mesh();
+    Mesh(GameObject* parent);
     ~Mesh(); //override;
 
     void update(); //override;
@@ -25,7 +25,7 @@ public:
     void loadModel(const char *filename);
     inline QString GetPath(){return path;}
     inline Material* GetMaterial(){return material;}
-
+    inline GameObject* GetParent(){return parent;}
     void draw();
 
     QVector<SubMesh*> submeshes;
@@ -38,6 +38,7 @@ private:
     SubMesh * processMesh(aiMesh *mesh, const aiScene *scene);
     QString path;
     Material* material;
+    GameObject* parent;
 };
 
 #endif // MESH_H

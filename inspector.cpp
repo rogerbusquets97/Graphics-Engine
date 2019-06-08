@@ -119,7 +119,7 @@ void Inspector::OnAddComponent()
 
         if(comboBox->currentText() == "Mesh Component")
         {
-            Mesh* m = new Mesh();
+            Mesh* m = new Mesh(selected);
             MeshComponent* component = new MeshComponent(m, selected, ComponentType::mesh);
             selected->OnAddComponent(component);
         }

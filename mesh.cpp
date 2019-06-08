@@ -7,10 +7,11 @@
 #include <QByteArray>
 #include <iostream>
 #include <QFileInfo>
-Mesh::Mesh()
+Mesh::Mesh(GameObject* parent)
 {
     material = new Material();
     needsUpdate =true;
+    this->parent = parent;
 }
 
 Mesh::~Mesh()

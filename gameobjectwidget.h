@@ -12,6 +12,7 @@ public:
     GameObjectWidget(QWidget *parent = nullptr, GameObject* obj = nullptr);
     inline GameObject* GetObject()const {return object;}
     inline QLabel* GetLabel()const {return label;}
+
 private:
     GameObject* object;
     QLabel* label;

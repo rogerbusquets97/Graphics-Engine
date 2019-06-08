@@ -15,12 +15,13 @@ public:
     inline void SetName(const QString n){ name = n; }
     inline QString GetName() const { return name; }
     void Update();
+    inline Transform* GetTransorm(){return transform;}
 public:
     QString name;
     QList<Component*> components;
     Component* GetComponent(ComponentType t);
     bool HasComponentOfType(ComponentType t);
-    Transform* transform;
+    Transform* transform = nullptr;
 signals:
 
 public slots:
