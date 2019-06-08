@@ -13,6 +13,9 @@ out Data
 {
     vec3 positionViewspace;
     vec3 normalViewspace;
+    vec3 tangentLocalspace;
+    vec3 bitangentLocalspace;
+    vec3 normalLocalspace;
     vec2 texCoords;
 } VSOut;
 
@@ -24,6 +27,10 @@ void main()
 
     mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
     VSOut.normalViewspace = normalMatrix * normal;
+    //Normal mapping
+    VSOut.tangentLocalspace = tangent;
+    VSOut.bitangentLocalspace = bitangent;
+    VSOut.normalLocalspace = normal;
 
 
     gl_Position = projectionMatrix * viewMatrix * worldPos;

@@ -1,3 +1,4 @@
+
 #include "myopenglwidget.h"
 #include "vertex.h"
 #include "submesh.h"
@@ -322,11 +323,22 @@ void myopenglwidget::DrawMeshes()
     {
         if((*it)->GetMaterial()->GetDiffuse()!= nullptr)
         {
-            diffuse = gl->glGetUniformLocation(program.programId(), "diffuseTexture");
+            diffuse = gl->glGetUniformLocation(geometryProgram.programId(), "diffuseTexture");
             gl->glActiveTexture(GL_TEXTURE0);
             gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
             gl->glUniform1i(diffuse, 0);
+
+
         }
+
+        if((*it)->GetMaterial()->GetNormalMap()!= nullptr)
+        {
+            normal = gl->glGetUniformLocation(geometryProgram.programId(), "normalMap");
+            gl->glActiveTexture(GL_TEXTURE1);
+            gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetNormalMap()->textureId());
+            gl->glUniform1i(normal, 1);
+        }
+
         (*it)->draw();
     }
 }

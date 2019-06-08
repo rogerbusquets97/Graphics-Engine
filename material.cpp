@@ -34,7 +34,7 @@ void Material::SetDiffuse(QString path)
     if(Diffuse != nullptr)
         delete Diffuse;
 
-    Diffuse = new QOpenGLTexture(diffuse);
+    Diffuse = new QOpenGLTexture(diffuse.mirrored());
     Diffuse->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
 

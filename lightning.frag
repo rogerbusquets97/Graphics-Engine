@@ -12,7 +12,7 @@ uniform sampler2D gNormal;
 uniform sampler2D gAlbedo;
 
 
-float ambientTerm = 0.05;
+float ambientTerm = 0.5;
 vec3 L = vec3(0,0,1);
 vec3 lightColor = vec3(1,1,1);
 
