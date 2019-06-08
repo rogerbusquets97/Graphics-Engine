@@ -125,19 +125,19 @@ void myopenglwidget::InitGBuffer()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
-
     //Color
     glGenTextures(1, &gAlbedo);
-    glBindTexture(GL_TEXTURE_2D, gAlbedo);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
+   glBindTexture(GL_TEXTURE_2D, gAlbedo);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width(), this->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
 
 
     unsigned int attachments[3] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
     glDrawBuffers(3, attachments);
 
+    program.bind();
     glUniform1i(glGetUniformLocation(program.programId(),"gPosition"),0);
     glUniform1i(glGetUniformLocation(program.programId(),"gNormal"),1);
     glUniform1i(glGetUniformLocation(program.programId(),"gAlbedo"),2);
@@ -172,9 +172,6 @@ void myopenglwidget::initializeGL()
     program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/lightning.frag");
     program.link();
 
-   /* diffuse = glGetUniformLocation(program.programId(), "Albedo");
-    normal = glGetUniformLocation(program.programId(), "NormalMap");*/
-
     // Geometry shaders
     geometryProgram.create();
     geometryProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/geometry.vert");
@@ -193,7 +190,7 @@ void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage
 void myopenglwidget::resizeGL(int width, int height)
 {
     this->resize(width, height);
-    int side = qMin(width, height);
+    /*int side = qMin(width, height);
         glViewport((width - side) / 2, (height - side) / 2, side, side);
 
         glMatrixMode(GL_PROJECTION);
@@ -203,7 +200,7 @@ void myopenglwidget::resizeGL(int width, int height)
     #else
         glOrtho(-2, +2, -2, +2, 1.0, 15.0);
     #endif
-        glMatrixMode(GL_MODELVIEW);
+        glMatrixMode(GL_MODELVIEW);*/
 }
 
 void myopenglwidget::paintGL()
@@ -213,9 +210,9 @@ void myopenglwidget::paintGL()
     UpdateMeshes();
 
     glClearDepth(1.0f);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDisable(GL_CULL_FACE);
+    //glDisable(GL_CULL_FACE);
 
     glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -346,9 +343,10 @@ void myopenglwidget::UseGeometryShader()
         // Object transformation
 
         QMatrix4x4 worldMatrix;
-        QMatrix4x4 worldViewMatrix = camera->viewMatrix * worldMatrix;
+        worldMatrix.setToIdentity();
         geometryProgram.setUniformValue("projectionMatrix", camera->projectionMatrix);
-        geometryProgram.setUniformValue("worldViewMatrix", worldViewMatrix);
+        geometryProgram.setUniformValue("modelMatrix", worldMatrix);
+        geometryProgram.setUniformValue("viewMatrix", camera->viewMatrix);
     }
 }
 

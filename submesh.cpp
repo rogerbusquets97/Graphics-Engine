@@ -8,20 +8,10 @@ SubMesh::SubMesh()
 
 }
 
-SubMesh::SubMesh(VertexFormat vertexFormat, void *data, int size)
-    : vertexFormat(vertexFormat), data((unsigned char*)data), data_size(size)
+SubMesh::SubMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
 {
-
-}
-
-SubMesh::SubMesh(VertexFormat vert_form, void* d, size_t d_size, uint* ind, uint num_ind) :
-                             vertexFormat(vert_form), data_size(d_size), indices_count(num_ind),
-                             ibo(QOpenGLBuffer::Type::IndexBuffer)
-{
-    data = new byte[d_size];
-    memcpy(data, d, d_size);
-    indices = new unsigned int[num_ind];
-    memcpy(indices, ind, num_ind * sizeof(unsigned int));
+    this->vertices = vertices;
+    this->ind = indices;
 }
 
 SubMesh::~SubMesh()
@@ -31,81 +21,47 @@ SubMesh::~SubMesh()
 
 void SubMesh::update()
 {
-    //VAO: Vertex foormat description and state of VBOs
-    vao.create();
-    vao.bind();
+    gl->glGenVertexArrays(1, &VAO);
+    gl->glGenBuffers(1, &VBO);
+    gl->glGenBuffers(1, &EBO);
 
-    //VBO: Buffer with vertex data
-    if(data != nullptr)
-    {
-        vbo.create();
-        vbo.bind();
-        vbo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
-        vbo.allocate(data, int(data_size));
-        delete[] data;
-        data = nullptr;
-    }
+    gl->glBindVertexArray(VAO);
+    gl->glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    gl->glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+    gl->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    gl->glBufferData(GL_ELEMENT_ARRAY_BUFFER, ind.size() * sizeof(unsigned int), &ind[0], GL_STATIC_DRAW);
 
-    else
-    {
-        return;
-    }
+    gl->glEnableVertexAttribArray(0);
+    gl->glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
-    //IBO: Buffer with indexes
-    if (indices != nullptr)
-    {
-        ibo.create();
-        ibo.bind();
-        ibo.setUsagePattern(QOpenGLBuffer::UsagePattern::StaticDraw);
-        ibo.allocate(indices, int(indices_count * sizeof(unsigned int)));
-        delete[] indices;
-        indices = nullptr;
-    }
+    gl->glEnableVertexAttribArray(1);
+    gl->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
 
-    //Vertex Attributes
-    for (int location = 0; location <MAX_VERTEX_ATTRIBUTES; ++location)
-    {
-        VertexAttribute &attr = vertexFormat.attribute[location];
+    gl->glEnableVertexAttribArray(2);
+    gl->glVertexAttribPointer(2,2,GL_FLOAT,GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
 
-        if(attr.enabled)
-        {
-            gl->glEnableVertexAttribArray(GLuint(location));
-            gl->glVertexAttribPointer(GLuint(location), attr.ncomp, GL_FLOAT, GL_FALSE, vertexFormat.size, (void *)(attr.offset));
+    gl->glEnableVertexAttribArray(3);
+    gl->glVertexAttribPointer(3,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
 
-        }
-    }
+    gl->glEnableVertexAttribArray(4);
+    gl->glVertexAttribPointer(4,3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
-    //Release
-    vao.release();
-    vbo.release();
-    if(ibo.isCreated())
-    {
-        ibo.release();
-    }
-
+    gl->glBindVertexArray(0);
 }
 
 void SubMesh::draw()
 {
-    int num_vertices = data_size / vertexFormat.size;
-    vao.bind();
 
-    if(indices_count > 0)
-    {
-        gl->glDrawElements(GL_TRIANGLES, int(indices_count), GL_UNSIGNED_INT, nullptr);
-    }
-    else
-    {
-        gl->glDrawArrays(GL_TRIANGLES, 0, int(num_vertices));
-    }
+    gl->glBindVertexArray(VAO);
 
-    vao.release();
+    if(ind.size() > 0)
+    {
+        gl->glDrawElements(GL_TRIANGLES, int(ind.size()), GL_UNSIGNED_INT, 0);
+    }
 }
 
 void SubMesh::destroy()
 {
-    if(vbo.isCreated()) {vbo.destroy(); }
-    if(ibo.isCreated()) {ibo.destroy(); }
-    if(vao.isCreated()) {vao.destroy(); }
+
 }
 

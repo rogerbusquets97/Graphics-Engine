@@ -20,8 +20,6 @@ public:
     void update(); //override;
     void destroy(); //override;
 
-    void addSubMesh(VertexFormat vertexFormat, void *data, int bytes);
-    void addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes);
     void loadModel(const char *filename);
     inline QString GetPath(){return path;}
     inline Material* GetMaterial(){return material;}

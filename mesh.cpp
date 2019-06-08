@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QByteArray>
 #include <iostream>
+#include <QVector2D>
+#include <vector>
 
 Mesh::Mesh()
 {
@@ -16,16 +18,6 @@ Mesh::Mesh()
 Mesh::~Mesh()
 {
     destroy();
-}
-
-void Mesh::addSubMesh(VertexFormat vertexFormat, void *data, int bytes)
-{
-
-}
-
-void Mesh::addSubMesh(VertexFormat vertexFormat, void *data, int bytes, unsigned int *indexes, int bytes_indexes)
-{
-    submeshes.push_back(new SubMesh(vertexFormat, data, bytes, indexes, bytes_indexes));
 }
 
 void Mesh::update()
@@ -94,59 +86,65 @@ SubMesh* Mesh::processMesh(aiMesh *mesh, const aiScene *scene)
     QVector<float> vertices;
     QVector<unsigned int> indices;
 
-    // Process vertices
+    std::vector<Vertex> vert;
+    std::vector<unsigned int> ind;
+
     for(unsigned int i = 0; i < mesh->mNumVertices; ++i)
     {
-        vertices.push_back(mesh->mVertices[i].x);
-        vertices.push_back(mesh->mVertices[i].y);
-        vertices.push_back(mesh->mVertices[i].z);
-        vertices.push_back(mesh->mNormals[i].x);
-        vertices.push_back(mesh->mNormals[i].y);
-        vertices.push_back(mesh->mNormals[i].z);
+        Vertex vertex;
+        QVector3D vec;
+        vec.setX(mesh->mVertices[i].x);
+        vec.setY(mesh->mVertices[i].y);
+        vec.setZ(mesh->mVertices[i].z);
+
+        vertex.Position = vec;
+
+        vec.setX(mesh->mNormals[i].x);
+        vec.setY(mesh->mNormals[i].y);
+        vec.setZ(mesh->mNormals[i].z);
+
+        vertex.Normal = vec;
 
         if(mesh->mTextureCoords[0])
         {
-            vertices.push_back(mesh->mTextureCoords[0][i].x);
-            vertices.push_back(mesh->mTextureCoords[0][i].y);
+            QVector2D vector;
+            vector.setX(mesh->mTextureCoords[0][i].x);
+            vector.setY(mesh->mTextureCoords[0][i].y);
+
+            vertex.TexCoords = vector;
+        }
+        else
+        {
+            vertex.TexCoords = QVector2D(0,0);
         }
 
-        if(mesh->mTangents != nullptr && mesh->mBitangents != nullptr)
-        {
-            vertices.push_back(mesh->mTangents[i].x);
-            vertices.push_back(mesh->mTangents[i].y);
-            vertices.push_back(mesh->mTangents[i].z);
-            vertices.push_back(mesh->mBitangents[i].x);
-            vertices.push_back(mesh->mBitangents[i].y);
-            vertices.push_back(mesh->mBitangents[i].z);
-        }
+        vec.setX(mesh->mTangents[i].x);
+        vec.setY(mesh->mTangents[i].y);
+        vec.setZ(mesh->mTangents[i].z);
+
+        vertex.Tangent = vec;
+
+        vec.setX(mesh->mBitangents[i].x);
+        vec.setY(mesh->mBitangents[i].y);
+        vec.setZ(mesh->mBitangents[i].z);
+        vertex.Bitangent = vec;
+
+
+        vert.push_back(vertex);
+
     }
 
-    // Process indices
     for(unsigned int i = 0; i < mesh->mNumFaces; ++i)
     {
         aiFace face = mesh->mFaces[i];
         for(unsigned int j = 0; j < face.mNumIndices; ++j)
         {
-            indices.push_back(face.mIndices[j]);
+            ind.push_back(face.mIndices [j]);
         }
     }
 
-    VertexFormat vertex_format;
-    vertex_format.setVertexAttribute(0, 0, 3);
-    vertex_format.setVertexAttribute(1, 3 * sizeof(float), 3);
+    return new SubMesh(vert, ind);
 
-    if(mesh->mTextureCoords[0])
-    {
-        vertex_format.setVertexAttribute(2, 6 *sizeof(float), 2);
-    }
-
-    if(mesh->mTangents != nullptr && mesh->mBitangents != nullptr)
-    {
-        vertex_format.setVertexAttribute(3, 8 *sizeof(float), 3);
-        vertex_format.setVertexAttribute(4, 11 *sizeof(float), 3);
-    }
-
-    return new SubMesh(vertex_format, vertices.data(), vertices.size() * sizeof(float), indices.data(), indices.size());
 }
 
 void Mesh::draw()
