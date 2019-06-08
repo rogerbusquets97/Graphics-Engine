@@ -79,6 +79,9 @@ void Mesh::loadModel(const char *filename)
 
     processNode(scene->mRootNode, scene);
     needsUpdate = true;
+
+    //Sa de borrar
+    material->SetDiffuse(":/Models/Patrick/Skin_Patrick.png");
 }
 
 SubMesh* Mesh::processMesh(aiMesh *mesh, const aiScene *scene)

@@ -210,12 +210,9 @@ void myopenglwidget::paintGL()
     UpdateMeshes();
 
     glClearDepth(1.0f);
+    glEnable(GL_DEPTH_TEST);
     glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE,GL_ONE);
 
     glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -225,6 +222,9 @@ void myopenglwidget::paintGL()
 
     //Use lightning shader
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE,GL_ONE);
+    glDepthMask(false);
     UseLightningShader();
     //Render quad
     RenderQuad();
