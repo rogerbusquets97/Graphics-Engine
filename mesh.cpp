@@ -77,24 +77,11 @@ void Mesh::loadModel(const char *filename)
                 aiProcess_PreTransformVertices |
                 aiProcess_ImproveCacheLocality |
                 aiProcess_CalcTangentSpace,
-                ".obj");
+                ".fbx");
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         std::cout << "ERROR:: ASSIMP::" << import.GetErrorString() << std::endl;
-        scene = import.ReadFileFromMemory(
-                        data.data(), data.size(),
-                        aiProcess_Triangulate |
-                        aiProcess_FlipUVs |
-                        aiProcess_GenSmoothNormals |
-                        aiProcess_RemoveRedundantMaterials |
-                        aiProcess_OptimizeMeshes |
-                        aiProcess_PreTransformVertices |
-                        aiProcess_ImproveCacheLocality |
-                        aiProcess_CalcTangentSpace,
-                        ".fbx");
-    }
-    else {
         return;
     }
 
