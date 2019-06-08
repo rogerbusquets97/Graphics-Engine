@@ -21,7 +21,9 @@ void main()
     vec4 worldPos = modelMatrix * vec4(position, 1.0);
     VSOut.positionViewspace = worldPos.xyz;
     VSOut.texCoords = texCoords;
-    VSOut.normalViewspace = (modelMatrix * vec4(normal,0)).xyz;
+
+    mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
+    VSOut.normalViewspace = normalMatrix * normal;
 
 
     gl_Position = projectionMatrix * viewMatrix * worldPos;
