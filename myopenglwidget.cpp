@@ -108,39 +108,39 @@ myopenglwidget::~myopenglwidget()
 
 void myopenglwidget::InitGBuffer()
 {
-    glGenFramebuffers(1, &gBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    gl->glGenFramebuffers(1, &gBuffer);
+    gl->glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
     //Position
-    glGenTextures(1, &gPosition);
-    glBindTexture(GL_TEXTURE_2D, gPosition);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+    gl->glGenTextures(1, &gPosition);
+    gl->glBindTexture(GL_TEXTURE_2D, gPosition);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
 
     //Nomal
-    glGenTextures(1, &gNormal);
-    glBindTexture(GL_TEXTURE_2D, gNormal);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+    gl->glGenTextures(1, &gNormal);
+    gl->glBindTexture(GL_TEXTURE_2D, gNormal);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
     //Color
-    glGenTextures(1, &gAlbedo);
-   glBindTexture(GL_TEXTURE_2D, gAlbedo);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width(), this->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
+    gl->glGenTextures(1, &gAlbedo);
+   gl->glBindTexture(GL_TEXTURE_2D, gAlbedo);
+   gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width(), this->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
 
 
     unsigned int attachments[3] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
-    glDrawBuffers(3, attachments);
+    gl->glDrawBuffers(3, attachments);
 
     program.bind();
-    glUniform1i(glGetUniformLocation(program.programId(),"gPosition"),0);
-    glUniform1i(glGetUniformLocation(program.programId(),"gNormal"),1);
-    glUniform1i(glGetUniformLocation(program.programId(),"gAlbedo"),2);
+    gl->glUniform1i(glGetUniformLocation(program.programId(),"gPosition"),0);
+    gl->glUniform1i(glGetUniformLocation(program.programId(),"gNormal"),1);
+    gl->glUniform1i(glGetUniformLocation(program.programId(),"gAlbedo"),2);
 
 }
 
@@ -163,7 +163,7 @@ void myopenglwidget::initializeGL()
         logger->startLogging();
     }
 
-    glEnable(GL_DEPTH_TEST);
+    gl->glEnable(GL_DEPTH_TEST);
 
     //Shaders
     //Lightning shaders
@@ -190,17 +190,6 @@ void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage
 void myopenglwidget::resizeGL(int width, int height)
 {
     this->resize(width, height);
-    /*int side = qMin(width, height);
-        glViewport((width - side) / 2, (height - side) / 2, side, side);
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-    #ifdef QT_OPENGL_ES_1
-        glOrthof(-2, +2, -2, +2, 1.0, 15.0);
-    #else
-        glOrtho(-2, +2, -2, +2, 1.0, 15.0);
-    #endif
-        glMatrixMode(GL_MODELVIEW);*/
 }
 
 void myopenglwidget::paintGL()
@@ -209,30 +198,30 @@ void myopenglwidget::paintGL()
 
     UpdateMeshes();
 
-    glClearDepth(1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    gl->glClearDepth(1.0f);
+    gl->glEnable(GL_DEPTH_TEST);
+    gl->glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+    gl->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    gl->glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+    gl->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     UseGeometryShader();
     DrawMeshes();
     QOpenGLFramebufferObject::bindDefault();
 
     //Use lightning shader
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE,GL_ONE);
-    glDepthMask(false);
+    gl->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //gl->glEnable(GL_BLEND);
+    //gl->glBlendFunc(GL_ONE,GL_ONE);
+    //gl->glDepthMask(false);
     UseLightningShader();
     //Render quad
     RenderQuad();
 
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-    glBlitFramebuffer(0,0, this->width(), this->height(), 0,0,this->width(), this->height(), GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    gl->glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
+    gl->glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    gl->glBlitFramebuffer(0,0, width(), height(), 0,0,width(), height(), GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+    gl->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
 }
@@ -299,20 +288,20 @@ void myopenglwidget::RenderQuad()
                      1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
                 };
 
-        glGenVertexArrays(1,&quadVAO);
-        glGenBuffers(1, &quadVBO);
-        glBindVertexArray(quadVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,5*sizeof(float), (void*)0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE, 5*sizeof(float), (void*)(3 * sizeof (float)));
+        gl->glGenVertexArrays(1,&quadVAO);
+        gl->glGenBuffers(1, &quadVBO);
+        gl->glBindVertexArray(quadVAO);
+        gl->glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        gl->glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        gl->glEnableVertexAttribArray(0);
+        gl->glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE, 5 *sizeof(float), (void*)0);
+        gl->glEnableVertexAttribArray(1);
+        gl->glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE, 5 *sizeof(float), (void*)(3 * sizeof (float)));
     }
 
-    glBindVertexArray(quadVAO);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0,4);
-    glBindVertexArray(0);
+    gl->glBindVertexArray(quadVAO);
+    gl->glDrawArrays(GL_TRIANGLE_STRIP, 0,4);
+    gl->glBindVertexArray(0);
 }
 void myopenglwidget::DrawMeshes()
 {
@@ -323,10 +312,10 @@ void myopenglwidget::DrawMeshes()
     {
         if((*it)->GetMaterial()->GetDiffuse()!= nullptr)
         {
-            diffuse = glGetUniformLocation(program.programId(), "diffuseTexture");
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
-            glUniform1i(diffuse, 0);
+            diffuse = gl->glGetUniformLocation(program.programId(), "diffuseTexture");
+            gl->glActiveTexture(GL_TEXTURE0);
+            gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
+            gl->glUniform1i(diffuse, 0);
         }
         (*it)->draw();
     }
@@ -357,23 +346,23 @@ void myopenglwidget::UseLightningShader()
 {
     if(program.bind())
     {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, gPosition);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, gNormal);
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, gAlbedo);
+        gl->glActiveTexture(GL_TEXTURE0);
+        gl->glBindTexture(GL_TEXTURE_2D, gPosition);
+        gl->glActiveTexture(GL_TEXTURE1);
+        gl->glBindTexture(GL_TEXTURE_2D, gNormal);
+        gl->glActiveTexture(GL_TEXTURE2);
+        gl->glBindTexture(GL_TEXTURE_2D, gAlbedo);
     }
 }
 
 void myopenglwidget::EnableVertexAttribArray(GLuint index)
 {
-    glEnableVertexAttribArray(index);
+    gl->glEnableVertexAttribArray(index);
 }
 
 void myopenglwidget::VertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer)
 {
-    glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+    gl->glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
 
