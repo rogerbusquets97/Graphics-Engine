@@ -61,7 +61,6 @@ public:
     void enterEvent(QEvent* )override ;
     void leaveEvent(QEvent*)override;
     void wheelEvent(QWheelEvent* event)override;
-
     Interaction* interaction;
 
 signals:
@@ -100,6 +99,8 @@ private:
     unsigned int quadVAO = 0;
     unsigned int quadVBO;
 
+    bool diffuseEnabled = true;
+    bool normalEnabled = true;
 };
 
 extern QOpenGLFunctions_3_3_Core* gl;

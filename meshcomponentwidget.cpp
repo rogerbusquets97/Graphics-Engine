@@ -69,3 +69,23 @@ void MeshComponentWidget::OnLoadDiffuse()
     }
 }
 
+void MeshComponentWidget::OnChangeDiffuseMirrored(bool aMirrored)
+{
+    meshComponent->mesh->GetMaterial()->SetDiffuseMirrored(aMirrored);
+}
+
+void MeshComponentWidget::OnChangeNormalMirrored(bool aMirrored)
+{
+    meshComponent->mesh->GetMaterial()->SetNormalMirrored(aMirrored);
+}
+
+void MeshComponentWidget::OnEnableNormal(bool a)
+{
+    meshComponent->mesh->GetMaterial()->SetNormalActive(a);
+}
+
+void MeshComponentWidget::OnEnableDiffuse(bool a)
+{
+    meshComponent->mesh->GetMaterial()->SetDiffuseActive(a);
+}
+

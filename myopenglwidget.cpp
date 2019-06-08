@@ -321,23 +321,60 @@ void myopenglwidget::DrawMeshes()
 
     for(QList<Mesh*>::iterator it = Scenemeshes.begin(); it!= Scenemeshes.end(); ++it)
     {
-        if((*it)->GetMaterial()->GetDiffuse()!= nullptr)
+        if((*it)->GetMaterial()->IsDiffuseActive())
         {
-            diffuse = gl->glGetUniformLocation(geometryProgram.programId(), "diffuseTexture");
-            gl->glActiveTexture(GL_TEXTURE0);
-            gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
-            gl->glUniform1i(diffuse, 0);
+            if((*it)->GetMaterial()->GetDiffuse()!= nullptr)
+            {
+                diffuse = gl->glGetUniformLocation(geometryProgram.programId(), "diffuseTexture");
+                gl->glActiveTexture(GL_TEXTURE0);
+                gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetDiffuse()->textureId());
+                gl->glUniform1i(diffuse, 0);
 
+                diffuseEnabled = true;
 
+            }
+            else
+            {
+                diffuseEnabled = false;
+            }
+        }
+        else
+        {
+            diffuseEnabled = false;
         }
 
-        if((*it)->GetMaterial()->GetNormalMap()!= nullptr)
+        if((*it)->GetMaterial()->IsNormalActive())
         {
-            normal = gl->glGetUniformLocation(geometryProgram.programId(), "normalMap");
-            gl->glActiveTexture(GL_TEXTURE1);
-            gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetNormalMap()->textureId());
-            gl->glUniform1i(normal, 1);
+            if((*it)->GetMaterial()->GetNormalMap()!= nullptr)
+            {
+                normal = gl->glGetUniformLocation(geometryProgram.programId(), "normalMap");
+                gl->glActiveTexture(GL_TEXTURE1);
+                gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetNormalMap()->textureId());
+                gl->glUniform1i(normal, 1);
+
+                normalEnabled = true;
+            }
+            else
+            {
+                normalEnabled = false;
+            }
         }
+        else
+        {
+            normalEnabled = false;
+        }
+
+
+        if(diffuseEnabled)
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "diffuseEnabled"), 1);
+        else
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "diffuseEnabled"), 0);
+
+        if(normalEnabled)
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 1);
+        else
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 0);
+
 
         (*it)->draw();
     }

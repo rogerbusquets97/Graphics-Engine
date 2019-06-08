@@ -21,11 +21,16 @@ public:
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();
+    void OnChangeDiffuseMirrored(bool aMirrored);
+    void OnChangeNormalMirrored(bool aMirrored);
+    void OnEnableDiffuse(bool a);
+    void OnEnableNormal(bool a);
     void Update();
      Ui::MeshComponentWidget *ui;
 private:
 
     MeshComponent* meshComponent;
+
 };
 
 #endif // MESHCOMPONENTWIDGET_H

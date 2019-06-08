@@ -77,6 +77,23 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="DiffuseEnabledCheckBox">
+     <property name="text">
+      <string>Enabled</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="DiffuseMirroredCheckBox">
+     <property name="text">
+      <string>Mirrored</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="DiffuseLoadButton">
      <property name="text">
       <string>Load</string>
@@ -101,6 +118,23 @@
     <widget class="QLabel" name="NormalImage">
      <property name="text">
       <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="NormalEnabledCheckBox">
+     <property name="text">
+      <string>Enabled</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="NormalMirroredCheckBox">
+     <property name="text">
+      <string>Mirrored</string>
      </property>
     </widget>
    </item>

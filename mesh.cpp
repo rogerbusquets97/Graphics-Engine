@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QByteArray>
 #include <iostream>
-
+#include <QFileInfo>
 Mesh::Mesh()
 {
     material = new Material();
@@ -67,6 +67,9 @@ void Mesh::loadModel(const char *filename)
 
     QByteArray data = file.readAll();
 
+    QFileInfo info(path);
+    QString extension = "." + info.completeSuffix();
+
     const aiScene *scene = import.ReadFileFromMemory(
                 data.data(), data.size(),
                 aiProcess_Triangulate |
@@ -77,7 +80,7 @@ void Mesh::loadModel(const char *filename)
                 aiProcess_PreTransformVertices |
                 aiProcess_ImproveCacheLocality |
                 aiProcess_CalcTangentSpace,
-                ".obj");
+                extension.toStdString().c_str());
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {

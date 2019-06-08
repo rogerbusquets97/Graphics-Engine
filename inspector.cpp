@@ -19,6 +19,8 @@
 #include <QWidget>
 #include <QComboBox>
 
+#include "myopenglwidget.h"
+
 Inspector::Inspector(QWidget *parent) : QWidget(parent)
 {
 
@@ -79,6 +81,36 @@ void Inspector::ConnectEvents()
     connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
     connect(meshComponentWidget->ui->DiffuseLoadButton, SIGNAL(clicked()),this, SLOT(OnLoadDiffuse()));
     connect(meshComponentWidget->ui->NormalLoadButton, SIGNAL(clicked()), this, SLOT(OnLoadNormal()));
+
+    connect(meshComponentWidget->ui->DiffuseMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeDiffuseMirrored()));
+    connect(meshComponentWidget->ui->NormalMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeNormalMirrored()));
+
+    connect(meshComponentWidget->ui->DiffuseEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableDiffuse()));
+    connect(meshComponentWidget->ui->NormalEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableNormal()));
+}
+
+void Inspector::OnChangeNormalMirrored()
+{
+    meshComponentWidget->OnChangeNormalMirrored(meshComponentWidget->ui->NormalMirroredCheckBox->isChecked());
+    w->update();
+    UpdateContent();
+}
+void Inspector::OnEnableDiffuse()
+{
+    meshComponentWidget->OnEnableDiffuse(meshComponentWidget->ui->DiffuseEnabledCheckBox->isChecked());
+    w->update();
+    UpdateContent();
+}
+
+void Inspector::OnEnableNormal()
+{
+    meshComponentWidget->OnEnableNormal(meshComponentWidget->ui->NormalEnabledCheckBox->isChecked());
+    UpdateContent();
+}
+void Inspector::OnChangeDiffuseMirrored()
+{
+    meshComponentWidget->OnChangeDiffuseMirrored(meshComponentWidget->ui->DiffuseMirroredCheckBox->isChecked());
+    UpdateContent();
 }
 void Inspector::OnAddComponent()
 {

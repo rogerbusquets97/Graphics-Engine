@@ -42,6 +42,10 @@ public slots:
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();
+    void OnChangeDiffuseMirrored();
+    void OnChangeNormalMirrored();
+    void OnEnableDiffuse();
+    void OnEnableNormal();
 
 };
 

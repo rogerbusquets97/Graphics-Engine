@@ -29,16 +29,6 @@ void main(void)
 
     FragColor.rgb = ambient + diffuse;
 
-    /*outColor.a = 1.0;
-    vec3 N = normalize(fragNormal);
-
-    float kD = max(0.0, dot(L,N));
-    FragColor.rgb = fragDiffuse*kD;
-    FragColor.a = 1.0;*/
-
     //GammaCorrection
     FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.4));
-
-
-    //FragColor.rgb = fragDiffuse;
 }

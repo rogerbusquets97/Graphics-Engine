@@ -22,11 +22,24 @@ public:
     inline QOpenGLTexture* GetDiffuse()const{return Diffuse;}
     inline QString GetDiffusePath() const {return diffusePath;}
     inline QString GetNormalPath() const {return normalPath;}
+
+    void SetDiffuseMirrored(bool aMirrored);
+    void SetNormalMirrored(bool aMirrored);
+
+
+    inline void SetDiffuseActive(bool a) {diffuseActive = a;}
+    inline void SetNormalActive(bool a){normalActive = a;}
+    inline bool IsDiffuseActive(){return diffuseActive;}
+    inline bool IsNormalActive(){return normalActive;}
+
     private:
     QOpenGLTexture* Diffuse;
     QOpenGLTexture* NormalMap;
     QString diffusePath;
     QString normalPath;
+
+    bool diffuseActive = true;
+    bool normalActive = true;
 };
 
 #endif // MATERIAL_H
