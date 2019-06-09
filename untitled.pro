@@ -42,7 +42,9 @@ SOURCES += \
     input.cpp \
     interaction.cpp \
     meshcomponentwidget.cpp \
-    material.cpp
+    material.cpp \
+    componentlight.cpp \
+    componentlightwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -64,7 +66,9 @@ HEADERS += \
     input.h \
     interaction.h \
     meshcomponentwidget.h \
-    material.h
+    material.h \
+    componentlight.h \
+    componentlightwidget.h
 
 FORMS += \
         mainwindow.ui \
