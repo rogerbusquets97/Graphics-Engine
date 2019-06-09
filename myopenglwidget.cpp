@@ -13,6 +13,9 @@
 
 #include "mainwindow.h"
 #include "transform.h"
+#include <QQuaternion>
+
+#define PI 3.14159265359
 
 #pragma comment( lib, "OpenGL32.lib" )
 
@@ -403,7 +406,10 @@ void myopenglwidget::DrawMeshes()
             Transform* trans = (*it)->GetParent()->GetTransorm();
             worldMatrix.translate(trans->GetPosition().x, trans->GetPosition().y, trans->GetPosition().z);
             worldMatrix.scale(trans->GetScale().x, trans->GetScale().y, trans->GetScale().z);
-            worldMatrix.rotate(trans->GetRotation().x, trans->GetRotation().y, trans->GetRotation().z);
+            worldMatrix.rotate(trans->GetRotation().x, QVector3D(1,0,0));
+            worldMatrix.rotate(trans->GetRotation().y, QVector3D(0,1,0));
+            worldMatrix.rotate(trans->GetRotation().z, QVector3D(0,0,1));
+            //worldMatrix = worldMatrix.rotate(quat.toRotationMatrix());
         }
 
          geometryProgram.setUniformValue("modelMatrix", worldMatrix);
