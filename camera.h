@@ -11,11 +11,6 @@ class Camera
 public:
     Camera();
 
-   /* QVector4D getleftRigthBottomTop();
-    QVector3D screenPointToWorldRay(int x, int y);
-    QVector3D screenDisplacementToWorldVector(int x0, int y0, int x1, int y1, const QVector3D& worldPoint);
-    QVector2D worldToScreenPoint(const QVector3D& p);*/
-
     void PrepareMatrices();
 
     int viewportWidth = 128;

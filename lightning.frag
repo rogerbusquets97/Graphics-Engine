@@ -60,7 +60,7 @@ struct SpotLight
     uniform PointLight pointLights[NR_POINT_LIGHTS];
     uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 
-    vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
+    vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 fragPosition);
     vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
     vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
@@ -82,7 +82,7 @@ void main(void)
 
     for (int i = 0; i < NR_DIREC_LIGHTS; i++)
     {
-        result += CalcDirLight(dirLights[i], normal, viewDir);
+        result += CalcDirLight(dirLights[i], normal, viewDir, fragPos);
     }
     for (int k = 0; k < NR_POINT_LIGHTS; k++)
     {
@@ -100,9 +100,9 @@ void main(void)
     FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.4));
 }
 
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 fragPosition)
 {
-    vec3 lightDir = normalize(-L);
+    vec3 lightDir = normalize(light.position - fragPosition);
 
     vec3 vecAmbient = vec3(light.ambient, light.ambient, light.ambient);
     vec3 vecSpecular = vec3(light.specular, light.specular, light.specular);
