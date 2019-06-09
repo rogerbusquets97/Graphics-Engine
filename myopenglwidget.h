@@ -79,8 +79,6 @@ private:
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram program;
     QOpenGLShaderProgram geometryProgram;
-    QOpenGLTexture* Diffuse;
-    QOpenGLTexture* NormalMap;
 
     GLuint normal;
     GLuint diffuse;
@@ -102,6 +100,7 @@ private:
 
     bool diffuseEnabled = true;
     bool normalEnabled = true;
+    bool parallaxEnabled = true;
 };
 
 extern QOpenGLFunctions_3_3_Core* gl;

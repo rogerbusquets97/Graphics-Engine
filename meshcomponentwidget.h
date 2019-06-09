@@ -21,11 +21,17 @@ public:
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();
+    void OnLoadHeightMap();
     void OnChangeDiffuseMirrored(bool aMirrored);
     void OnChangeNormalMirrored(bool aMirrored);
+    void OnChangeHeightMapMirrored(bool aMirrored);
+    void OnChangeMaterialTilling(QVector2D t);
+    void OnChangeHeightScale(float s);
     void OnEnableDiffuse(bool a);
     void OnEnableNormal(bool a);
+    void OnEnableParallax(bool a);
     void Update();
+    inline MeshComponent* GetComponent()const{return meshComponent;}
      Ui::MeshComponentWidget *ui;
 private:
 

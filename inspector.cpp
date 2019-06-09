@@ -89,14 +89,22 @@ void Inspector::ConnectEvents()
     connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
     connect(meshComponentWidget->ui->DiffuseLoadButton, SIGNAL(clicked()),this, SLOT(OnLoadDiffuse()));
     connect(meshComponentWidget->ui->NormalLoadButton, SIGNAL(clicked()), this, SLOT(OnLoadNormal()));
+    connect(meshComponentWidget->ui->HeightMapLoad, SIGNAL(clicked()), this, SLOT(OnLoadHeightMap()));
 
     connect(meshComponentWidget->ui->DiffuseMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeDiffuseMirrored()));
     connect(meshComponentWidget->ui->NormalMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeNormalMirrored()));
+    connect(meshComponentWidget->ui->ParallaxMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeParallaxMirrored()));
 
     connect(meshComponentWidget->ui->DiffuseEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableDiffuse()));
     connect(meshComponentWidget->ui->NormalEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableNormal()));
 
     // do stuff for Comp Light
+    connect(meshComponentWidget->ui->ParallaxEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableParallax()));
+
+    connect(meshComponentWidget->ui->DiffuseXTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
+    connect(meshComponentWidget->ui->DiffuseYTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
+
+    connect(meshComponentWidget->ui->HeightScale, SIGNAL(valueChanged(double)), this, SLOT(OnHeightScaleChanged()));
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -117,9 +125,38 @@ void Inspector::OnEnableNormal()
     meshComponentWidget->OnEnableNormal(meshComponentWidget->ui->NormalEnabledCheckBox->isChecked());
     UpdateContent();
 }
+
+void Inspector::OnEnableParallax()
+{
+    meshComponentWidget->OnEnableParallax(meshComponentWidget->ui->ParallaxEnabledCheckBox->isChecked());
+    UpdateContent();
+}
+
+void Inspector::OnChangeDiffuseTilling()
+{
+    QVector2D vec(meshComponentWidget->ui->DiffuseXTilling->value(), meshComponentWidget->ui->DiffuseYTilling->value());
+    meshComponentWidget->OnChangeMaterialTilling(vec);
+    std::cout<<"Change tilling"<<std::endl;
+}
+
+void Inspector::OnHeightScaleChanged()
+{
+    meshComponentWidget->OnChangeHeightScale(meshComponentWidget->ui->HeightScale->value());
+}
 void Inspector::OnChangeDiffuseMirrored()
 {
     meshComponentWidget->OnChangeDiffuseMirrored(meshComponentWidget->ui->DiffuseMirroredCheckBox->isChecked());
+    UpdateContent();
+}
+
+void Inspector::OnChangeParallaxMirrored()
+{
+    meshComponentWidget->OnChangeHeightMapMirrored(meshComponentWidget->ui->ParallaxMirroredCheckBox->isChecked());
+    UpdateContent();
+}
+void Inspector::OnLoadHeightMap()
+{
+    meshComponentWidget->OnLoadHeightMap();
     UpdateContent();
 }
 void Inspector::OnAddComponent()
@@ -201,6 +238,15 @@ void Inspector::UpdateTransform()
     BlockSignals(false);
     transformComponentWidget->update();
 }
+
+void Inspector::UpdateMeshComponent()
+{
+    BlockSignals(true);
+    meshComponentWidget->ui->DiffuseXTilling->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetTilling().x());
+    meshComponentWidget->ui->DiffuseYTilling->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetTilling().y());
+    meshComponentWidget->ui->HeightScale->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetHeightScale());
+    BlockSignals(false);
+}
 void Inspector::BlockSignals(bool b)
 {
     transformComponentWidget->ui->PositionX->blockSignals(b);
@@ -213,6 +259,10 @@ void Inspector::BlockSignals(bool b)
     transformComponentWidget->ui->ScaleX->blockSignals(b);
     transformComponentWidget->ui->ScaleY->blockSignals(b);
     transformComponentWidget->ui->ScaleZ->blockSignals(b);
+
+    meshComponentWidget->ui->DiffuseXTilling->blockSignals(b);
+    meshComponentWidget->ui->DiffuseYTilling->blockSignals(b);
+    meshComponentWidget->ui->HeightScale->blockSignals(b);
 }
 void Inspector::UpdateContent()
 {
@@ -238,6 +288,7 @@ void Inspector::UpdateContent()
                 meshComponentWidget->SetMeshComponent(static_cast<MeshComponent*>(*it));
                 meshComponentWidget->ui->PathText->setText(static_cast<MeshComponent*>(*it)->mesh->GetPath());
                 meshComponentWidget->SetPreviewTextures();
+                UpdateMeshComponent();
                 meshComponentWidget->Update();
                 break;
             case ComponentType::Light:

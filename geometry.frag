@@ -15,15 +15,65 @@ in Data
 
 uniform sampler2D diffuseTexture;
 uniform sampler2D normalMap;
+uniform sampler2D heightMap;
 uniform mat4 modelMatrix;
 uniform int diffuseEnabled;
 uniform int normalEnabled;
+uniform int parallaxEnabled;
+uniform vec3 lightPos;
+uniform vec3 viewPos;
+uniform vec2 tilling;
+uniform float heightscale;
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
+{
+    // number of depth layers
+    const float minLayers = 8;
+    const float maxLayers = 32;
+    float numLayers = mix(maxLayers, minLayers, abs(dot(vec3(0.0, 0.0, 1.0), viewDir)));
+    // calculate the size of each layer
+    float layerDepth = 1.0 / numLayers;
+    // depth of current layer
+    float currentLayerDepth = 0.0;
+    // the amount to shift the texture coordinates per layer (from vector P)
+    vec2 P = viewDir.xy * heightscale;
+    vec2 deltaTexCoords = P / numLayers;
+
+    // get initial values
+    vec2  currentTexCoords     = texCoords;
+    float currentDepthMapValue = texture(heightMap, currentTexCoords).r;
+
+    while(currentLayerDepth < currentDepthMapValue)
+    {
+        // shift texture coordinates along direction of P
+        currentTexCoords -= deltaTexCoords;
+        // get depthmap value at current texture coordinates
+        currentDepthMapValue = texture(heightMap, currentTexCoords).r;
+        // get depth of next layer
+        currentLayerDepth += layerDepth;
+    }
+
+    // get texture coordinates before collision (reverse operations)
+    vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+    // get depth after and before collision for linear interpolation
+    float afterDepth  = currentDepthMapValue - currentLayerDepth;
+    float beforeDepth = texture(heightMap, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+    // interpolation of texture coordinates
+    float weight = afterDepth / (afterDepth - beforeDepth);
+    vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight);
+
+    return finalTexCoords;
+}
+
 
 void main()
 {
     // store the fragment position vector in the first gbuffer texture
     gPosition = FSIn.positionViewspace;
     // also store the per-fragment normals into the gbuffer
+    vec2 TexCoords = FSIn.texCoords * tilling;
 
     if(normalEnabled == 1)
     {
@@ -32,7 +82,18 @@ void main()
         vec3 N = normalize(FSIn.normalLocalspace);
 
         mat3 TBN = mat3(T, B, N);
-        vec3 normalTangent = texture(normalMap, FSIn.texCoords).rgb;
+
+        if(parallaxEnabled == 1)
+        {
+            vec3 TangentLightPos = TBN * lightPos;
+            vec3 TangentViewPos = TBN * viewPos;
+            vec3 TangentFragPos = TBN * FSIn.positionViewspace;
+
+            vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+            TexCoords = ParallaxMapping(TexCoords, viewDir);
+        }
+
+        vec3 normalTangent = texture(normalMap, TexCoords).rgb;
         normalTangent = normalize(normalTangent * 2.0 - 1.0);
 
         vec3 normalLocal = normalize(TBN * normalTangent);
@@ -47,7 +108,7 @@ void main()
 
     if(diffuseEnabled == 1)
     {
-        gAlbedo.rgb = texture(diffuseTexture, FSIn.texCoords).rgb;
+        gAlbedo.rgb = texture(diffuseTexture, TexCoords).rgb;
     }
     else
     {

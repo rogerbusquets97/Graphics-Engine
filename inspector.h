@@ -25,6 +25,7 @@ private:
     void UpdateContent();
     void SetAllInvisible();
     void UpdateTransform();
+    void UpdateMeshComponent();
     void BlockSignals(bool b);
     GameObject* selected = nullptr;
     TransformComponentWidget* transformComponentWidget;
@@ -44,10 +45,15 @@ public slots:
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();
+    void OnLoadHeightMap();
     void OnChangeDiffuseMirrored();
     void OnChangeNormalMirrored();
+    void OnChangeParallaxMirrored();
     void OnEnableDiffuse();
     void OnEnableNormal();
+    void OnEnableParallax();
+    void OnChangeDiffuseTilling();
+    void OnHeightScaleChanged();
 
 };
 

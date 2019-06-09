@@ -94,6 +94,19 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Tilling</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="DiffuseXTilling"/>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="DiffuseYTilling"/>
+   </item>
+   <item>
     <widget class="QPushButton" name="DiffuseLoadButton">
      <property name="text">
       <string>Load</string>
@@ -140,6 +153,61 @@
    </item>
    <item>
     <widget class="QPushButton" name="NormalLoadButton">
+     <property name="text">
+      <string>Load</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>HeightMap</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="HeightMapImage">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Height Scale</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="HeightScale"/>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
+     <property name="text">
+      <string>Enabled</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="ParallaxMirroredCheckBox">
+     <property name="text">
+      <string>Mirrored</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="HeightMapLoad">
      <property name="text">
       <string>Load</string>
      </property>

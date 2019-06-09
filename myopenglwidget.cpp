@@ -13,6 +13,9 @@
 
 #include "mainwindow.h"
 #include "transform.h"
+#include <QQuaternion>
+
+#define PI 3.14159265359
 
 #pragma comment( lib, "OpenGL32.lib" )
 
@@ -327,7 +330,6 @@ void myopenglwidget::DrawMeshes()
                 gl->glUniform1i(diffuse, 0);
 
                 diffuseEnabled = true;
-
             }
             else
             {
@@ -360,6 +362,27 @@ void myopenglwidget::DrawMeshes()
             normalEnabled = false;
         }
 
+        if((*it)->GetMaterial()->IsParallaxActive())
+        {
+            if((*it)->GetMaterial()->GetHeightMap() != nullptr)
+            {
+                GLuint parallax = gl->glGetUniformLocation(geometryProgram.programId(), "heightMap");
+                gl->glActiveTexture(GL_TEXTURE2);
+                gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetHeightMap()->textureId());
+                gl->glUniform1i(parallax, 2);
+
+                parallaxEnabled = true;
+            }
+            else
+            {
+                parallaxEnabled = false;
+            }
+        }
+        else
+        {
+            parallaxEnabled = false;
+        }
+
 
         if(diffuseEnabled)
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "diffuseEnabled"), 1);
@@ -370,6 +393,10 @@ void myopenglwidget::DrawMeshes()
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 1);
         else
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 0);
+        if(parallaxEnabled)
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "parallaxEnabled"), 1);
+        else
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "parallaxEnabled"), 0);
 
         QMatrix4x4 worldMatrix;
         worldMatrix.setToIdentity();
@@ -379,10 +406,15 @@ void myopenglwidget::DrawMeshes()
             Transform* trans = (*it)->GetParent()->GetTransorm();
             worldMatrix.translate(trans->GetPosition().x, trans->GetPosition().y, trans->GetPosition().z);
             worldMatrix.scale(trans->GetScale().x, trans->GetScale().y, trans->GetScale().z);
-            worldMatrix.rotate(trans->GetRotation().x, trans->GetRotation().y, trans->GetRotation().z);
+            worldMatrix.rotate(trans->GetRotation().x, QVector3D(1,0,0));
+            worldMatrix.rotate(trans->GetRotation().y, QVector3D(0,1,0));
+            worldMatrix.rotate(trans->GetRotation().z, QVector3D(0,0,1));
+            //worldMatrix = worldMatrix.rotate(quat.toRotationMatrix());
         }
 
          geometryProgram.setUniformValue("modelMatrix", worldMatrix);
+         geometryProgram.setUniformValue("tilling", (*it)->GetMaterial()->GetTilling());
+         geometryProgram.setUniformValue("heightscale", (*it)->GetMaterial()->GetHeightScale());
         (*it)->draw();
     }
 }
@@ -405,6 +437,8 @@ void myopenglwidget::UseGeometryShader()
 
         geometryProgram.setUniformValue("projectionMatrix", camera->projectionMatrix);
         geometryProgram.setUniformValue("viewMatrix", camera->viewMatrix);
+        geometryProgram.setUniformValue("viewPos", camera->position);
+        geometryProgram.setUniformValue("lightPos", QVector3D(0,0,1));
     }
 }
 
