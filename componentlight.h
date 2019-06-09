@@ -36,7 +36,7 @@ public:
     Float3 GetRGBColor() const;
     float* GetColorToEdit() const;
     LightType GetLightType() const;
-    void SetLightType();
+    void SetLightType(LightType type);
     void SetTypeToDirectional();
     void SetTypeToSpot();
     void SetTypeToPoint();
