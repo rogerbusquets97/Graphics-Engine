@@ -7,6 +7,7 @@ Material::Material()
     HeightMap = nullptr;
 
     tilling = {1.0, 1.0};
+    HeightScale = 0.1;
 }
 
 Material::~Material()

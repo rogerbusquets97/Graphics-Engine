@@ -121,6 +121,10 @@ void MeshComponentWidget::OnEnableNormal(bool a)
     meshComponent->mesh->GetMaterial()->SetNormalActive(a);
 }
 
+void MeshComponentWidget::OnChangeHeightScale(float s)
+{
+    meshComponent->mesh->GetMaterial()->SetHeightScale(s);
+}
 void MeshComponentWidget::OnChangeMaterialTilling(QVector2D t)
 {
     meshComponent->mesh->GetMaterial()->SetTilling(t.x(), t.y());

@@ -93,6 +93,8 @@ void Inspector::ConnectEvents()
 
     connect(meshComponentWidget->ui->DiffuseXTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
     connect(meshComponentWidget->ui->DiffuseYTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
+
+    connect(meshComponentWidget->ui->HeightScale, SIGNAL(valueChanged(double)), this, SLOT(OnHeightScaleChanged()));
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -125,6 +127,11 @@ void Inspector::OnChangeDiffuseTilling()
     QVector2D vec(meshComponentWidget->ui->DiffuseXTilling->value(), meshComponentWidget->ui->DiffuseYTilling->value());
     meshComponentWidget->OnChangeMaterialTilling(vec);
     std::cout<<"Change tilling"<<std::endl;
+}
+
+void Inspector::OnHeightScaleChanged()
+{
+    meshComponentWidget->OnChangeHeightScale(meshComponentWidget->ui->HeightScale->value());
 }
 void Inspector::OnChangeDiffuseMirrored()
 {
@@ -221,6 +228,7 @@ void Inspector::UpdateMeshComponent()
     BlockSignals(true);
     meshComponentWidget->ui->DiffuseXTilling->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetTilling().x());
     meshComponentWidget->ui->DiffuseYTilling->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetTilling().y());
+    meshComponentWidget->ui->HeightScale->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetHeightScale());
     BlockSignals(false);
 }
 void Inspector::BlockSignals(bool b)
@@ -238,6 +246,7 @@ void Inspector::BlockSignals(bool b)
 
     meshComponentWidget->ui->DiffuseXTilling->blockSignals(b);
     meshComponentWidget->ui->DiffuseYTilling->blockSignals(b);
+    meshComponentWidget->ui->HeightScale->blockSignals(b);
 }
 void Inspector::UpdateContent()
 {

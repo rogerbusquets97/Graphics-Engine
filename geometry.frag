@@ -23,6 +23,7 @@ uniform int parallaxEnabled;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform vec2 tilling;
+uniform float heightscale;
 
 vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
 {
@@ -35,7 +36,7 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
     // depth of current layer
     float currentLayerDepth = 0.0;
     // the amount to shift the texture coordinates per layer (from vector P)
-    vec2 P = viewDir.xy * 0.05;
+    vec2 P = viewDir.xy * heightscale;
     vec2 deltaTexCoords = P / numLayers;
 
     // get initial values

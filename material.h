@@ -25,6 +25,7 @@ public:
     inline QString GetDiffusePath() const {return diffusePath;}
     inline QString GetNormalPath() const {return normalPath;}
     inline QString GetHeightMapPath()const{return heightPath;}
+    inline float GetHeightScale()const{return HeightScale;}
 
     void SetDiffuseMirrored(bool aMirrored);
     void SetNormalMirrored(bool aMirrored);
@@ -34,6 +35,7 @@ public:
     inline void SetDiffuseActive(bool a) {diffuseActive = a;}
     inline void SetNormalActive(bool a){normalActive = a;}
     inline void SetParallaxActive(bool a){parallaxActive = a;}
+    inline void SetHeightScale(float s){HeightScale = s;}
     inline bool IsDiffuseActive(){return diffuseActive;}
     inline bool IsNormalActive(){return normalActive;}
     inline bool IsParallaxActive(){return parallaxActive;}
@@ -50,6 +52,7 @@ public:
     QString heightPath;
 
     QVector2D tilling;
+    float HeightScale;
 
     bool diffuseActive = true;
     bool normalActive = true;

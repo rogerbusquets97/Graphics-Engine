@@ -180,6 +180,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Height Scale</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="HeightScale"/>
+   </item>
+   <item>
     <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
      <property name="text">
       <string>Enabled</string>

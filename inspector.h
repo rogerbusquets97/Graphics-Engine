@@ -51,6 +51,7 @@ public slots:
     void OnEnableNormal();
     void OnEnableParallax();
     void OnChangeDiffuseTilling();
+    void OnHeightScaleChanged();
 
 };
 

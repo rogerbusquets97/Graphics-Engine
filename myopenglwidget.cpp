@@ -408,6 +408,7 @@ void myopenglwidget::DrawMeshes()
 
          geometryProgram.setUniformValue("modelMatrix", worldMatrix);
          geometryProgram.setUniformValue("tilling", (*it)->GetMaterial()->GetTilling());
+         geometryProgram.setUniformValue("heightscale", (*it)->GetMaterial()->GetHeightScale());
         (*it)->draw();
     }
 }
