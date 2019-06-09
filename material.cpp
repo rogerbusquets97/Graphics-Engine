@@ -5,6 +5,8 @@ Material::Material()
     Diffuse = nullptr;
     NormalMap = nullptr;
     HeightMap = nullptr;
+
+    tilling = {1.0, 1.0};
 }
 
 Material::~Material()

@@ -327,7 +327,6 @@ void myopenglwidget::DrawMeshes()
                 gl->glUniform1i(diffuse, 0);
 
                 diffuseEnabled = true;
-
             }
             else
             {
@@ -408,6 +407,7 @@ void myopenglwidget::DrawMeshes()
         }
 
          geometryProgram.setUniformValue("modelMatrix", worldMatrix);
+         geometryProgram.setUniformValue("tilling", (*it)->GetMaterial()->GetTilling());
         (*it)->draw();
     }
 }

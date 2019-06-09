@@ -94,6 +94,19 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Tilling</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="DiffuseXTilling"/>
+   </item>
+   <item>
+    <widget class="QDoubleSpinBox" name="DiffuseYTilling"/>
+   </item>
+   <item>
     <widget class="QPushButton" name="DiffuseLoadButton">
      <property name="text">
       <string>Load</string>

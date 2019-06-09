@@ -37,6 +37,9 @@ public:
     inline bool IsDiffuseActive(){return diffuseActive;}
     inline bool IsNormalActive(){return normalActive;}
     inline bool IsParallaxActive(){return parallaxActive;}
+    inline void SetTilling(float x, float y){tilling.setX(x), tilling.setY(y);}
+
+    inline QVector2D GetTilling()const{return tilling;}
 
     private:
     QOpenGLTexture* Diffuse;
@@ -45,6 +48,8 @@ public:
     QString diffusePath;
     QString normalPath;
     QString heightPath;
+
+    QVector2D tilling;
 
     bool diffuseActive = true;
     bool normalActive = true;

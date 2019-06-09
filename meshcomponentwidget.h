@@ -25,6 +25,7 @@ public:
     void OnChangeDiffuseMirrored(bool aMirrored);
     void OnChangeNormalMirrored(bool aMirrored);
     void OnChangeHeightMapMirrored(bool aMirrored);
+    void OnChangeMaterialTilling(QVector2D t);
     void OnEnableDiffuse(bool a);
     void OnEnableNormal(bool a);
     void OnEnableParallax(bool a);

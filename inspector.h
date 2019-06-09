@@ -49,6 +49,7 @@ public slots:
     void OnEnableDiffuse();
     void OnEnableNormal();
     void OnEnableParallax();
+    void OnChangeDiffuseTilling();
 
 };
 

@@ -91,7 +91,8 @@ void Inspector::ConnectEvents()
     connect(meshComponentWidget->ui->NormalEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableNormal()));
     connect(meshComponentWidget->ui->ParallaxEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableParallax()));
 
-
+    connect(meshComponentWidget->ui->DiffuseXTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
+    connect(meshComponentWidget->ui->DiffuseYTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -117,6 +118,13 @@ void Inspector::OnEnableParallax()
 {
     meshComponentWidget->OnEnableParallax(meshComponentWidget->ui->ParallaxEnabledCheckBox->isChecked());
     UpdateContent();
+}
+
+void Inspector::OnChangeDiffuseTilling()
+{
+    QVector2D vec(meshComponentWidget->ui->DiffuseXTilling->value(), meshComponentWidget->ui->DiffuseYTilling->value());
+    meshComponentWidget->OnChangeMaterialTilling(vec);
+    std::cout<<"Change tilling"<<std::endl;
 }
 void Inspector::OnChangeDiffuseMirrored()
 {

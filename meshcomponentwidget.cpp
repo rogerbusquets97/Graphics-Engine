@@ -108,6 +108,10 @@ void MeshComponentWidget::OnEnableNormal(bool a)
     meshComponent->mesh->GetMaterial()->SetNormalActive(a);
 }
 
+void MeshComponentWidget::OnChangeMaterialTilling(QVector2D t)
+{
+    meshComponent->mesh->GetMaterial()->SetTilling(t.x(), t.y());
+}
 void MeshComponentWidget::OnEnableParallax(bool a)
 {
     meshComponent->mesh->GetMaterial()->SetParallaxActive(a);

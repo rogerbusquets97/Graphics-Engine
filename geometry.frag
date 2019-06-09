@@ -22,6 +22,7 @@ uniform int normalEnabled;
 uniform int parallaxEnabled;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+uniform vec2 tilling;
 
 vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
 {
@@ -34,7 +35,7 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
     // depth of current layer
     float currentLayerDepth = 0.0;
     // the amount to shift the texture coordinates per layer (from vector P)
-    vec2 P = viewDir.xy * 0.1;
+    vec2 P = viewDir.xy * 0.05;
     vec2 deltaTexCoords = P / numLayers;
 
     // get initial values
@@ -71,7 +72,7 @@ void main()
     // store the fragment position vector in the first gbuffer texture
     gPosition = FSIn.positionViewspace;
     // also store the per-fragment normals into the gbuffer
-    vec2 TexCoords = FSIn.texCoords;
+    vec2 TexCoords = FSIn.texCoords * tilling;
 
     if(normalEnabled == 1)
     {
