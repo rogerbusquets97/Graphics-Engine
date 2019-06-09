@@ -3,15 +3,20 @@
 
 #include <QWidget>
 
+namespace Ui {
+class ComponentLightWidget;
+}
+
 class ComponentLightWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ComponentLightWidget(QWidget *parent = nullptr);
+    ~ComponentLightWidget();
 
-signals:
-
-public slots:
+private:
+    Ui::ComponentLightWidget *ui;
 };
 
 #endif // COMPONENTLIGHTWIDGET_H

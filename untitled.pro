@@ -76,7 +76,8 @@ FORMS += \
     hierarchy_widget.ui \
     shapecomponentwidget.ui \
     transformcomponentwidget.ui \
-    meshcomponentwidget.ui
+    meshcomponentwidget.ui \
+    componentlightwidget.ui
 QT      += opengl
 
 CONFIG += console
