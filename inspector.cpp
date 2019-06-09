@@ -215,6 +215,14 @@ void Inspector::UpdateTransform()
     BlockSignals(false);
     transformComponentWidget->update();
 }
+
+void Inspector::UpdateMeshComponent()
+{
+    BlockSignals(true);
+    meshComponentWidget->ui->DiffuseXTilling->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetTilling().x());
+    meshComponentWidget->ui->DiffuseYTilling->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetTilling().y());
+    BlockSignals(false);
+}
 void Inspector::BlockSignals(bool b)
 {
     transformComponentWidget->ui->PositionX->blockSignals(b);
@@ -227,6 +235,9 @@ void Inspector::BlockSignals(bool b)
     transformComponentWidget->ui->ScaleX->blockSignals(b);
     transformComponentWidget->ui->ScaleY->blockSignals(b);
     transformComponentWidget->ui->ScaleZ->blockSignals(b);
+
+    meshComponentWidget->ui->DiffuseXTilling->blockSignals(b);
+    meshComponentWidget->ui->DiffuseYTilling->blockSignals(b);
 }
 void Inspector::UpdateContent()
 {
@@ -251,6 +262,7 @@ void Inspector::UpdateContent()
                 meshComponentWidget->SetMeshComponent(static_cast<MeshComponent*>(*it));
                 meshComponentWidget->ui->PathText->setText(static_cast<MeshComponent*>(*it)->mesh->GetPath());
                 meshComponentWidget->SetPreviewTextures();
+                UpdateMeshComponent();
                 meshComponentWidget->Update();
                 break;
             default:

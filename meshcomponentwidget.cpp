@@ -38,6 +38,11 @@ void MeshComponentWidget::SetPreviewTextures()
     {
         QPixmap pix(diffusePath);
         ui->DiffuseImage->setPixmap(pix.scaled(100,100,Qt::KeepAspectRatio));
+        ui->DiffuseImage->setVisible(true);
+    }
+    else
+    {
+        ui->DiffuseImage->setVisible(false);
     }
 
     QString normalPath = meshComponent->mesh->GetMaterial()->GetNormalPath();
@@ -45,7 +50,11 @@ void MeshComponentWidget::SetPreviewTextures()
     {
         QPixmap pix(normalPath);
         ui->NormalImage->setPixmap(pix.scaled(100,100, Qt::KeepAspectRatio));
-
+        ui->NormalImage->setVisible(true);
+    }
+    else
+    {
+         ui->NormalImage->setVisible(false);
     }
 
     QString heightPath = meshComponent->mesh->GetMaterial()->GetHeightMapPath();
@@ -53,7 +62,11 @@ void MeshComponentWidget::SetPreviewTextures()
     {
         QPixmap pix(heightPath);
         ui->HeightMapImage->setPixmap(pix.scaled(100,100, Qt::KeepAspectRatio));
-
+        ui->HeightMapImage->setVisible(true);
+    }
+    else
+    {
+        ui->HeightMapImage->setVisible(false);
     }
 
 

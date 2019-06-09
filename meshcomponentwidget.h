@@ -30,6 +30,7 @@ public:
     void OnEnableNormal(bool a);
     void OnEnableParallax(bool a);
     void Update();
+    inline MeshComponent* GetComponent()const{return meshComponent;}
      Ui::MeshComponentWidget *ui;
 private:
 

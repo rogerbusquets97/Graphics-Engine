@@ -24,6 +24,7 @@ private:
     void UpdateContent();
     void SetAllInvisible();
     void UpdateTransform();
+    void UpdateMeshComponent();
     void BlockSignals(bool b);
     GameObject* selected = nullptr;
     TransformComponentWidget* transformComponentWidget;
