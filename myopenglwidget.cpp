@@ -360,6 +360,27 @@ void myopenglwidget::DrawMeshes()
             normalEnabled = false;
         }
 
+        if((*it)->GetMaterial()->IsParallaxActive())
+        {
+            if((*it)->GetMaterial()->GetHeightMap() != nullptr)
+            {
+                GLuint parallax = gl->glGetUniformLocation(geometryProgram.programId(), "heightMap");
+                gl->glActiveTexture(GL_TEXTURE2);
+                gl->glBindTexture(GL_TEXTURE_2D, (*it)->GetMaterial()->GetHeightMap()->textureId());
+                gl->glUniform1i(parallax, 2);
+
+                parallaxEnabled = true;
+            }
+            else
+            {
+                parallaxEnabled = false;
+            }
+        }
+        else
+        {
+            parallaxEnabled = false;
+        }
+
 
         if(diffuseEnabled)
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "diffuseEnabled"), 1);
@@ -370,6 +391,10 @@ void myopenglwidget::DrawMeshes()
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 1);
         else
             gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "normalEnabled"), 0);
+        if(parallaxEnabled)
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "parallaxEnabled"), 1);
+        else
+            gl->glUniform1i(gl->glGetUniformLocation(geometryProgram.programId(), "parallaxEnabled"), 0);
 
         QMatrix4x4 worldMatrix;
         worldMatrix.setToIdentity();
@@ -405,6 +430,8 @@ void myopenglwidget::UseGeometryShader()
 
         geometryProgram.setUniformValue("projectionMatrix", camera->projectionMatrix);
         geometryProgram.setUniformValue("viewMatrix", camera->viewMatrix);
+        geometryProgram.setUniformValue("viewPos", camera->position);
+        geometryProgram.setUniformValue("lightPos", QVector3D(0,0,1));
     }
 }
 
