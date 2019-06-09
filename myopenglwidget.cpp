@@ -444,7 +444,7 @@ void myopenglwidget::UseLightningShader()
             }
         }
 
-        program.setUniformValue("viewPos", camera->position);
+        program.setUniformValue("viewPos", camera->position.x(), camera->position.y(), camera->position.z());
 
         // Directional Lights
         std::string str, str2;
@@ -456,8 +456,7 @@ void myopenglwidget::UseLightningShader()
             // Position
             Transform* transform = DirectionalLights[i]->GetParent()->GetTransorm();
             str2 = str +"position";
-            QVector3D position = QVector3D(transform->GetPosition().x,transform->GetPosition().y,transform->GetPosition().z );
-            program.setUniformValue(str2.c_str(),position);
+            program.setUniformValue(str2.c_str(), transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z);
 
             str2= str + "ambient";
             program.setUniformValue(str2.c_str(),DirectionalLights[i]->GetAmbient());
@@ -468,9 +467,8 @@ void myopenglwidget::UseLightningShader()
             str2= str + "specular";
             program.setUniformValue(str2.c_str(),DirectionalLights[i]->GetSpecular());
 
-            str2= str + "specular";
-            QVector3D color = QVector3D(DirectionalLights[i]->GetRGBColor().r,DirectionalLights[i]->GetRGBColor().b, DirectionalLights[i]->GetRGBColor().g  );
-            program.setUniformValue(str2.c_str(), color);
+            str2= str + "color";
+            program.setUniformValue(str2.c_str(), DirectionalLights[i]->GetRGBColor().r, DirectionalLights[i]->GetRGBColor().g, DirectionalLights[i]->GetRGBColor().b);
         }
 
     }

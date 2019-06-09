@@ -18,7 +18,7 @@ uniform vec3 viewPos;
 #define NR_SPOT_LIGHTS 20
 
 float ambientTerm = 0.3;
-vec3 L = vec3(0,0,1);
+vec3 L = vec3(0,0.5,1);
 vec3 lightColor = vec3(1,1,1);
 
 struct DirLight
@@ -112,10 +112,10 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 reflectDir = reflect(-lightDir, normal);
 
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 ambient = vecAmbient * vec3(FragColor);
-    vec3 diffuse = vecDiffuse * diff * vec3(FragColor);
-    vec3 specular = vecSpecular * spec * vec3(FragColor);
-    return (ambient + diffuse + specular);
+    vec3 ambient = vecAmbient * vec3(texture(gAlbedo, FSIn.TexCoords).rgb);
+    vec3 diffuse = vecDiffuse * diff * vec3(texture(gAlbedo, FSIn.TexCoords).rgb);
+    vec3 specular = vecSpecular * spec;
+    return (ambient + diffuse + specular) * light.color;
 }
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
