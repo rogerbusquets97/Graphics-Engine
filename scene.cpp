@@ -39,6 +39,18 @@ void Scene::GetSceneMeshes(QList<Mesh *> &meshList) const
         }
     }
 }
+
+void Scene::GetSceneLights(QVector<componentlight*> &lights) const
+{
+    for(QList<GameObject*>::const_iterator it = sceneObjects.begin(); it!= sceneObjects.end(); ++it)
+    {
+        if((*it)->HasComponentOfType(ComponentType::Light))
+        {
+            lights.push_back(static_cast<componentlight*>((*it)->GetComponent(ComponentType::Light)));
+        }
+    }
+}
+
 void Scene::OnDeleteSelectedObject()
 {
     if(selectedOject!=nullptr)

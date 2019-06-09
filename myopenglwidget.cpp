@@ -418,6 +418,44 @@ void myopenglwidget::UseLightningShader()
         gl->glBindTexture(GL_TEXTURE_2D, gNormal);
         gl->glActiveTexture(GL_TEXTURE2);
         gl->glBindTexture(GL_TEXTURE_2D, gAlbedo);
+
+        QVector<componentlight*> lights;
+        w->GetCurrScene()->GetSceneLights(lights);
+
+        QVector<componentlight*> DirectionalLights, PointLights, SpotLights;
+
+
+        for(QVector<componentlight*>::iterator it = lights.begin(); it!= lights.end(); ++it)
+        {
+            switch((*it)->GetLightType())
+            {
+                case LightType::DIRECTIONAL_LIGHT:
+                    DirectionalLights.push_back((*it));
+                break;
+                case LightType::POINT_LIGHT:
+                    PointLights.push_back((*it));
+                break;
+                case LightType::SPOT_LIGHT:
+                    SpotLights.push_back((*it));
+                break;
+            }
+        }
+
+        // Directional Lights
+        std::string str, str2;
+        for (uint i = 0; i < 5; ++i)
+        {
+
+            str = "dirLights[" + std::to_string(i) + "].";
+
+            // Position
+            Transform* transform = DirectionalLights[i]->GetParent()->GetTransorm();
+            str2 = str +"position";
+            QVector3D position = QVector3D(transform->GetPosition().x,transform->GetPosition().y,transform->GetPosition().z );
+            program.setUniformValue(str.c_str(),position);
+
+        }
+
     }
 }
 

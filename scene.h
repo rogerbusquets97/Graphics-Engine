@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QString>
+#include "componentlight.h"
 #include "gameobject.h"
 #include "mesh.h"
 
@@ -18,6 +19,7 @@ public:
    void SetSelectedObjectByInt(int i);
    const QList<GameObject*>& GetObjectsList() const;
    void GetSceneMeshes(QList<Mesh*>& meshList)const;
+   void GetSceneLights(QVector<componentlight*> &lights) const;
    void Update();
    virtual ~Scene();
 
