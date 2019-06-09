@@ -432,4 +432,3 @@ void myopenglwidget::VertexAttribPointer(GLuint index, GLint size, GLenum type, 
 }
 
 
-

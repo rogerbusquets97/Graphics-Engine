@@ -7,10 +7,12 @@
 #include <iostream>
 #include "mainwindow.h"
 #include "ui_transformcomponentwidget.h"
+#include "ui_componentlightwidget.h"
 #include "ui_shapecomponentwidget.h"
 #include "ui_meshcomponentwidget.h"
 #include "QString"
 #include "transform.h"
+#include "componentlight.h"
 
 #include <QWidget>
 #include <QPainter>
@@ -29,17 +31,22 @@ Inspector::Inspector(QWidget *parent) : QWidget(parent)
    transformComponentWidget->setVisible(false);
 
    meshComponentWidget = new MeshComponentWidget();
+   componentLightWidget = new ComponentLightWidget();
+   componentLightWidget->setVisible(false);
 
    //Add them to a vertical layout
    QVBoxLayout* layout = new QVBoxLayout;
    layout->addWidget(transformComponentWidget);
    layout->addWidget(meshComponentWidget);
+   layout->addWidget(componentLightWidget);
 
 
    //Combo box for adding Components
    comboBox = new QComboBox();
   // comboBox->addItem("Shape Component"); // Only shape for now
    comboBox->addItem("Mesh Component");
+   comboBox->addItem("Light Component");
+
    layout->addWidget(comboBox);
    //Button to add Components
    button = new QPushButton();
@@ -62,6 +69,7 @@ Inspector::~Inspector()
 {
     delete transformComponentWidget;
     delete meshComponentWidget;
+    delete componentLightWidget;
 }
 
 void Inspector::ConnectEvents()
@@ -87,6 +95,8 @@ void Inspector::ConnectEvents()
 
     connect(meshComponentWidget->ui->DiffuseEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableDiffuse()));
     connect(meshComponentWidget->ui->NormalEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableNormal()));
+
+    // do stuff for Comp Light
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -122,7 +132,13 @@ void Inspector::OnAddComponent()
             Mesh* m = new Mesh(selected);
             MeshComponent* component = new MeshComponent(m, selected, ComponentType::mesh);
             selected->OnAddComponent(component);
+
+        } else if(comboBox->currentText() == "Light Component")
+            {
+            componentlight* component = new componentlight(selected, ComponentType::Light);
+            selected->OnAddComponent(component);
         }
+
         //other components
 
         UpdateContent();
@@ -203,6 +219,7 @@ void Inspector::UpdateContent()
     //Set all invisible before checking for available components
     transformComponentWidget->setVisible(false);
     meshComponentWidget->setVisible(false);
+    componentLightWidget->setVisible(false);
 
     if(selected!=nullptr)
     {
@@ -222,6 +239,9 @@ void Inspector::UpdateContent()
                 meshComponentWidget->ui->PathText->setText(static_cast<MeshComponent*>(*it)->mesh->GetPath());
                 meshComponentWidget->SetPreviewTextures();
                 meshComponentWidget->Update();
+                break;
+            case ComponentType::Light:
+                componentLightWidget->setVisible(true);
                 break;
             default:
                 break;

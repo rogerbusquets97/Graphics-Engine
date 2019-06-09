@@ -2,23 +2,24 @@
 
 componentlight::componentlight(GameObject* p, ComponentType t) :  Component(p,t)
 {
-    color = Float3(1.0, 1.0, 1.0);
+    color = Color(1.0, 1.0, 1.0);
 
     diffuse = 10.0f;
     ambient = 3.0f;
     specular = 10.0f;
     cutOff = 12.0f;
     outercutOff = 12.0f;
+    SetTypeToPoint();
 }
 
 
-void componentlight::SetRGBColor(Float3 color)
+void componentlight::SetRGBColor(Color color)
 {
-        this->color.x = color.x;
-        this->color.y = color.y;
-        this->color.z = color.z;
+        this->color.r = color.r;
+        this->color.g = color.g;
+        this->color.b = color.b;
 }
-Float3 componentlight::GetRGBColor() const
+Color componentlight::GetRGBColor() const
 {
     return color;
 }
@@ -28,11 +29,11 @@ float* componentlight::GetColorToEdit() const
 }
 LightType componentlight::GetLightType() const
 {
-    return type;
+    return lighttype;
 }
 void componentlight::SetLightType(LightType type)
 {
-    this->type = type;
+    this->lighttype = type;
 }
 void componentlight::SetTypeToDirectional()
 {
@@ -41,7 +42,7 @@ void componentlight::SetTypeToDirectional()
     diffuse = 1.5;
     cutOff = 0;
     outercutOff = 0;
-    type = DIRECTIONAL_LIGHT;
+    lighttype = DIRECTIONAL_LIGHT;
 
     //App->renderer3D->AddLight(this);
 }
@@ -51,7 +52,7 @@ void componentlight::SetTypeToSpot()
     specular = 2.5;
     cutOff = 12.0f;
     outercutOff = 12.0f;
-    type = SPOT_LIGHT;
+    lighttype = SPOT_LIGHT;
 }
 void componentlight::SetTypeToPoint()
 {
@@ -59,7 +60,7 @@ void componentlight::SetTypeToPoint()
     specular = 2.5;
     cutOff = 0;
     outercutOff = 0;
-    type = POINT_LIGHT;
+    lighttype = POINT_LIGHT;
 }
 
 void componentlight::setDiffuse(float diffuse)

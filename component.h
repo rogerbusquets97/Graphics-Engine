@@ -8,6 +8,7 @@ enum ComponentType
  Shape,
  Trans,
  mesh,
+ Light,
  Component_Unknow
 };
 

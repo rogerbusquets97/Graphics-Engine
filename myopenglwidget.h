@@ -16,6 +16,7 @@
 #include "input.h"
 #include "interaction.h"
 #include "camera.h"
+#include "componentlight.h"
 
 // Sphere //
 #define H 32

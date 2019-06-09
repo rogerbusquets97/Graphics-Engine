@@ -128,13 +128,13 @@
   <widget class="QDockWidget" name="InspectorDock_2">
    <property name="minimumSize">
     <size>
-     <width>200</width>
+     <width>240</width>
      <height>100</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>200</width>
+     <width>240</width>
      <height>524287</height>
     </size>
    </property>

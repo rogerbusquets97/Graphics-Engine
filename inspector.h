@@ -8,6 +8,7 @@
 #include "QComboBox"
 #include "QPushButton"
 #include "meshcomponentwidget.h"
+#include "componentlightwidget.h"
 
 class TransformComponentWidget;
 
@@ -28,6 +29,7 @@ private:
     GameObject* selected = nullptr;
     TransformComponentWidget* transformComponentWidget;
     MeshComponentWidget* meshComponentWidget;
+    ComponentLightWidget* componentLightWidget;
 
 
     QComboBox* comboBox;

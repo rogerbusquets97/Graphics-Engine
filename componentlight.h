@@ -3,21 +3,21 @@
 
 #include "component.h"
 
-struct Float3
+struct Color
 {
-    Float3(float x, float y, float z)
+    Color(float x, float y, float z)
     {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+        this->r = x;
+        this->g = y;
+        this->b = z;
     }
-    Float3()
+    Color()
     {
-        x = 0;
-        y = 0;
-        z = 0;
+        r = 0;
+        g = 0;
+        b = 0;
     }
-    float x,y,z;
+    float r,g,b;
 };
 
 enum LightType {
@@ -32,11 +32,11 @@ class componentlight : public Component
 public:
     componentlight(GameObject* p, ComponentType t);
 
-    void SetRGBColor(Float3 color);
-    Float3 GetRGBColor() const;
+    void SetRGBColor(Color color);
+    Color GetRGBColor() const;
     float* GetColorToEdit() const;
     LightType GetLightType() const;
-    void SetLightType(LightType type);
+    void SetLightType(LightType lighttype);
     void SetTypeToDirectional();
     void SetTypeToSpot();
     void SetTypeToPoint();
@@ -51,8 +51,8 @@ public:
     float GetOuterCutOff() const;
 
 private:
-   Float3 color;
-   LightType type;
+   Color color;
+   LightType lighttype;
 
    float diffuse = 10.0f;
    float ambient = 3.0f;
