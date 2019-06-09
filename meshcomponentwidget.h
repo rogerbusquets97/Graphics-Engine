@@ -21,10 +21,13 @@ public:
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();
+    void OnLoadHeightMap();
     void OnChangeDiffuseMirrored(bool aMirrored);
     void OnChangeNormalMirrored(bool aMirrored);
+    void OnChangeHeightMapMirrored(bool aMirrored);
     void OnEnableDiffuse(bool a);
     void OnEnableNormal(bool a);
+    void OnEnableParallax(bool a);
     void Update();
      Ui::MeshComponentWidget *ui;
 private:

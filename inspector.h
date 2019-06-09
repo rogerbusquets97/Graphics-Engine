@@ -42,10 +42,13 @@ public slots:
     void OnLoadMesh();
     void OnLoadDiffuse();
     void OnLoadNormal();
+    void OnLoadHeightMap();
     void OnChangeDiffuseMirrored();
     void OnChangeNormalMirrored();
+    void OnChangeParallaxMirrored();
     void OnEnableDiffuse();
     void OnEnableNormal();
+    void OnEnableParallax();
 
 };
 

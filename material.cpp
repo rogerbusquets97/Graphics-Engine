@@ -4,6 +4,7 @@ Material::Material()
 {
     Diffuse = nullptr;
     NormalMap = nullptr;
+    HeightMap = nullptr;
 }
 
 Material::~Material()
@@ -77,6 +78,30 @@ void Material::SetNormalMirrored(bool aMirrored)
         }
     }
 }
+
+void Material::SetHeightMapMirrored(bool aMirrored)
+{
+    if(HeightMap != nullptr)
+    {
+        if(!heightPath.isEmpty())
+        {
+            delete HeightMap;
+            QImage normal;
+            normal.load(heightPath);
+            if(aMirrored)
+                HeightMap = new QOpenGLTexture(normal.mirrored());
+            else
+                HeightMap = new QOpenGLTexture(normal);
+
+            HeightMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            HeightMap->setMagnificationFilter(QOpenGLTexture::Linear);
+        }
+        else
+        {
+            std::cout<<"Path empty"<<std::endl;
+        }
+    }
+}
 void Material::SetDiffuse(QString path)
 {
     QImage diffuse;
@@ -89,6 +114,20 @@ void Material::SetDiffuse(QString path)
     Diffuse->setMagnificationFilter(QOpenGLTexture::Linear);
 
     diffusePath = path;
+}
+
+void Material::SetHeightMap(QString path)
+{
+    QImage height;
+    height.load(path);
+    if(HeightMap != nullptr)
+        delete HeightMap;
+
+    HeightMap = new QOpenGLTexture(height);
+    HeightMap->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    HeightMap->setMagnificationFilter(QOpenGLTexture::Linear);
+
+    heightPath = path;
 }
 
 

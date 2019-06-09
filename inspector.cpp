@@ -81,12 +81,17 @@ void Inspector::ConnectEvents()
     connect(meshComponentWidget->ui->LoadMeshButton, SIGNAL(clicked()),this,SLOT(OnLoadMesh()));
     connect(meshComponentWidget->ui->DiffuseLoadButton, SIGNAL(clicked()),this, SLOT(OnLoadDiffuse()));
     connect(meshComponentWidget->ui->NormalLoadButton, SIGNAL(clicked()), this, SLOT(OnLoadNormal()));
+    connect(meshComponentWidget->ui->HeightMapLoad, SIGNAL(clicked()), this, SLOT(OnLoadHeightMap()));
 
     connect(meshComponentWidget->ui->DiffuseMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeDiffuseMirrored()));
     connect(meshComponentWidget->ui->NormalMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeNormalMirrored()));
+    connect(meshComponentWidget->ui->ParallaxMirroredCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnChangeParallaxMirrored()));
 
     connect(meshComponentWidget->ui->DiffuseEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableDiffuse()));
     connect(meshComponentWidget->ui->NormalEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableNormal()));
+    connect(meshComponentWidget->ui->ParallaxEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableParallax()));
+
+
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -107,9 +112,26 @@ void Inspector::OnEnableNormal()
     meshComponentWidget->OnEnableNormal(meshComponentWidget->ui->NormalEnabledCheckBox->isChecked());
     UpdateContent();
 }
+
+void Inspector::OnEnableParallax()
+{
+    meshComponentWidget->OnEnableParallax(meshComponentWidget->ui->ParallaxEnabledCheckBox->isChecked());
+    UpdateContent();
+}
 void Inspector::OnChangeDiffuseMirrored()
 {
     meshComponentWidget->OnChangeDiffuseMirrored(meshComponentWidget->ui->DiffuseMirroredCheckBox->isChecked());
+    UpdateContent();
+}
+
+void Inspector::OnChangeParallaxMirrored()
+{
+    meshComponentWidget->OnChangeHeightMapMirrored(meshComponentWidget->ui->ParallaxMirroredCheckBox->isChecked());
+    UpdateContent();
+}
+void Inspector::OnLoadHeightMap()
+{
+    meshComponentWidget->OnLoadHeightMap();
     UpdateContent();
 }
 void Inspector::OnAddComponent()

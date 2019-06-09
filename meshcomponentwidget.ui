@@ -146,6 +146,51 @@
     </widget>
    </item>
    <item>
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>HeightMap</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="HeightMapImage">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
+     <property name="text">
+      <string>Enabled</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="ParallaxMirroredCheckBox">
+     <property name="text">
+      <string>Mirrored</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="HeightMapLoad">
+     <property name="text">
+      <string>Load</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

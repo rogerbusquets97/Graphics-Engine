@@ -47,6 +47,16 @@ void MeshComponentWidget::SetPreviewTextures()
         ui->NormalImage->setPixmap(pix.scaled(100,100, Qt::KeepAspectRatio));
 
     }
+
+    QString heightPath = meshComponent->mesh->GetMaterial()->GetHeightMapPath();
+    if(!heightPath.isEmpty())
+    {
+        QPixmap pix(heightPath);
+        ui->HeightMapImage->setPixmap(pix.scaled(100,100, Qt::KeepAspectRatio));
+
+    }
+
+
 }
 
 void MeshComponentWidget::OnLoadNormal()
@@ -59,6 +69,15 @@ void MeshComponentWidget::OnLoadNormal()
     }
 }
 
+void MeshComponentWidget::OnLoadHeightMap()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Load HeightMap");
+    if(!path.isEmpty())
+    {
+        meshComponent->mesh->GetMaterial()->SetHeightMap(path);
+        w->update();
+    }
+}
 void MeshComponentWidget::OnLoadDiffuse()
 {
     QString path = QFileDialog::getOpenFileName(this, "Load Diffuse");
@@ -79,9 +98,19 @@ void MeshComponentWidget::OnChangeNormalMirrored(bool aMirrored)
     meshComponent->mesh->GetMaterial()->SetNormalMirrored(aMirrored);
 }
 
+void MeshComponentWidget::OnChangeHeightMapMirrored(bool aMirrored)
+{
+    meshComponent->mesh->GetMaterial()->SetHeightMapMirrored(aMirrored);
+}
+
 void MeshComponentWidget::OnEnableNormal(bool a)
 {
     meshComponent->mesh->GetMaterial()->SetNormalActive(a);
+}
+
+void MeshComponentWidget::OnEnableParallax(bool a)
+{
+    meshComponent->mesh->GetMaterial()->SetParallaxActive(a);
 }
 
 void MeshComponentWidget::OnEnableDiffuse(bool a)
