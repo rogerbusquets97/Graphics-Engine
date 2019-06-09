@@ -2,14 +2,14 @@
 
 componentlight::componentlight(GameObject* p, ComponentType t) :  Component(p,t)
 {
-    color = Color(1.0, 1.0, 1.0);
+    color = Color(1.0, 0.5, 0.0);
 
     diffuse = 10.0f;
     ambient = 3.0f;
     specular = 10.0f;
     cutOff = 12.0f;
     outercutOff = 12.0f;
-    SetTypeToPoint();
+    SetTypeToDirectional();
 }
 
 
@@ -70,6 +70,15 @@ void componentlight::setDiffuse(float diffuse)
 float componentlight::GetDiffuse() const
 {
     return diffuse;
+}
+
+void componentlight::setSpecular(float specular)
+{
+    this->specular = specular;
+}
+float componentlight::GetSpecular() const
+{
+    return specular;
 }
 void componentlight::setAmbient(float ambient)
 {

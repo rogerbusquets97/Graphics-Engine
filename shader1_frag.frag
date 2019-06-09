@@ -29,7 +29,7 @@ void main(void)
 
     if(normalEnabled == 1)
     {
-        vec3 V = -normalize(FSIn.positionViewspace);
+     /*   vec3 V = -normalize(FSIn.positionViewspace);
 
         // NORMAL MAPPING
         // Tangent to local (TBN) matrix
@@ -63,7 +63,7 @@ void main(void)
 
         outColor.rgb = ambient + diffuse;
 
-        outColor.a = 1.0;
+        outColor.a = 1.0;*/
     }
 
     else

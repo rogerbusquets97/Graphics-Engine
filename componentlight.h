@@ -43,6 +43,8 @@ public:
 
     void setDiffuse(float diffuse);
     float GetDiffuse() const;
+    void setSpecular(float specular);
+    float GetSpecular() const;
     void setAmbient(float ambient);
     float GetAmbient() const;
     void setcutOff(float ambient);

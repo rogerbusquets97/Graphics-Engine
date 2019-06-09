@@ -102,8 +102,20 @@ void main(void)
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 {
-    vec3 result;
-    return result;
+    vec3 lightDir = normalize(-L);
+
+    vec3 vecAmbient = vec3(light.ambient, light.ambient, light.ambient);
+    vec3 vecSpecular = vec3(light.specular, light.specular, light.specular);
+    vec3 vecDiffuse = vec3(light.diffuse, light.diffuse, light.diffuse);
+
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 reflectDir = reflect(-lightDir, normal);
+
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 ambient = vecAmbient * vec3(FragColor);
+    vec3 diffuse = vecDiffuse * diff * vec3(FragColor);
+    vec3 specular = vecSpecular * spec * vec3(FragColor);
+    return (ambient + diffuse + specular);
 }
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {

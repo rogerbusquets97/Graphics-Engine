@@ -424,26 +424,31 @@ void myopenglwidget::UseLightningShader()
 
         QVector<componentlight*> DirectionalLights, PointLights, SpotLights;
 
-
+        uint dir_count = 0, point_count = 0, spot_count= 0;
         for(QVector<componentlight*>::iterator it = lights.begin(); it!= lights.end(); ++it)
         {
             switch((*it)->GetLightType())
             {
                 case LightType::DIRECTIONAL_LIGHT:
                     DirectionalLights.push_back((*it));
+                    dir_count++;
                 break;
                 case LightType::POINT_LIGHT:
                     PointLights.push_back((*it));
+                    point_count++;
                 break;
                 case LightType::SPOT_LIGHT:
                     SpotLights.push_back((*it));
+                    spot_count++;
                 break;
             }
         }
 
+        program.setUniformValue("viewPos", camera->position);
+
         // Directional Lights
         std::string str, str2;
-        for (uint i = 0; i < 5; ++i)
+        for (uint i = 0; i < dir_count; ++i)
         {
 
             str = "dirLights[" + std::to_string(i) + "].";
@@ -452,8 +457,20 @@ void myopenglwidget::UseLightningShader()
             Transform* transform = DirectionalLights[i]->GetParent()->GetTransorm();
             str2 = str +"position";
             QVector3D position = QVector3D(transform->GetPosition().x,transform->GetPosition().y,transform->GetPosition().z );
-            program.setUniformValue(str.c_str(),position);
+            program.setUniformValue(str2.c_str(),position);
 
+            str2= str + "ambient";
+            program.setUniformValue(str2.c_str(),DirectionalLights[i]->GetAmbient());
+
+            str2= str + "diffuse";
+            program.setUniformValue(str2.c_str(),DirectionalLights[i]->GetDiffuse());
+
+            str2= str + "specular";
+            program.setUniformValue(str2.c_str(),DirectionalLights[i]->GetSpecular());
+
+            str2= str + "specular";
+            QVector3D color = QVector3D(DirectionalLights[i]->GetRGBColor().r,DirectionalLights[i]->GetRGBColor().b, DirectionalLights[i]->GetRGBColor().g  );
+            program.setUniformValue(str2.c_str(), color);
         }
 
     }
