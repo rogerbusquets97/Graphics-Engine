@@ -201,19 +201,13 @@ void myopenglwidget::resizeGL(int w, int h)
 {
     this->resize(w, h);
     int side = qMin(w, h);
-        glViewport((w - side) / 2, (h - side) / 2, side, side);
+    glViewport((w - side) / 2, (h - side) / 2, side, side);
 
-    /*//Resize GBuffer textures
-    gl->glBindTexture(GL_TEXTURE_2D, gPosition);
-    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, w/2, h/2, 0, GL_RGB, GL_FLOAT, NULL);
-
-    gl->glBindTexture(GL_TEXTURE_2D, gNormal);
-    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, w/2, h/2 , 0, GL_RGB, GL_FLOAT, NULL);
-
-    gl->glBindTexture(GL_TEXTURE_2D, gAlbedo);
-    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w/2, h/2 , 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);*/
-
-
+    //GBuffer
+    gl->glDeleteTextures(1,&gPosition);
+    gl->glDeleteTextures(1, &gNormal);
+    gl->glDeleteTextures(1, &gAlbedo);
+   InitGBuffer();
 }
 
 void myopenglwidget::paintGL()
@@ -299,6 +293,40 @@ void myopenglwidget::UpdateMeshes()
             (*it)->needsUpdate = false;
         }
     }
+}
+
+void myopenglwidget::ResizeTextures()
+{
+
+    gl->glDeleteTextures(1,&gPosition);
+    gl->glDeleteTextures(1, &gNormal);
+    gl->glDeleteTextures(1, &gAlbedo);
+
+
+    gl->glGenTextures(1, &gPosition);
+    gl->glBindTexture(GL_TEXTURE_2D, gPosition);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+
+    //Nomal
+    gl->glGenTextures(1, &gNormal);
+    gl->glBindTexture(GL_TEXTURE_2D, gNormal);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+    //Color
+    gl->glGenTextures(1, &gAlbedo);
+   gl->glBindTexture(GL_TEXTURE_2D, gAlbedo);
+   gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width(), this->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   gl->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
+
+
+
 }
 
 void myopenglwidget::RenderQuad()

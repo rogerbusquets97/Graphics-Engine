@@ -43,6 +43,8 @@ public:
     void DrawMeshes();
     void RenderQuad();
 
+    void ResizeTextures();
+
     void UseGeometryShader();
     void UseLightningShader();
     void InitGBuffer();
