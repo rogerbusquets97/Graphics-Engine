@@ -197,9 +197,23 @@ void myopenglwidget::handleLoggedMessage(const QOpenGLDebugMessage &debugMessage
               << debugMessage.message().toStdString() << std::endl;
 }
 
-void myopenglwidget::resizeGL(int width, int height)
+void myopenglwidget::resizeGL(int w, int h)
 {
-    this->resize(width, height);
+    this->resize(w, h);
+    int side = qMin(w, h);
+        glViewport((w - side) / 2, (h - side) / 2, side, side);
+
+    /*//Resize GBuffer textures
+    gl->glBindTexture(GL_TEXTURE_2D, gPosition);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, w/2, h/2, 0, GL_RGB, GL_FLOAT, NULL);
+
+    gl->glBindTexture(GL_TEXTURE_2D, gNormal);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, w/2, h/2 , 0, GL_RGB, GL_FLOAT, NULL);
+
+    gl->glBindTexture(GL_TEXTURE_2D, gAlbedo);
+    gl->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w/2, h/2 , 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);*/
+
+
 }
 
 void myopenglwidget::paintGL()

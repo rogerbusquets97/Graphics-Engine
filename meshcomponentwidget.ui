@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>259</width>
-    <height>333</height>
+    <width>388</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>222</width>
-        <height>667</height>
+        <width>351</width>
+        <height>655</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">

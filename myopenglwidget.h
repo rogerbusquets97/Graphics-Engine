@@ -33,7 +33,7 @@ public:
 
     //From these methods we can call OpenGL function
     void initializeGL() override;
-    void resizeGL(int width, int height) override;
+    void resizeGL(int w, int h) override;
     void paintGL() override;
 
     void showInfo();

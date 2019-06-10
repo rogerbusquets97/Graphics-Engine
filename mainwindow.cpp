@@ -26,13 +26,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //uiMainWindow->openGLWidget->scene = currScene;
     setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 
-    uiMainWindow->RenderingDock_2->setFloating(false);
+    //uiMainWindow->RenderingDock_2->setFloating(false);
 
     hierarchy = new Hierarchy_Widget();
-    uiMainWindow->HierarchyDock->setWidget(hierarchy);
+    uiMainWindow->HierarchyDock_2->setWidget(hierarchy);
 
     inspector = new Inspector();
-    uiMainWindow->InspectorDock_2->setWidget(inspector);
+    uiMainWindow->InspectorDock_3->setWidget(inspector);
 
     // Connect Actions' triggered() signals to some slots
     connect(uiMainWindow->actionOpen_Project, SIGNAL(triggered()), this, SLOT(openProject()));
