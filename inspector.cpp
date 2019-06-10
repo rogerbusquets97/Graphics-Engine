@@ -157,26 +157,32 @@ void Inspector::OnEnableNormal()
 void Inspector::OnChangeLightCutOff()
 {
     componentLightWidget->GetComponent()->setcutOff(componentLightWidget->ui->CutOff->value());
+    UpdateContent();
 }
 
 void Inspector::OnChangeLightAmbient()
 {
     componentLightWidget->GetComponent()->setAmbient(componentLightWidget->ui->Ambient->value());
+    UpdateContent();
 }
 
 void Inspector::OnChangeLightDiffuse()
 {
     componentLightWidget->GetComponent()->setDiffuse(componentLightWidget->ui->Diffuse->value());
+    UpdateContent();
 }
 
 void Inspector::OnChangeLightSpecular()
 {
     componentLightWidget->GetComponent()->setSpecular(componentLightWidget->ui->Specular->value());
+    UpdateContent();
 }
+
 
 void Inspector::OnChangeLightOutterCutoff()
 {
     componentLightWidget->GetComponent()->setOuterCutOff(componentLightWidget->ui->OuterCutOff->value());
+    UpdateContent();
 }
 void Inspector::OnEnableParallax()
 {
@@ -188,7 +194,6 @@ void Inspector::OnChangeDiffuseTilling()
 {
     QVector2D vec(meshComponentWidget->ui->DiffuseXTilling->value(), meshComponentWidget->ui->DiffuseYTilling->value());
     meshComponentWidget->OnChangeMaterialTilling(vec);
-    std::cout<<"Change tilling"<<std::endl;
 }
 
 void Inspector::OnHeightScaleChanged()
@@ -210,6 +215,7 @@ void Inspector::OnChangeParallaxMirrored()
 void Inspector::OnChangeLightColor()
 {
     componentLightWidget->OnChangeLightColor();
+    UpdateContent();
 }
 void Inspector::OnLoadHeightMap()
 {
