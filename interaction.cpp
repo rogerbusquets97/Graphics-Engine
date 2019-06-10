@@ -87,8 +87,8 @@ bool Interaction::Navigate()
     if(mousex_delta > 2 || mousey_delta > 2 || mousex_delta < -2 ||  mousey_delta < -2)
     {
         cameraChanged = true;
-        yaw -= 0.3f * mousex_delta;
-        pitch -= 0.3f * mousey_delta;
+        yaw -= 0.1f * mousex_delta;
+        pitch -= 0.1f * mousey_delta;
 
         while(yaw < 0.0f) yaw += 360.0f;
         while(yaw > 360.0f) yaw -= 360.0f;
