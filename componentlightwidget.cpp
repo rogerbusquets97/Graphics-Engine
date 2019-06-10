@@ -22,3 +22,33 @@ void ComponentLightWidget::OnChangeLightColor()
         ComponentLight->SetRGBColor(Color(color.red()/255.0, color.green()/255.0,color.blue()/255.0));
     }
 }
+
+void ComponentLightWidget::OnChangeLightType(LightType t)
+{
+    ComponentLight->SetLightType(t);
+}
+
+void ComponentLightWidget::OnChangeLightCutOff(float c)
+{
+    ComponentLight->setcutOff(c);
+}
+
+void ComponentLightWidget::OnChangeLightAmbient(float a)
+{
+    ComponentLight->setAmbient(a);
+}
+
+void ComponentLightWidget::OnChangeLightDiffuse(float d)
+{
+    ComponentLight->setDiffuse(d);
+}
+
+void ComponentLightWidget::OnChangeLightSpecular(float s)
+{
+    ComponentLight->setSpecular(s);
+}
+
+void ComponentLightWidget::OnChangeLightOutterCutOff(float c)
+{
+    ComponentLight->setOuterCutOff(c);
+}

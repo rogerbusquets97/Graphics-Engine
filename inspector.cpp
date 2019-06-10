@@ -108,6 +108,11 @@ void Inspector::ConnectEvents()
     //Light
 
     connect(componentLightWidget->ui->ColorPicker, SIGNAL(clicked()), this, SLOT(OnChangeLightColor()));
+    connect(componentLightWidget->ui->Ambient, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightAmbient()));
+    connect(componentLightWidget->ui->Specular, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightSpecular()));
+    connect(componentLightWidget->ui->Diffuse, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightDiffuse()));
+    connect(componentLightWidget->ui->CutOff, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightCutOff()));
+    connect(componentLightWidget->ui->OuterCutOff, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightOutterCutoff()));
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -129,6 +134,30 @@ void Inspector::OnEnableNormal()
     UpdateContent();
 }
 
+void Inspector::OnChangeLightCutOff()
+{
+    componentLightWidget->GetComponent()->setcutOff(componentLightWidget->ui->CutOff->value());
+}
+
+void Inspector::OnChangeLightAmbient()
+{
+    componentLightWidget->GetComponent()->setAmbient(componentLightWidget->ui->Ambient->value());
+}
+
+void Inspector::OnChangeLightDiffuse()
+{
+    componentLightWidget->GetComponent()->setDiffuse(componentLightWidget->ui->Diffuse->value());
+}
+
+void Inspector::OnChangeLightSpecular()
+{
+    componentLightWidget->GetComponent()->setSpecular(componentLightWidget->ui->Specular->value());
+}
+
+void Inspector::OnChangeLightOutterCutoff()
+{
+    componentLightWidget->GetComponent()->setOuterCutOff(componentLightWidget->ui->OuterCutOff->value());
+}
 void Inspector::OnEnableParallax()
 {
     meshComponentWidget->OnEnableParallax(meshComponentWidget->ui->ParallaxEnabledCheckBox->isChecked());
@@ -260,7 +289,12 @@ void Inspector::UpdateMeshComponent()
 void Inspector::UpdateLightComponent()
 {
     BlockSignals(true);
-    //Do stuff
+    componentLightWidget->ui->Ambient->setValue(componentLightWidget->GetComponent()->GetAmbient());
+    componentLightWidget->ui->Specular->setValue(componentLightWidget->GetComponent()->GetSpecular());
+    componentLightWidget->ui->Diffuse->setValue(componentLightWidget->GetComponent()->GetDiffuse());
+    componentLightWidget->ui->CutOff->setValue(componentLightWidget->GetComponent()->GetCutOff());
+    componentLightWidget->ui->OuterCutOff->setValue(componentLightWidget->GetComponent()->GetOuterCutOff());
+
     BlockSignals(false);
 }
 void Inspector::BlockSignals(bool b)

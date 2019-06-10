@@ -51,6 +51,11 @@ public slots:
     void OnChangeNormalMirrored();
     void OnChangeParallaxMirrored();
     void OnChangeLightColor();
+    void OnChangeLightDiffuse();
+    void OnChangeLightSpecular();
+    void OnChangeLightAmbient();
+    void OnChangeLightCutOff();
+    void OnChangeLightOutterCutoff();
     void OnEnableDiffuse();
     void OnEnableNormal();
     void OnEnableParallax();
