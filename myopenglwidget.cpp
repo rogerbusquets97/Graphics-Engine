@@ -479,9 +479,9 @@ void myopenglwidget::UseLightningShader()
         }
 
         program.setUniformValue("viewPos", camera->position.x(), camera->position.y(), camera->position.z());
-
-        // Directional Lights
         std::string str, str2;
+        // Directional Lights
+
         for (uint i = 0; i < dir_count; ++i)
         {
 
@@ -508,6 +508,66 @@ void myopenglwidget::UseLightningShader()
 
             str2= str + "color";
             program.setUniformValue(str2.c_str(), DirectionalLights[i]->GetRGBColor().r, DirectionalLights[i]->GetRGBColor().g, DirectionalLights[i]->GetRGBColor().b);
+        }
+
+
+        // Point Lights
+        for (uint j = 0; j < point_count; j++)
+        {
+            str = "pointLights[" + std::to_string(j) + "].";
+
+            // Position
+            Transform* transform = PointLights[j]->GetParent()->GetTransorm();
+            str2 = str +"position";
+            program.setUniformValue(str2.c_str(), transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z);
+
+            str2= str + "ambient";
+            program.setUniformValue(str2.c_str(),PointLights[j]->GetAmbient());
+
+            str2= str + "diffuse";
+            program.setUniformValue(str2.c_str(),PointLights[j]->GetDiffuse());
+
+            str2= str + "specular";
+            program.setUniformValue(str2.c_str(),PointLights[j]->GetSpecular());
+
+            str2= str + "color";
+            program.setUniformValue(str2.c_str(), PointLights[j]->GetRGBColor().r, PointLights[j]->GetRGBColor().g, PointLights[j]->GetRGBColor().b);
+        }
+
+        // Spot Lights
+
+        for (uint k = 0; k < spot_count; k++)
+        {
+            str = "spotLights[" + std::to_string(k) + "].";
+
+            // Position
+            Transform* transform = SpotLights[k]->GetParent()->GetTransorm();
+            str2 = str +"position";
+            program.setUniformValue(str2.c_str(), transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z);
+
+            str2 = str +"direction";
+            QQuaternion quat = QQuaternion::fromEulerAngles(transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z);
+            QVector3D dir = quat * QVector3D(0,0,1);
+            program.setUniformValue(str2.c_str(), dir);
+
+            str2= str + "ambient";
+            program.setUniformValue(str2.c_str(),SpotLights[k]->GetAmbient());
+
+            str2= str + "diffuse";
+            program.setUniformValue(str2.c_str(),SpotLights[k]->GetDiffuse());
+
+            str2= str + "specular";
+            program.setUniformValue(str2.c_str(),SpotLights[k]->GetSpecular());
+
+            str2= str + "color";
+            program.setUniformValue(str2.c_str(), SpotLights[k]->GetRGBColor().r, SpotLights[k]->GetRGBColor().g, SpotLights[k]->GetRGBColor().b);
+
+            str2= str+ "cutOff";
+            program.setUniformValue(str2.c_str(),SpotLights[k]->GetCutOff());
+
+            str2= str+ "outerCutOff";
+            program.setUniformValue(str2.c_str(),SpotLights[k]->GetOuterCutOff());
+
         }
 
     }
