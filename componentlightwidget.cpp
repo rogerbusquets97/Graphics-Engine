@@ -25,7 +25,18 @@ void ComponentLightWidget::OnChangeLightColor()
 
 void ComponentLightWidget::OnChangeLightType(LightType t)
 {
-    ComponentLight->SetLightType(t);
+
+    switch (t) {
+        case DIRECTIONAL_LIGHT:
+            ComponentLight->SetTypeToDirectional();
+            break;
+        case POINT_LIGHT:
+            ComponentLight->SetTypeToPoint();
+            break;
+        case SPOT_LIGHT:
+            ComponentLight->SetTypeToPoint();
+             break;
+    }
 }
 
 void ComponentLightWidget::OnChangeLightCutOff(float c)
