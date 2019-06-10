@@ -26,6 +26,7 @@ private:
     void SetAllInvisible();
     void UpdateTransform();
     void UpdateMeshComponent();
+    void UpdateLightComponent();
     void BlockSignals(bool b);
     GameObject* selected = nullptr;
     TransformComponentWidget* transformComponentWidget;
@@ -49,6 +50,12 @@ public slots:
     void OnChangeDiffuseMirrored();
     void OnChangeNormalMirrored();
     void OnChangeParallaxMirrored();
+    void OnChangeLightColor();
+    void OnChangeLightDiffuse();
+    void OnChangeLightSpecular();
+    void OnChangeLightAmbient();
+    void OnChangeLightCutOff();
+    void OnChangeLightOutterCutoff();
     void OnEnableDiffuse();
     void OnEnableNormal();
     void OnEnableParallax();

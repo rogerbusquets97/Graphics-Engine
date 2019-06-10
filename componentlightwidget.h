@@ -2,6 +2,7 @@
 #define COMPONENTLIGHTWIDGET_H
 
 #include <QWidget>
+#include <componentlight.h>
 
 namespace Ui {
 class ComponentLightWidget;
@@ -14,9 +15,19 @@ class ComponentLightWidget : public QWidget
 public:
     explicit ComponentLightWidget(QWidget *parent = nullptr);
     ~ComponentLightWidget();
-
-private:
     Ui::ComponentLightWidget *ui;
+    inline componentlight* GetComponent()const{return ComponentLight;}
+    inline void SetComponent(componentlight* c){ComponentLight = c;}
+
+    void OnChangeLightColor();
+    void OnChangeLightType(LightType t);
+    void OnChangeLightDiffuse(float d);
+    void OnChangeLightAmbient(float a);
+    void OnChangeLightSpecular(float s);
+    void OnChangeLightCutOff(float c);
+    void OnChangeLightOutterCutOff(float c);
+private:
+   componentlight* ComponentLight;
 };
 
 #endif // COMPONENTLIGHTWIDGET_H
