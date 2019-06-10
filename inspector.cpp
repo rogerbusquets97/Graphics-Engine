@@ -147,6 +147,8 @@ void Inspector::OnChangeLightType()
     {
         componentLightWidget->GetComponent()->SetTypeToSpot();
     }
+
+    UpdateContent();
 }
 void Inspector::OnEnableNormal()
 {
