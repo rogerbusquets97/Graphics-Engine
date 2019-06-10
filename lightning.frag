@@ -17,6 +17,10 @@ uniform vec3 viewPos;
 #define NR_DIREC_LIGHTS 5
 #define NR_SPOT_LIGHTS 20
 
+uniform int Directionals;
+uniform int Points;
+uniform int Spots;
+
 float ambientTerm = 0.005;
 vec3 L = vec3(0,0.5,1);
 vec3 lightColor = vec3(1,1,1);
@@ -80,15 +84,15 @@ void main(void)
     vec3 normal = normalize(fragNormal);
     vec3 viewDir = normalize(viewPos - fragPos);
 
-    for (int i = 0; i < NR_DIREC_LIGHTS; i++)
+    for (int i = 0; i < Directionals; i++)
     {
         result += CalcDirLight(dirLights[i], normal, viewDir, fragPos);
     }
-    for (int k = 0; k < NR_POINT_LIGHTS; k++)
+    for (int k = 0; k < Points; k++)
     {
         result += CalcPointLight(pointLights[k], normal, fragPos, viewDir);
     }
-    for (int j = 0; j < NR_SPOT_LIGHTS; j++)
+    for (int j = 0; j < Spots; j++)
     {
         result += CalcSpotLight(spotLights[j], normal, fragPos, viewDir);
     }

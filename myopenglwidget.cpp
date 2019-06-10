@@ -524,6 +524,7 @@ void myopenglwidget::UseLightningShader()
         std::string str, str2;
         // Directional Lights
 
+        program.setUniformValue("Directionals", dir_count);
         for (uint i = 0; i < dir_count; ++i)
         {
 
@@ -552,7 +553,7 @@ void myopenglwidget::UseLightningShader()
             program.setUniformValue(str2.c_str(), DirectionalLights[i]->GetRGBColor().r, DirectionalLights[i]->GetRGBColor().g, DirectionalLights[i]->GetRGBColor().b);
         }
 
-
+         program.setUniformValue("Points", point_count);
         // Point Lights
         for (uint j = 0; j < point_count; j++)
         {
@@ -576,6 +577,7 @@ void myopenglwidget::UseLightningShader()
             program.setUniformValue(str2.c_str(), PointLights[j]->GetRGBColor().r, PointLights[j]->GetRGBColor().g, PointLights[j]->GetRGBColor().b);
         }
 
+        program.setUniformValue("Spots", spot_count);
         // Spot Lights
 
         for (uint k = 0; k < spot_count; k++)
