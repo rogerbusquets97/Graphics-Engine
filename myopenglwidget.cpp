@@ -467,10 +467,7 @@ void myopenglwidget::UseGeometryShader()
     {
         camera->PrepareMatrices();
         // Camera transformation
-        QVector3D eyePosition(5.0, 5.0, 10.0);
-        QVector3D center(0.0, 0.0, 0.0);
-        QVector3D up(0.0, 1.0, 0.0);
-        camera->viewMatrix.lookAt(eyePosition, center, up);
+
 
         // Object transformation
 

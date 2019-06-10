@@ -24,12 +24,15 @@ public:
     float pitch = 0.0f;
     QVector3D position;
 
-    float speed = 5.0f;
+    float speed = 10.0f;
 
     QMatrix4x4 worldMatrix;
     QMatrix4x4 viewMatrix;
     QMatrix4x4 projectionMatrix;
 
+    QVector3D eyePosition;
+    QVector3D center;
+    QVector3D up;
 };
 
 #endif // CAMERA_H

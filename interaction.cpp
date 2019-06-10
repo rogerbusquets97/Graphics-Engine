@@ -51,19 +51,6 @@ bool Interaction::Idle()
             state = State::Zooming;
    }
 
-    else if(input->mouseButtons[Qt::LeftButton]==MouseButtonState::Pressed)
-    {
-        //Selection
-    }
-
-
-
-    // else if(selection->count() > 0)
-   //{
-   //    transalte/rotate/scale
-    //}
-
-
     return false;
 }
 
@@ -96,49 +83,36 @@ bool Interaction::Navigate()
         if(pitch < -89.0f) pitch = -89.0f;
     }
 
-    QVector3D displacementVector;
-
+    QVector3D forwardVec = camera->eyePosition - camera->position;
+    forwardVec.normalize();
     if(input->keys[Qt::Key_W] == KeyState::Pressed)
     {
         //Forward
         cameraChanged = true;
-        displacementVector += QVector3D(-sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
-                                        sinf(qDegreesToRadians(pitch)),
-                                        -cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
+        camera->position += forwardVec * camera->speed/60.0;
     }
 
     if(input->keys[Qt::Key_A] == KeyState::Pressed)
     {
         //Left
         cameraChanged = true;
-        displacementVector += QVector3D(-cosf(qDegreesToRadians(yaw) * cosf(qDegreesToRadians(pitch))),
-                                        sinf(qDegreesToRadians(pitch)),
-                                        sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
+        QVector3D leftVec = QVector3D::crossProduct(camera->up, forwardVec);
+        camera->position += leftVec * camera->speed/60.0;
+
     }
 
     if(input->keys[Qt::Key_S] == KeyState::Pressed)
     {
-        //Backwards
-        //Forward
         cameraChanged = true;
-        displacementVector += QVector3D(sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
-                                        -sinf(qDegreesToRadians(pitch)),
-                                        cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
+        camera->position -= forwardVec * camera->speed/60.0;
     }
 
     if(input->keys[Qt::Key_D] == KeyState::Pressed)
     {
-        //Right
         cameraChanged = true;
-        displacementVector += QVector3D(cosf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)),
-                                        sinf(qDegreesToRadians(pitch)),
-                                        -sinf(qDegreesToRadians(yaw)) * cosf(qDegreesToRadians(pitch)));
+        QVector3D rightVec = QVector3D::crossProduct(forwardVec, camera->up);
+        camera->position += rightVec*camera->speed/60.0;
     }
-
-
-    displacementVector *= camera->speed/60.0f;
-
-    camera->position += displacementVector;
 
     return cameraChanged;
 }
