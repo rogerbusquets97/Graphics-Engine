@@ -94,7 +94,8 @@ void main(void)
     }
 
 
-    FragColor.rgb = (result + ambient) * diffuse;
+    FragColor.rgb = result;
+    FragColor.a = 1.0;
 
     //GammaCorrection
     FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.4));
@@ -102,7 +103,7 @@ void main(void)
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 fragPosition)
 {
-    vec3 lightDir = normalize(light.position - fragPosition);
+    vec3 lightDir = normalize(light.direction);
 
     vec3 vecAmbient = vec3(light.ambient, light.ambient, light.ambient);
     vec3 vecSpecular = vec3(light.specular, light.specular, light.specular);
@@ -111,7 +112,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 fragPosition)
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 reflectDir = reflect(-lightDir, normal);
 
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32); // 32 material shinness
     vec3 ambient = vecAmbient * vec3(texture(gAlbedo, FSIn.TexCoords).rgb);
     vec3 diffuse = vecDiffuse * diff * vec3(texture(gAlbedo, FSIn.TexCoords).rgb);
     vec3 specular = vecSpecular * spec;

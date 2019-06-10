@@ -492,6 +492,11 @@ void myopenglwidget::UseLightningShader()
             str2 = str +"position";
             program.setUniformValue(str2.c_str(), transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z);
 
+            str2 = str +"direction";
+            QQuaternion quat = QQuaternion::fromEulerAngles(transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z);
+            QVector3D dir = quat * QVector3D(0,0,1);
+            program.setUniformValue(str2.c_str(), dir);
+
             str2= str + "ambient";
             program.setUniformValue(str2.c_str(),DirectionalLights[i]->GetAmbient());
 

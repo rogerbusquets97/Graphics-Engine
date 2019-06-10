@@ -14,22 +14,26 @@ Input::~Input()
 
 void Input::keyPressedEvent(QKeyEvent *event)
 {
-    keys[event->key()] = KeyState::Pressed;
+    if(event->key() < MAX_KEYS)
+        keys[event->key()] = KeyState::Pressed;
 }
 
 void Input::keyReleasedEvent(QKeyEvent *event)
 {
-    keys[event->key()] = KeyState::Up;
+    if(event->key() < MAX_KEYS)
+        keys[event->key()] = KeyState::Up;
 }
 
 void Input::mousePressedEvent(QMouseEvent *event)
 {
-    mouseButtons[event->button()] = MouseButtonState::Pressed;
+    if(event->button() < MAX_BUTTONS)
+        mouseButtons[event->button()] = MouseButtonState::Pressed;
 }
 
 void Input::mouseReleaseEvent(QMouseEvent *event)
 {
-     mouseButtons[event->button()] = MouseButtonState::Up;
+    if(event->button() < MAX_BUTTONS)
+        mouseButtons[event->button()] = MouseButtonState::Up;
 }
 
 void Input::mouseMoveEvent(QMouseEvent *event)
