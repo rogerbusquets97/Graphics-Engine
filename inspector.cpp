@@ -98,13 +98,16 @@ void Inspector::ConnectEvents()
     connect(meshComponentWidget->ui->DiffuseEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableDiffuse()));
     connect(meshComponentWidget->ui->NormalEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableNormal()));
 
-    // do stuff for Comp Light
     connect(meshComponentWidget->ui->ParallaxEnabledCheckBox, SIGNAL(stateChanged(int)), this, SLOT(OnEnableParallax()));
 
     connect(meshComponentWidget->ui->DiffuseXTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
     connect(meshComponentWidget->ui->DiffuseYTilling, SIGNAL(valueChanged(double)),this, SLOT(OnChangeDiffuseTilling()));
 
     connect(meshComponentWidget->ui->HeightScale, SIGNAL(valueChanged(double)), this, SLOT(OnHeightScaleChanged()));
+
+    //Light
+
+    connect(componentLightWidget->ui->ColorPicker, SIGNAL(clicked()), this, SLOT(OnChangeLightColor()));
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -154,6 +157,11 @@ void Inspector::OnChangeParallaxMirrored()
     meshComponentWidget->OnChangeHeightMapMirrored(meshComponentWidget->ui->ParallaxMirroredCheckBox->isChecked());
     UpdateContent();
 }
+
+void Inspector::OnChangeLightColor()
+{
+    componentLightWidget->OnChangeLightColor();
+}
 void Inspector::OnLoadHeightMap()
 {
     meshComponentWidget->OnLoadHeightMap();
@@ -170,8 +178,9 @@ void Inspector::OnAddComponent()
             MeshComponent* component = new MeshComponent(m, selected, ComponentType::mesh);
             selected->OnAddComponent(component);
 
-        } else if(comboBox->currentText() == "Light Component")
-            {
+        }
+        else if(comboBox->currentText() == "Light Component")
+        {
             componentlight* component = new componentlight(selected, ComponentType::Light);
             selected->OnAddComponent(component);
         }
@@ -247,6 +256,13 @@ void Inspector::UpdateMeshComponent()
     meshComponentWidget->ui->HeightScale->setValue(meshComponentWidget->GetComponent()->mesh->GetMaterial()->GetHeightScale());
     BlockSignals(false);
 }
+
+void Inspector::UpdateLightComponent()
+{
+    BlockSignals(true);
+    //Do stuff
+    BlockSignals(false);
+}
 void Inspector::BlockSignals(bool b)
 {
     transformComponentWidget->ui->PositionX->blockSignals(b);
@@ -263,6 +279,13 @@ void Inspector::BlockSignals(bool b)
     meshComponentWidget->ui->DiffuseXTilling->blockSignals(b);
     meshComponentWidget->ui->DiffuseYTilling->blockSignals(b);
     meshComponentWidget->ui->HeightScale->blockSignals(b);
+
+    componentLightWidget->ui->Ambient->blockSignals(b);
+    componentLightWidget->ui->Diffuse->blockSignals(b);
+    componentLightWidget->ui->Specular->blockSignals(b);
+    componentLightWidget->ui->CutOff->blockSignals(b);
+    componentLightWidget->ui->OuterCutOff->blockSignals(b);
+    componentLightWidget->ui->LightType->blockSignals(b);
 }
 void Inspector::UpdateContent()
 {
@@ -293,6 +316,8 @@ void Inspector::UpdateContent()
                 break;
             case ComponentType::Light:
                 componentLightWidget->setVisible(true);
+                componentLightWidget->SetComponent(static_cast<componentlight*>(*it));
+                UpdateLightComponent();
                 break;
             default:
                 break;

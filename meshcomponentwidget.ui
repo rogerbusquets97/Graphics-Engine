@@ -187,7 +187,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QDoubleSpinBox" name="HeightScale"/>
+    <widget class="QDoubleSpinBox" name="HeightScale">
+     <property name="singleStep">
+      <double>0.010000000000000</double>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
