@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>259</width>
-    <height>746</height>
+    <height>333</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,214 +21,220 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Mesh Component</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="LoadMeshButton">
-     <property name="text">
-      <string>Load Mesh</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Path:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="PathText">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Diffuse</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="DiffuseImage">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="DiffuseEnabledCheckBox">
-     <property name="text">
-      <string>Enabled</string>
-     </property>
-     <property name="checked">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
       <bool>true</bool>
      </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>222</width>
+        <height>667</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="1" column="1">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Mesh Component</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Diffuse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLabel" name="DiffuseImage">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Tilling</string>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="1">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Normal</string>
+         </property>
+        </widget>
+       </item>
+       <item row="17" column="1">
+        <widget class="QLabel" name="NormalImage">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="22" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>HeightMap</string>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="1">
+        <widget class="QLabel" name="HeightMapImage">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="27" column="1">
+        <widget class="QPushButton" name="HeightMapLoad">
+         <property name="text">
+          <string>Load</string>
+         </property>
+        </widget>
+       </item>
+       <item row="30" column="1">
+        <widget class="QDoubleSpinBox" name="HeightScale">
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="38" column="0">
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="LoadMeshButton">
+         <property name="text">
+          <string>Load Mesh</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Path:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="PathText">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QPushButton" name="DiffuseLoadButton">
+         <property name="text">
+          <string>Load</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QDoubleSpinBox" name="DiffuseXTilling"/>
+       </item>
+       <item row="14" column="1">
+        <widget class="QDoubleSpinBox" name="DiffuseYTilling"/>
+       </item>
+       <item row="15" column="1">
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="1">
+        <widget class="QPushButton" name="NormalLoadButton">
+         <property name="text">
+          <string>Load</string>
+         </property>
+        </widget>
+       </item>
+       <item row="20" column="1">
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QCheckBox" name="DiffuseEnabledCheckBox">
+         <property name="text">
+          <string>Enabled</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QCheckBox" name="DiffuseMirroredCheckBox">
+         <property name="text">
+          <string>Mirrored</string>
+         </property>
+        </widget>
+       </item>
+       <item row="19" column="1">
+        <widget class="QCheckBox" name="NormalEnabledCheckBox">
+         <property name="text">
+          <string>Enabled</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="1">
+        <widget class="QCheckBox" name="NormalMirroredCheckBox">
+         <property name="text">
+          <string>Mirrored</string>
+         </property>
+        </widget>
+       </item>
+       <item row="28" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Height Scale</string>
+         </property>
+        </widget>
+       </item>
+       <item row="31" column="1">
+        <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
+         <property name="text">
+          <string>Enabled</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="32" column="1">
+        <widget class="QCheckBox" name="ParallaxMirroredCheckBox">
+         <property name="text">
+          <string>Mirrored</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="DiffuseMirroredCheckBox">
-     <property name="text">
-      <string>Mirrored</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Tilling</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QDoubleSpinBox" name="DiffuseXTilling"/>
-   </item>
-   <item>
-    <widget class="QDoubleSpinBox" name="DiffuseYTilling"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="DiffuseLoadButton">
-     <property name="text">
-      <string>Load</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Normal</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="NormalImage">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="NormalEnabledCheckBox">
-     <property name="text">
-      <string>Enabled</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="NormalMirroredCheckBox">
-     <property name="text">
-      <string>Mirrored</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="NormalLoadButton">
-     <property name="text">
-      <string>Load</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>HeightMap</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="HeightMapImage">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Height Scale</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QDoubleSpinBox" name="HeightScale">
-     <property name="singleStep">
-      <double>0.010000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
-     <property name="text">
-      <string>Enabled</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="ParallaxMirroredCheckBox">
-     <property name="text">
-      <string>Mirrored</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="HeightMapLoad">
-     <property name="text">
-      <string>Load</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

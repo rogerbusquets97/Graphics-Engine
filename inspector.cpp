@@ -113,6 +113,7 @@ void Inspector::ConnectEvents()
     connect(componentLightWidget->ui->Diffuse, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightDiffuse()));
     connect(componentLightWidget->ui->CutOff, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightCutOff()));
     connect(componentLightWidget->ui->OuterCutOff, SIGNAL(valueChanged(double)), this, SLOT(OnChangeLightOutterCutoff()));
+    connect(componentLightWidget->ui->LightType, SIGNAL(currentTextChanged(const QString&)), this, SLOT(OnChangeLightType()));
 }
 
 void Inspector::OnChangeNormalMirrored()
@@ -128,6 +129,25 @@ void Inspector::OnEnableDiffuse()
     UpdateContent();
 }
 
+void Inspector::OnChangeLightType()
+{
+    const QString&& currText = componentLightWidget->ui->LightType->currentText();
+
+    if(currText == "Directional Light")
+    {
+        componentLightWidget->GetComponent()->SetTypeToDirectional();
+    }
+
+    else if(currText == "Point Light")
+    {
+        componentLightWidget->GetComponent()->SetTypeToPoint();
+    }
+
+    else if(currText == "Spot Light")
+    {
+        componentLightWidget->GetComponent()->SetTypeToSpot();
+    }
+}
 void Inspector::OnEnableNormal()
 {
     meshComponentWidget->OnEnableNormal(meshComponentWidget->ui->NormalEnabledCheckBox->isChecked());
@@ -295,6 +315,18 @@ void Inspector::UpdateLightComponent()
     componentLightWidget->ui->CutOff->setValue(componentLightWidget->GetComponent()->GetCutOff());
     componentLightWidget->ui->OuterCutOff->setValue(componentLightWidget->GetComponent()->GetOuterCutOff());
 
+    switch(componentLightWidget->GetComponent()->GetLightType())
+    {
+        case LightType::DIRECTIONAL_LIGHT:
+        componentLightWidget->ui->LightType->setCurrentText("Directional Light");
+        break;
+    case LightType::SPOT_LIGHT:
+        componentLightWidget->ui->LightType->setCurrentText("Spot Light");
+        break;
+    case LightType::POINT_LIGHT:
+        componentLightWidget->ui->LightType->setCurrentText("Point Light");
+        break;
+    }
     BlockSignals(false);
 }
 void Inspector::BlockSignals(bool b)
@@ -366,7 +398,6 @@ void Inspector::UpdateContent()
 
 void Inspector::OnUpdateSelectedTransform()
 {
-    std::cout<< "OnUpdateSelectedTransf " << std::endl;
     selected->transform->SetPosition((float)transformComponentWidget->ui->PositionX->value(),(float)transformComponentWidget->ui->PositionY->value(),(float)transformComponentWidget->ui->PositionZ->value());
     selected->transform->SetRotation((float)transformComponentWidget->ui->RotationX->value(),(float)transformComponentWidget->ui->RotationY->value(),(float)transformComponentWidget->ui->RotationZ->value());
     selected->transform->SetScale((float)transformComponentWidget->ui->ScaleX->value(),(float)transformComponentWidget->ui->ScaleY->value(),(float)transformComponentWidget->ui->ScaleZ->value());
