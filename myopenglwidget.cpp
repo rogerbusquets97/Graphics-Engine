@@ -218,7 +218,7 @@ void myopenglwidget::paintGL()
 
     gl->glClearDepth(1.0f);
     gl->glEnable(GL_DEPTH_TEST);
-    gl->glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+    gl->glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     gl->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     gl->glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
