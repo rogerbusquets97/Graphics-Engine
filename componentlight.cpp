@@ -3,7 +3,13 @@
 componentlight::componentlight(GameObject* p, ComponentType t) :  Component(p,t)
 {
     color = Color(1.0, 1.0, 1.0);
-    SetTypeToDirectional();
+
+    diffuse = 10.0f;
+    ambient = 3.0f;
+    specular = 10.0f;
+    cutOff = 10.0f;
+    outercutOff = 12.0f;
+    SetTypeToPoint();
 }
 
 
@@ -31,8 +37,8 @@ void componentlight::SetLightType(LightType type)
 }
 void componentlight::SetTypeToDirectional()
 {
-    ambient = 0.3;
-    specular = 0.5;
+    ambient = 0.0;
+    specular = 0.0;
     diffuse = 1.0;
     cutOff = 0;
     outercutOff = 0;

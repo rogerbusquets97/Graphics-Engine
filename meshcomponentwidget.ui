@@ -29,9 +29,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-223</y>
+        <y>0</y>
         <width>351</width>
-        <height>661</height>
+        <height>655</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -77,35 +77,35 @@
          </property>
         </widget>
        </item>
-       <item row="23" column="1">
+       <item row="22" column="1">
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>HeightMap</string>
          </property>
         </widget>
        </item>
-       <item row="24" column="1">
+       <item row="23" column="1">
         <widget class="QLabel" name="HeightMapImage">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="28" column="1">
+       <item row="27" column="1">
         <widget class="QPushButton" name="HeightMapLoad">
          <property name="text">
           <string>Load</string>
          </property>
         </widget>
        </item>
-       <item row="31" column="1">
+       <item row="30" column="1">
         <widget class="QDoubleSpinBox" name="HeightScale">
          <property name="singleStep">
           <double>0.010000000000000</double>
          </property>
         </widget>
        </item>
-       <item row="39" column="0">
+       <item row="38" column="0">
         <widget class="Line" name="line_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -167,6 +167,13 @@
          </property>
         </widget>
        </item>
+       <item row="20" column="1">
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
        <item row="10" column="1">
         <widget class="QCheckBox" name="DiffuseEnabledCheckBox">
          <property name="text">
@@ -201,14 +208,14 @@
          </property>
         </widget>
        </item>
-       <item row="29" column="1">
+       <item row="28" column="1">
         <widget class="QLabel" name="label_6">
          <property name="text">
           <string>Height Scale</string>
          </property>
         </widget>
        </item>
-       <item row="32" column="1">
+       <item row="31" column="1">
         <widget class="QCheckBox" name="ParallaxEnabledCheckBox">
          <property name="text">
           <string>Enabled</string>
@@ -218,17 +225,10 @@
          </property>
         </widget>
        </item>
-       <item row="33" column="1">
+       <item row="32" column="1">
         <widget class="QCheckBox" name="ParallaxMirroredCheckBox">
          <property name="text">
           <string>Mirrored</string>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="1">
-        <widget class="Line" name="line_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>

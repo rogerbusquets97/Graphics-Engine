@@ -2,9 +2,7 @@
 
 Camera::Camera()
 {
-    eyePosition = {5.0,5.0,10.0};
-    center = {0.0,0.0,0.0};
-    up = {0.0,1.0,0.0};
+
 }
 
 void Camera::PrepareMatrices()
@@ -18,6 +16,4 @@ void Camera::PrepareMatrices()
 
     projectionMatrix.setToIdentity();
     projectionMatrix.perspective(fovy, float(viewportWidth)/viewportHeight, znear, zfar);
-
-    viewMatrix.lookAt(eyePosition, center, up);
 }
