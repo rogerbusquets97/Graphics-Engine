@@ -55,8 +55,6 @@ public slots:
     void OnChangeLightSpecular();
     void OnChangeLightAmbient();
     void OnChangeLightType();
-    void OnChangeLightCutOff();
-    void OnChangeLightOutterCutoff();
     void OnEnableDiffuse();
     void OnEnableNormal();
     void OnEnableParallax();
