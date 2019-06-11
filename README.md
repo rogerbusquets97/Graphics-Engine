@@ -29,9 +29,18 @@ Instead of direct rendering, we postpone the heavy processing to a later state. 
 
 To add diffuse texturing to a mesh, go to the Diffuse section of your Component Mesh and click on Load. Select the image on your browser. You can set the tiling, mirror it, and enable it and disable it as you please.
 
+![Image](http://i64.tinypic.com/20fcoea.png)
+
+![Image](http://i66.tinypic.com/2pqm9hj.png)
+
 * Normal mapping
 
 To add a normal map to a mesh, go to the Normal section of your Component Mesh and click on Load Normal. Select the image on your browser. You can mirror it and enable it and disable it as you please.
+
+![Image](http://i64.tinypic.com/1et5qw.png)
+
+![Image](http://i66.tinypic.com/2lcb3vk.png)
+
 
 ## Qt features used:
 * Slots and Signals: all signals triggered by UI widgets are connected to custom Slots that implement a certain functionallity. For example 
