@@ -7,7 +7,7 @@ Graphics Engine developed with Qt Creator for University class.
 * Add Components to Game Objects (Light and Mesh.)
 * Load Meshes to scene. 
 
-To do so: Create a game object, select it and a Component Mesh to it. Click load mesh a select it from browser (".obj" or ".fbx").
+To do so: Create a game object, select it and add a Component Mesh to it. Click load mesh and select it from browser (".obj" or ".fbx").
 
 NOTE: YOU WILL NEED TO ADD A LIGHT TO SEE IT.
 
@@ -15,7 +15,7 @@ To delete a mesh from the scene, just delete the game object.
 
 * Multiple lighting.
 
-To add lights: Create a game object, select it and a Component Light to it. There are several settings in the UI you can play with.
+To add lights: Create a game object, select it and add a  Component Light to it. There are several settings in the UI you can play with.
 
 NOTE: Lights are needed to see the meshes in the scene. For example, create a Directional Map with Rotation (-90, 0, 0).
 
