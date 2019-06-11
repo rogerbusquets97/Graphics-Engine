@@ -21,18 +21,32 @@ NOTE: Lights are needed to see the meshes in the scene. For example, create a Di
 
 To delete the light from the scene, just delete the game object.
 
+You can add multiple lights of both types, directional and point lights. You can change their colors and set their diffuse, ambient and specular attributes.
+
+To move them around the space, it is highly recommended to use the mousewheel hovering the transform values on the inspector.
+
+A directional light example:
+
+![Image](http://i66.tinypic.com/28hct9v.png)
+
+Multiple Point Lights example:
+
+![Image](http://i63.tinypic.com/15551lk.png)
+
+Directional + Point Lights example:
+
+![Image](http://i68.tinypic.com/ighq2u.png)
+
+
 * Deferred Shading
 
-Instead of direct rendering, we postpone the heavy processing to a later state. We do that by creating a gbuffer where we store all the geometry information of the scene and then we send make lightning pass to a quad that renders the scene fragment per fragment using the gbuffer info previously stored.
+Instead of direct rendering, we postpone the heavy processing to a later state. We do that by creating a gbuffer where we store all the geometry information of the scene and then we make a lightning pass to a quad that renders the scene fragment per fragment using the gbuffer info previously stored.
 
 * Diffuse texturing
 
 To add diffuse texturing to a mesh, go to the Diffuse section of your Component Mesh and click on Load. Select the image on your browser. You can set the tiling, mirror it, and enable it and disable it as you please.
 
 ![Image](http://i64.tinypic.com/20fcoea.png)
-
-![Image](http://i66.tinypic.com/2pqm9hj.png)
-
 * Normal mapping
 
 To add a normal map to a mesh, go to the Normal section of your Component Mesh and click on Load Normal. Select the image on your browser. You can mirror it and enable it and disable it as you please.
