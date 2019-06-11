@@ -94,7 +94,7 @@ void main(void)
     }
     for (int j = 0; j < Spots; j++)
     {
-        result += CalcSpotLight(spotLights[j], normal, fragPos, viewDir);
+       // result += CalcSpotLight(spotLights[j], normal, fragPos, viewDir);
     }
 
     FragColor.rgb = ambientTerm + (result * diffuse);
@@ -153,31 +153,6 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 }
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    vec3 vecAmbient = vec3(light.ambient, light.ambient, light.ambient);
-    vec3 vecSpecular = vec3(light.specular, light.specular, light.specular);
-    vec3 vecDiffuse = vec3(light.diffuse, light.diffuse, light.diffuse);
-
-    vec3 lightDir = normalize(light.position - fragPos);
-    float diff = max(dot(normal, lightDir), 0.0);
-
-    vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-
-    float distance = length(light.position - fragPos);
-
-    float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));
-
-    float theta = dot(lightDir, normalize(-light.direction));
-    float epsilon = light.cutOff - light.outerCutOff;
-    float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
-
-    vec3 ambient = vecAmbient * vec3(texture(gAlbedo, FSIn.TexCoords).rgb);
-    vec3 diffuse = vecDiffuse * diff * vec3(texture(gAlbedo, FSIn.TexCoords).rgb);
-    vec3 specular = vecSpecular * spec;
-
-    ambient *= attenuation * intensity;
-    diffuse *= attenuation * intensity;
-    specular *= attenuation * intensity;
-
-    return (ambient + diffuse + specular) * light.color;
+    vec3 result;
+    return result;
 }

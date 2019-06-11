@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>286</width>
+    <width>323</width>
     <height>431</height>
    </rect>
   </property>
@@ -62,11 +62,6 @@
      <item>
       <property name="text">
        <string>Point Light</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Spot Light</string>
       </property>
      </item>
     </widget>
