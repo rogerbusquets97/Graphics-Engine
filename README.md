@@ -47,13 +47,24 @@ Instead of direct rendering, we postpone the heavy processing to a later state. 
 To add diffuse texturing to a mesh, go to the Diffuse section of your Component Mesh and click on Load. Select the image on your browser. You can set the tiling, mirror it, and enable it and disable it as you please.
 
 ![Image](http://i64.tinypic.com/20fcoea.png)
+
 * Normal mapping
 
-To add a normal map to a mesh, go to the Normal section of your Component Mesh and click on Load Normal. Select the image on your browser. You can mirror it and enable it and disable it as you please.
+To add a normal map to a mesh, go to the Normal section of your Component Mesh and click on Load. Select the image on your browser. You can mirror it and enable it and disable it as you please.
 
 ![Image](http://i64.tinypic.com/1et5qw.png)
 
 ![Image](http://i66.tinypic.com/2lcb3vk.png)
+
+* Parallax Mapping
+
+To add a height map to a mesh, go to the Height Map section of your component mesh and click on Load. Select the image on your browser. You can mirror it and disable it as your please.
+
+NOTE: Normal map needs to be enabled for Parallax Mapping to work.
+
+![Image](http://i68.tinypic.com/mwb49x.png)
+
+![Image](http://i63.tinypic.com/fc8f3k.png)
 
 
 ## Qt features used:
@@ -64,5 +75,4 @@ The same applies for creating components or changing their variables.
 and the inspector has been promoted to run an specific behaviour. 
 * QPainter: The QPainter feature provided by Qt has been used to render shapes for all the objects with a Shape component attached to them.
 * Dialogs: In order to warn the user we have used dialogs from Qt to make sure some "dangerous actions" (like exting) are safe to compute. 
-*
 
