@@ -46,7 +46,7 @@ Init picture:
 
 ![Image](http://i65.tinypic.com/1xz868.png)
 
-Sending info to Geometry Pass and Lightning Pass:
+Sending info to Geometry and Lightning shaders:
 
 ![Image](http://i66.tinypic.com/2ykau5h.png)
 
