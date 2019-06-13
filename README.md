@@ -42,6 +42,15 @@ Directional + Point Lights example:
 
 Instead of direct rendering, we postpone the heavy processing to a later state. We do that by creating a gbuffer where we store all the geometry information of the scene and then we make a lightning pass to a quad that renders the scene fragment per fragment using the gbuffer info previously stored.
 
+Init picture:
+
+![Image](http://i65.tinypic.com/1xz868.png)
+
+Sending info to Geometry Pass and Lightning Pass:
+
+![Image](http://i66.tinypic.com/2ykau5h.png)
+
+
 * Diffuse texturing
 
 To add diffuse texturing to a mesh, go to the Diffuse section of your Component Mesh and click on Load. Select the image on your browser. You can set the tiling, mirror it, and enable it and disable it as you please.
